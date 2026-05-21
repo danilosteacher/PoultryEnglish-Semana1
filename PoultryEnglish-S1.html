@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aula 1 — O Flock Cycle | Poultry English</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green-deep: #0d2b1f;
+  --green-mid: #1a4a30;
+  --green-main: #1D9E75;
+  --green-light: #E1F5EE;
+  --green-pale: #f0faf5;
+  --gold: #c9a84c;
+  --gold-light: #f5ecd4;
+  --text-primary: #0d1f17;
+  --text-secondary: #3d5a4a;
+  --text-muted: #7a9e8a;
+  --border: #d4e8dd;
+  --bg: #f7fbf8;
+  --white: #ffffff;
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  min-height: 100vh;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* HEADER */
+.site-header {
+  background: var(--green-deep);
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.logo {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+  color: var(--white);
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.logo span { color: var(--green-main); }
+.header-meta {
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+  font-weight: 300;
+}
+
+/* PROGRESS BAR */
+.progress-strip {
+  background: var(--border);
+  height: 3px;
+  position: sticky;
+  top: 56px;
+  z-index: 99;
+}
+.progress-fill {
+  height: 3px;
+  background: linear-gradient(90deg, var(--green-main), var(--gold));
+  width: 0%;
+  transition: width 0.6s ease;
+}
+
+/* HERO DA AULA */
+.lesson-hero {
+  background: var(--green-deep);
+  padding: 3rem 2rem 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.lesson-hero::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 280px; height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(29,158,117,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+.lesson-hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--green-main), transparent);
+}
+.hero-inner { max-width: 720px; margin: 0 auto; position: relative; }
+.lesson-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.25rem; }
+.badge {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 4px 12px;
+  border-radius: 99px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.badge-week { background: rgba(29,158,117,0.2); color: var(--green-main); border: 1px solid rgba(29,158,117,0.3); }
+.badge-time { background: rgba(201,168,76,0.15); color: var(--gold); border: 1px solid rgba(201,168,76,0.2); }
+.badge-method { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.1); }
+.lesson-number {
+  font-family: 'Syne', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--green-main);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.lesson-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(22px, 4vw, 32px);
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1.2;
+  margin-bottom: 10px;
+}
+.lesson-title em { color: var(--green-main); font-style: normal; }
+.lesson-sub {
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+  font-weight: 300;
+  max-width: 480px;
+  line-height: 1.6;
+}
+
+/* CONTAINER PRINCIPAL */
+.main { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+/* SEÇÃO */
+.section { margin-bottom: 2.5rem; }
+.section-label {
+  font-family: 'Syne', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--green-main);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* FOCUS — CONTEXTO */
+.focus-block {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--green-main);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 1.25rem 1.5rem;
+}
+.focus-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--green-main);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+}
+.focus-text {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+.focus-quote {
+  margin-top: 1rem;
+  padding: 0.875rem 1rem;
+  background: var(--green-pale);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  color: var(--text-primary);
+  font-style: italic;
+  border-left: 3px solid var(--green-main);
+}
+
+/* OBJETIVOS */
+.objectives { display: flex; flex-direction: column; gap: 10px; }
+.obj-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+}
+.obj-check {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--green-light);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.obj-check svg { width: 12px; height: 12px; stroke: var(--green-main); stroke-width: 2.5; fill: none; }
+.obj-text { font-size: 14px; color: var(--text-primary); line-height: 1.5; }
+
+/* VÍDEOS */
+.video-blocks { display: flex; flex-direction: column; gap: 10px; }
+.video-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.video-play {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--green-main);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+}
+.video-play:hover { transform: scale(1.08); background: var(--green-mid); }
+.video-play svg { width: 16px; height: 16px; fill: white; margin-left: 2px; }
+.video-info { flex: 1; }
+.video-title { font-size: 14px; font-weight: 500; color: var(--text-primary); margin-bottom: 3px; }
+.video-desc { font-size: 12px; color: var(--text-muted); }
+.video-dur {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: var(--bg);
+  padding: 4px 10px;
+  border-radius: 99px;
+  border: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+/* FLASHCARDS */
+.voice-row { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-bottom: 1rem; }
+.voice-label { font-size: 12px; color: var(--text-muted); }
+.vbtn {
+  padding: 4px 12px;
+  border-radius: 99px;
+  border: 1px solid var(--border);
+  background: transparent;
+  font-size: 12px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.15s;
+}
+.vbtn:hover { background: var(--green-light); border-color: var(--green-main); }
+.vbtn.active { background: var(--green-light); color: var(--green-main); border-color: var(--green-main); font-weight: 500; }
+.voices-loading { font-size: 12px; color: var(--text-muted); font-style: italic; }
+
+.fc-nav-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.fc-counter { font-size: 13px; color: var(--text-muted); }
+.fc-arrows { display: flex; gap: 6px; }
+.fc-arrow {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.fc-arrow:hover { background: var(--green-light); border-color: var(--green-main); }
+.fc-arrow svg { width: 14px; height: 14px; stroke: var(--text-secondary); stroke-width: 2; fill: none; }
+
+/* PROGRESS DOTS */
+.fc-dots { display: flex; gap: 5px; justify-content: center; margin-bottom: 12px; flex-wrap: wrap; }
+.fc-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--border);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.fc-dot.active { background: var(--green-main); transform: scale(1.3); }
+.fc-dot.done { background: var(--green-main); opacity: 0.4; }
+
+.flashcard {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  min-height: 240px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem 1.5rem;
+  gap: 10px;
+  position: relative;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  user-select: none;
+}
+.flashcard:hover { border-color: var(--green-main); box-shadow: 0 0 0 3px rgba(29,158,117,0.08); }
+.fc-side-label {
+  position: absolute;
+  top: 1rem; right: 1rem;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.fc-front { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%; }
+.fc-front.hidden { display: none; }
+.fc-back { display: none; flex-direction: column; align-items: center; gap: 10px; width: 100%; }
+.fc-back.visible { display: flex; }
+.fc-step-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--green-main);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.fc-word {
+  font-family: 'Syne', sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+.fc-ipa { font-size: 13px; color: var(--text-muted); font-style: italic; }
+.audio-btns { display: flex; gap: 8px; align-items: center; margin-top: 4px; }
+.abtn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 14px;
+  border-radius: 99px;
+  border: 1px solid var(--border);
+  background: transparent;
+  font-size: 12px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.15s;
+}
+.abtn:hover { background: var(--green-light); border-color: var(--green-main); color: var(--green-main); }
+.abtn.playing { background: var(--green-light); border-color: var(--green-main); color: var(--green-main); }
+.abtn svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2; fill: none; flex-shrink: 0; }
+.spd-btn {
+  padding: 4px 10px;
+  border-radius: 99px;
+  border: 1px solid var(--border);
+  background: transparent;
+  font-size: 11px;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.15s;
+}
+.spd-btn.active { background: var(--green-light); border-color: var(--green-main); color: var(--green-main); }
+.fc-hint { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
+.fc-translation {
+  font-family: 'Syne', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--green-main);
+}
+.fc-example {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  border-left: 3px solid var(--green-main);
+  padding-left: 12px;
+  text-align: left;
+  width: 100%;
+}
+.fc-example-pt {
+  font-size: 12px;
+  color: var(--text-muted);
+  padding-left: 15px;
+  text-align: left;
+  width: 100%;
+  font-style: italic;
+}
+.fc-why {
+  font-size: 12px;
+  background: var(--green-light);
+  color: #085041;
+  padding: 6px 14px;
+  border-radius: 99px;
+  margin-top: 4px;
+}
+
+/* QUIZ */
+.quiz-wrapper { display: flex; flex-direction: column; gap: 0; }
+.quiz-q-block { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; }
+.quiz-situation {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--green-main);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+}
+.quiz-context {
+  font-size: 13px;
+  color: var(--text-secondary);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.875rem 1rem;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+  font-style: italic;
+}
+.quiz-q {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+.quiz-opts { display: flex; flex-direction: column; gap: 8px; }
+.quiz-opt {
+  padding: 0.875rem 1.1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--white);
+  font-size: 14px;
+  color: var(--text-primary);
+  cursor: pointer;
+  text-align: left;
+  line-height: 1.5;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.15s;
+}
+.quiz-opt:hover:not(:disabled) { background: var(--green-pale); border-color: var(--green-main); }
+.quiz-opt.correct { background: var(--green-light); border-color: var(--green-main); color: #085041; font-weight: 500; }
+.quiz-opt.wrong { background: #fef2f2; border-color: #fca5a5; color: #7f1d1d; }
+.quiz-opt:disabled { cursor: default; }
+.quiz-feedback {
+  margin-top: 12px;
+  padding: 1rem 1.1rem;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  line-height: 1.6;
+  display: none;
+}
+.quiz-feedback.ok { background: var(--green-light); color: #085041; display: block; border: 1px solid #9FE1CB; }
+.quiz-feedback.no { background: #fef2f2; color: #7f1d1d; display: block; border: 1px solid #fca5a5; }
+.quiz-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; }
+.quiz-prog { font-size: 12px; color: var(--text-muted); }
+.btn-next {
+  padding: 8px 20px;
+  border-radius: 99px;
+  border: 1px solid var(--border);
+  background: var(--white);
+  font-size: 13px;
+  color: var(--text-primary);
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.15s;
+  display: none;
+}
+.btn-next:hover { background: var(--green-light); border-color: var(--green-main); color: var(--green-main); }
+.score-block {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem;
+  text-align: center;
+  display: none;
+}
+.score-block.show { display: block; }
+.score-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 48px;
+  font-weight: 800;
+  color: var(--green-main);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.score-msg { font-size: 14px; color: var(--text-secondary); margin-bottom: 1.25rem; }
+.btn-retry {
+  padding: 8px 20px;
+  border-radius: 99px;
+  border: 1px solid var(--border);
+  background: transparent;
+  font-size: 13px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+}
+.btn-retry:hover { background: var(--green-light); }
+
+/* DESAFIO */
+.apply-block {
+  background: var(--green-deep);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.apply-block::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(29,158,117,0.2) 0%, transparent 70%);
+  pointer-events: none;
+}
+.apply-header { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+.apply-icon {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: rgba(29,158,117,0.2);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.apply-icon svg { width: 16px; height: 16px; stroke: var(--green-main); stroke-width: 2; fill: none; }
+.apply-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--white);
+}
+.apply-sub { font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 1.25rem; line-height: 1.6; }
+.apply-steps { display: flex; flex-direction: column; gap: 10px; }
+.apply-step {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius-sm);
+  padding: 0.875rem 1rem;
+}
+.step-num {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: var(--green-main);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: white;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.step-text { font-size: 13px; color: rgba(255,255,255,0.75); line-height: 1.6; }
+.step-text em { color: var(--green-main); font-style: normal; font-weight: 500; }
+
+/* BASE TÉCNICA */
+.sources-block {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+.sources-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+.sources-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 1.25rem; line-height: 1.5; }
+.source-list { display: flex; flex-direction: column; gap: 10px; }
+.source-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 0.875rem 1rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+.source-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--green-main);
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+.source-content { flex: 1; }
+.source-name { font-size: 13px; font-weight: 500; color: var(--text-primary); margin-bottom: 2px; }
+.source-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-bottom: 5px; }
+.source-link {
+  font-size: 12px;
+  color: var(--green-main);
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.source-link:hover { text-decoration: underline; }
+.source-link svg { width: 12px; height: 12px; stroke: currentColor; stroke-width: 2; fill: none; }
+
+/* NEXT CTA */
+.next-cta {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.next-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; font-weight: 500; }
+.next-title { font-size: 15px; font-weight: 500; color: var(--text-primary); }
+.next-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 99px;
+  border: none;
+  background: var(--green-main);
+  color: white;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.15s;
+}
+.next-btn:hover { background: var(--green-mid); }
+.next-btn svg { width: 14px; height: 14px; stroke: white; stroke-width: 2; fill: none; }
+
+/* DIVIDER */
+.divider { height: 1px; background: var(--border); margin: 2rem 0; }
+
+@media (max-width: 600px) {
+  .lesson-hero { padding: 2rem 1.25rem 2rem; }
+  .main { padding: 1.5rem 1rem 3rem; }
+  .next-cta { flex-direction: column; align-items: flex-start; }
+  .next-btn { width: 100%; justify-content: center; }
+  .video-card { flex-wrap: wrap; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="logo">POULTRY <span>ENGLISH</span></div>
+  <div class="header-meta">Semana 1 · Aula 1 de 30</div>
+</header>
+
+<!-- PROGRESS BAR -->
+<div class="progress-strip">
+  <div class="progress-fill" id="prog-fill"></div>
+</div>
+
+<!-- HERO -->
+<div class="lesson-hero">
+  <div class="hero-inner">
+    <div class="lesson-badges">
+      <span class="badge badge-week">Semana 1</span>
+      <span class="badge badge-time">⏱ 20 minutos</span>
+      <span class="badge badge-method">Método FLOCK</span>
+    </div>
+    <div class="lesson-number">Aula 01</div>
+    <h1 class="lesson-title">O <em>Flock Cycle</em> —<br>como descrever seu lote</h1>
+    <p class="lesson-sub">Aprenda a nomear cada fase do ciclo produtivo e descreva seu lote em inglês para qualquer parceiro estrangeiro.</p>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- F — FOCUS -->
+  <section class="section">
+    <div class="section-label">F — Focus</div>
+    <div class="focus-block">
+      <div class="focus-label">Por que você precisa dessa aula</div>
+      <p class="focus-text">
+        Um supervisor da Cobb-Vantress chega na sua granja para uma visita técnica. Ele pergunta em inglês: <em>"What stage is your current flock at?"</em> Você sabe a resposta — o lote está na fase de crescimento, no dia 22. Mas as palavras não saem.
+      </p>
+      <div class="focus-quote">
+        "What stage is your current flock at? How many birds do you have placed?"<br>
+        <span style="font-size:12px;color:var(--text-muted);font-style:normal;">— Pergunta padrão de qualquer supervisor ou comprador estrangeiro ao chegar na granja.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- OBJETIVOS -->
+  <section class="section">
+    <div class="section-label">O que você vai conseguir fazer</div>
+    <div class="objectives">
+      <div class="obj-item">
+        <div class="obj-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="obj-text">Descrever em inglês em que fase do ciclo produtivo seu lote está — do alojamento ao abate</div>
+      </div>
+      <div class="obj-item">
+        <div class="obj-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="obj-text">Responder as perguntas mais comuns de supervisores estrangeiros sobre o seu lote</div>
+      </div>
+      <div class="obj-item">
+        <div class="obj-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="obj-text">Usar os termos corretos que aparecem em manuais Cobb, Ross e Aviagen em inglês</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- L — LISTEN (VÍDEOS) -->
+  <section class="section">
+    <div class="section-label">L — Listen · Vídeos da aula</div>
+    <div class="video-blocks">
+      <div class="video-card">
+        <div class="video-play">
+          <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        </div>
+        <div class="video-info">
+          <div class="video-title">Bloco 1 — As fases do flock cycle em inglês</div>
+          <div class="video-desc">Placement, brooding, grow-out, depletion — cada fase com o nome e o contexto certo</div>
+        </div>
+        <div class="video-dur">5 min</div>
+      </div>
+      <div class="video-card">
+        <div class="video-play">
+          <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        </div>
+        <div class="video-info">
+          <div class="video-title">Bloco 2 — Como falar sobre seu lote agora</div>
+          <div class="video-desc">Frases prontas para descrever número de aves, fase atual e dias de vida do lote</div>
+        </div>
+        <div class="video-dur">5 min</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- O — OWN (FLASHCARDS) -->
+  <section class="section">
+    <div class="section-label">O — Own · Flashcards com áudio</div>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:1rem;">Ouça o termo antes de virar o card. Depois ouça a frase completa em contexto.</p>
+
+    <!-- Seletor de voz -->
+    <div class="voice-row">
+      <span class="voice-label">Voz:</span>
+      <span class="voices-loading" id="v-loading">Carregando vozes do seu navegador...</span>
+      <div id="v-btns" style="display:flex;gap:6px;flex-wrap:wrap;"></div>
+    </div>
+
+    <!-- Dots de progresso -->
+    <div class="fc-dots" id="fc-dots"></div>
+
+    <!-- Nav -->
+    <div class="fc-nav-row">
+      <span class="fc-counter" id="fc-counter">1 de 9</span>
+      <div class="fc-arrows">
+        <button class="fc-arrow" onclick="fcNav(-1)" aria-label="Card anterior">
+          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button class="fc-arrow" onclick="fcNav(1)" aria-label="Próximo card">
+          <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Card -->
+    <div class="flashcard" id="flashcard" onclick="handleCardClick(event)">
+      <!-- FRENTE -->
+      <div class="fc-front" id="fc-front">
+        <div class="fc-side-label">Toque para ver a tradução</div>
+        <div class="fc-step-label" id="fc-step"></div>
+        <div class="fc-word" id="fc-word"></div>
+        <div class="fc-ipa" id="fc-ipa"></div>
+        <div class="audio-btns" onclick="event.stopPropagation()">
+          <button class="abtn" id="abtn-word" onclick="sayWord()">
+            <svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+            Ouvir termo
+          </button>
+          <button class="spd-btn active" id="spd1" onclick="setSpd(1,event)">1×</button>
+          <button class="spd-btn" id="spd07" onclick="setSpd(0.7,event)">0.7×</button>
+        </div>
+        <div class="fc-hint">Toque no card para ver a tradução e o uso real</div>
+      </div>
+      <!-- VERSO -->
+      <div class="fc-back" id="fc-back">
+        <div class="fc-side-label">Tradução e uso real</div>
+        <div class="fc-translation" id="fc-trans"></div>
+        <div class="audio-btns" onclick="event.stopPropagation()">
+          <button class="abtn" id="abtn-ex" onclick="sayEx()">
+            <svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+            Ouvir frase
+          </button>
+          <button class="spd-btn active" id="exspd1" onclick="setExSpd(1,event)">1×</button>
+          <button class="spd-btn" id="exspd07" onclick="setExSpd(0.7,event)">0.7×</button>
+        </div>
+        <div class="fc-example" id="fc-ex"></div>
+        <div class="fc-example-pt" id="fc-ex-pt"></div>
+        <div class="fc-why" id="fc-why"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- C — CHECK (QUIZ) -->
+  <section class="section">
+    <div class="section-label">C — Check · Quiz situacional</div>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:1rem;">Situações reais. Não testa gramática — testa se você sabe usar o termo quando precisar.</p>
+
+    <div id="quiz-area">
+      <div class="quiz-q-block" id="quiz-block">
+        <div class="quiz-situation">Situação real</div>
+        <div class="quiz-context" id="q-ctx"></div>
+        <div class="quiz-q" id="q-text"></div>
+        <div class="quiz-opts" id="q-opts"></div>
+        <div class="quiz-feedback" id="q-fb"></div>
+        <div class="quiz-nav">
+          <span class="quiz-prog" id="q-prog"></span>
+          <button class="btn-next" id="btn-next" onclick="nextQ()">Próxima →</button>
+        </div>
+      </div>
+      <div class="score-block" id="score-block">
+        <div class="score-num" id="score-num"></div>
+        <div class="score-msg" id="score-msg"></div>
+        <button class="btn-retry" onclick="restartQuiz()">Refazer o quiz</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- K — KEEP (DESAFIO) -->
+  <section class="section">
+    <div class="section-label">K — Keep · Use hoje</div>
+    <div class="apply-block">
+      <div class="apply-header">
+        <div class="apply-icon">
+          <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
+        <div class="apply-title">Desafio de hoje — faça agora, leva 5 minutos</div>
+      </div>
+      <p class="apply-sub">Escreva 3 frases sobre o seu lote atual em inglês. Use os termos da aula. Pode ser no bloco de notas, no WhatsApp, em qualquer lugar.</p>
+      <div class="apply-steps">
+        <div class="apply-step">
+          <div class="step-num">1</div>
+          <div class="step-text">Descreva a fase do seu lote: <em>"Our flock is currently in the ___ phase. The birds are ___ days old."</em></div>
+        </div>
+        <div class="apply-step">
+          <div class="step-num">2</div>
+          <div class="step-text">Informe o número de aves: <em>"We have ___ birds placed in house number ___."</em></div>
+        </div>
+        <div class="apply-step">
+          <div class="step-num">3</div>
+          <div class="step-text">Mencione o objetivo do lote: <em>"The target slaughter weight is ___ kg at ___ days."</em></div>
+        </div>
+        <div class="apply-step">
+          <div class="step-num">4</div>
+          <div class="step-text">Se não tiver lote ativo, use os dados do último: <em>"In our last flock cycle, we placed ___ birds and achieved a FCR of ___."</em></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- BASE TÉCNICA -->
+  <section class="section">
+    <div class="sources-block">
+      <div class="sources-title">Base técnica desta aula</div>
+      <p class="sources-sub">O vocabulário desta aula vem de fontes usadas por profissionais e empresas do setor avícola mundial.</p>
+      <div class="source-list">
+        <div class="source-item">
+          <div class="source-dot"></div>
+          <div class="source-content">
+            <div class="source-name">Cobb 500 Broiler Management Guide</div>
+            <div class="source-desc">Manual oficial da Cobb-Vantress com toda a terminologia de manejo de frangos de corte em inglês — incluindo as fases do flock cycle usadas nesta aula.</div>
+            <a class="source-link" href="https://cobbgenetics.com/resources/broiler-resources/" target="_blank" rel="noopener">
+              Acessar documento
+              <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="source-item">
+          <div class="source-dot"></div>
+          <div class="source-content">
+            <div class="source-name">Ross Broiler Management Handbook — Aviagen</div>
+            <div class="source-desc">Referência técnica internacional da Aviagen com vocabulário padronizado de ciclo produtivo, alojamento e desempenho zootécnico em inglês.</div>
+            <a class="source-link" href="https://www.aviagen.com/brands/ross/resources/" target="_blank" rel="noopener">
+              Acessar documento
+              <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="source-item">
+          <div class="source-dot"></div>
+          <div class="source-content">
+            <div class="source-name">Aviagen Technical Resources</div>
+            <div class="source-desc">Biblioteca completa de manuais técnicos em inglês da Aviagen — a maior empresa de genética avícola do mundo. Fonte primária para terminologia de manejo.</div>
+            <a class="source-link" href="https://www.aviagen.com/tech-center/" target="_blank" rel="noopener">
+              Acessar documento
+              <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRÓXIMA AULA -->
+  <div class="next-cta">
+    <div>
+      <div class="next-label">Próxima aula</div>
+      <div class="next-title">Aula 2 — Pinteiro e aquecimento: brooding, heat source, chick behavior</div>
+    </div>
+    <button class="next-btn" onclick="goNext()">
+      Continuar
+      <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </div>
+
+</main>
+
+<script>
+// ─── DADOS ───────────────────────────────────────────────
+const cards = [
+  {
+    step: "Fase 1 — Início",
+    word: "Flock placement",
+    ipa: "/flɒk ˈpleɪsmənt/",
+    trans: "Alojamento do lote",
+    ex: "Flock placement took place on Monday with 45,000 day-old chicks.",
+    pt: "→ O alojamento do lote ocorreu na segunda-feira com 45.000 pintinhos de um dia.",
+    why: "Primeiro termo que aparece em qualquer relatório de início de ciclo"
+  },
+  {
+    step: "Fase 2 — Pinteiro",
+    word: "Brooding phase",
+    ipa: "/ˈbruːdɪŋ feɪz/",
+    trans: "Fase de aquecimento / pinteiro",
+    ex: "During the brooding phase, house temperature must stay above 32°C.",
+    pt: "→ Durante a fase de aquecimento, a temperatura do galpão deve permanecer acima de 32°C.",
+    why: "Termo técnico padrão nos manuais Cobb e Ross para a fase inicial"
+  },
+  {
+    step: "Fase 3 — Crescimento",
+    word: "Grow-out period",
+    ipa: "/ɡrəʊ aʊt ˈpɪəriəd/",
+    trans: "Período de crescimento / engorda",
+    ex: "The grow-out period for this flock is 42 days.",
+    pt: "→ O período de crescimento deste lote é de 42 dias.",
+    why: "Expressão mais usada em relatórios de integradoras internacionais"
+  },
+  {
+    step: "Fase 4 — Abate",
+    word: "Depletion / Flock depletion",
+    ipa: "/dɪˈpliːʃən/",
+    trans: "Retirada das aves para o abate",
+    ex: "Flock depletion is scheduled for next Thursday at 06:00 AM.",
+    pt: "→ A retirada das aves para o abate está agendada para a próxima quinta-feira às 06h.",
+    why: "Usado em schedules de abate e comunicação com frigoríficos"
+  },
+  {
+    step: "Essencial",
+    word: "Day-old chick",
+    ipa: "/deɪ əʊld tʃɪk/",
+    trans: "Pintinho de um dia",
+    ex: "We received 50,000 day-old chicks from the hatchery this morning.",
+    pt: "→ Recebemos 50.000 pintinhos de um dia do incubatório esta manhã.",
+    why: "Termo padrão em todas as comunicações com fornecedores de genética"
+  },
+  {
+    step: "Essencial",
+    word: "Flock performance",
+    ipa: "/flɒk pəˈfɔːməns/",
+    trans: "Desempenho do lote",
+    ex: "Flock performance this cycle exceeded our targets for FCR and livability.",
+    pt: "→ O desempenho do lote neste ciclo superou nossas metas de CA e viabilidade.",
+    why: "Expressão central em relatórios de desempenho e reuniões técnicas"
+  },
+  {
+    step: "Essencial",
+    word: "Flock cycle",
+    ipa: "/flɒk ˈsaɪkəl/",
+    trans: "Ciclo do lote / ciclo de produção",
+    ex: "This is the third flock cycle in house number 4 this year.",
+    pt: "→ Este é o terceiro ciclo de lote no galpão número 4 este ano.",
+    why: "Vocabulário básico de qualquer discussão sobre produção avícola"
+  },
+  {
+    step: "Essencial",
+    word: "Stocking density",
+    ipa: "/ˈstɒkɪŋ ˈdɛnsɪti/",
+    trans: "Densidade de alojamento",
+    ex: "Our stocking density is 12 birds per square meter.",
+    pt: "→ Nossa densidade de alojamento é de 12 aves por metro quadrado.",
+    why: "Exigência de certificações de exportação — BRC e Global G.A.P."
+  },
+  {
+    step: "Essencial",
+    word: "Slaughter age",
+    ipa: "/ˈslɔːtər eɪdʒ/",
+    trans: "Idade ao abate",
+    ex: "The target slaughter age for this flock is 42 days.",
+    pt: "→ A idade alvo ao abate para este lote é de 42 dias.",
+    why: "Informação obrigatória em contratos com frigoríficos e integradores"
+  }
+];
+
+const quizData = [
+  {
+    ctx: "Um técnico da Cobb-Vantress visita sua granja e pergunta sobre o status do lote atual.",
+    q: "Ele diz: 'What stage is your current flock at?' O que ele está perguntando?",
+    opts: ["Qual é o peso médio das aves", "Em que fase do ciclo produtivo seu lote está", "Quantos lotes você produziu este ano", "Qual é a temperatura do galpão"],
+    correct: 1,
+    fb: "Correto. 'What stage is your flock at?' é a pergunta padrão para saber em que fase do ciclo o lote está — brooding, grow-out ou próximo ao abate. A resposta certa seria algo como: 'We are in the grow-out period, day 22.'"
+  },
+  {
+    ctx: "Você está escrevendo um e-mail para o frigorífico confirmando o planejamento de abate.",
+    q: "Qual termo correto para comunicar a data de retirada das aves para o abate?",
+    opts: ["Flock placement is scheduled for Friday", "Flock depletion is scheduled for Friday", "Flock cycle ends on Friday", "Brooding phase ends on Friday"],
+    correct: 1,
+    fb: "Correto. 'Flock depletion' é o termo técnico para a retirada das aves para o abate. 'Flock placement' é o oposto — é quando as aves chegam na granja. Misturar os dois em um e-mail cria confusão séria com o frigorífico."
+  },
+  {
+    ctx: "Um comprador estrangeiro está avaliando sua granja para certificação de exportação.",
+    q: "Ele pergunta: 'What is your stocking density?' O que você deve informar?",
+    opts: ["O número total de aves no lote", "O peso médio das aves", "A quantidade de aves por metro quadrado", "O número de galpões em produção"],
+    correct: 2,
+    fb: "Correto. 'Stocking density' é a quantidade de aves por metro quadrado — não o total do lote. Para mercados europeus, o limite máximo é geralmente 33 kg/m². Saber responder isso com precisão é essencial para qualquer certificação de exportação."
+  },
+  {
+    ctx: "Você recebe um relatório da integradora em inglês com o termo 'grow-out period: 42 days'.",
+    q: "O que esse termo indica no relatório?",
+    opts: ["O tempo de aquecimento dos pintinhos no pinteiro", "O período total de crescimento das aves até o abate", "O tempo de limpeza e desinfecção entre lotes", "O intervalo entre o alojamento e o pico de consumo"],
+    correct: 1,
+    fb: "Correto. 'Grow-out period' é o período total de crescimento — do alojamento até o abate. É diferente da 'brooding phase', que é apenas a fase inicial de aquecimento. Em relatórios de integradoras internacionais, esse é um dos termos mais frequentes."
+  }
+];
+
+// ─── ESTADO ───────────────────────────────────────────────
+let fcIdx = 0, fcFlipped = false;
+let voices = [], selVoice = null, spd = 1, exSpd = 1;
+let qIdx = 0, score = 0, qAnswered = false;
+let doneFC = false, doneQuiz = false;
+
+// ─── PROGRESSO GERAL ──────────────────────────────────────
+function updateProg() {
+  let p = 0;
+  if (doneFC) p += 50;
+  if (doneQuiz) p += 50;
+  document.getElementById('prog-fill').style.width = p + '%';
+}
+
+// ─── VOZES ────────────────────────────────────────────────
+function loadVoices() {
+  const all = window.speechSynthesis.getVoices();
+  voices = all.filter(v => v.lang.startsWith('en'));
+  if (!voices.length) { setTimeout(loadVoices, 300); return; }
+  const pref = ['Google US English', 'Samantha', 'Karen', 'Google UK English Female', 'Microsoft Aria'];
+  const sorted = [...voices].sort((a, b) => {
+    const ai = pref.findIndex(p => a.name.includes(p.split(' ')[0]) && a.name.includes(p.split(' ').pop()));
+    const bi = pref.findIndex(p => b.name.includes(p.split(' ')[0]) && b.name.includes(p.split(' ').pop()));
+    return (ai < 0 ? 99 : ai) - (bi < 0 ? 99 : bi);
+  });
+  const top = sorted.slice(0, 4);
+  selVoice = top[0] || null;
+  document.getElementById('v-loading').style.display = 'none';
+  const container = document.getElementById('v-btns');
+  container.innerHTML = '';
+  top.forEach((v, i) => {
+    const b = document.createElement('button');
+    b.className = 'vbtn' + (i === 0 ? ' active' : '');
+    b.textContent = v.name.replace('Google ', '').replace('Microsoft ', '').replace(' Online', '');
+    b.onclick = () => {
+      selVoice = v;
+      stopAll();
+      document.querySelectorAll('.vbtn').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+    };
+    container.appendChild(b);
+  });
+}
+
+function stopAll() {
+  window.speechSynthesis && window.speechSynthesis.cancel();
+  document.querySelectorAll('.abtn').forEach(b => b.classList.remove('playing'));
+}
+
+function say(text, rate, btnId) {
+  stopAll();
+  if (!window.speechSynthesis) return;
+  const u = new SpeechSynthesisUtterance(text);
+  if (selVoice) u.voice = selVoice;
+  u.lang = 'en-US'; u.rate = rate;
+  const btn = document.getElementById(btnId);
+  if (btn) btn.classList.add('playing');
+  u.onend = u.onerror = () => { if (btn) btn.classList.remove('playing'); };
+  window.speechSynthesis.speak(u);
+}
+
+function sayWord() { say(cards[fcIdx].word, spd, 'abtn-word'); }
+function sayEx() { say(cards[fcIdx].ex, exSpd, 'abtn-ex'); }
+
+function setSpd(s, e) {
+  e.stopPropagation(); spd = s;
+  document.getElementById('spd1').classList.toggle('active', s === 1);
+  document.getElementById('spd07').classList.toggle('active', s === 0.7);
+  sayWord();
+}
+function setExSpd(s, e) {
+  e.stopPropagation(); exSpd = s;
+  document.getElementById('exspd1').classList.toggle('active', s === 1);
+  document.getElementById('exspd07').classList.toggle('active', s === 0.7);
+  sayEx();
+}
+
+// ─── FLASHCARDS ───────────────────────────────────────────
+function buildDots() {
+  const c = document.getElementById('fc-dots');
+  c.innerHTML = '';
+  cards.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'fc-dot' + (i === 0 ? ' active' : '');
+    d.id = 'dot-' + i;
+    d.onclick = () => { fcIdx = i; renderFC(); updateDots(); };
+    c.appendChild(d);
+  });
+}
+
+function updateDots() {
+  cards.forEach((_, i) => {
+    const d = document.getElementById('dot-' + i);
+    if (!d) return;
+    d.className = 'fc-dot' + (i === fcIdx ? ' active' : i < fcIdx ? ' done' : '');
+  });
+}
+
+function renderFC() {
+  const c = cards[fcIdx];
+  document.getElementById('fc-step').textContent = c.step;
+  document.getElementById('fc-word').textContent = c.word;
+  document.getElementById('fc-ipa').textContent = c.ipa;
+  document.getElementById('fc-trans').textContent = c.trans;
+  document.getElementById('fc-ex').textContent = c.ex;
+  document.getElementById('fc-ex-pt').textContent = c.pt;
+  document.getElementById('fc-why').textContent = 'Por que importa: ' + c.why;
+  document.getElementById('fc-counter').textContent = (fcIdx + 1) + ' de ' + cards.length;
+  fcFlipped = false;
+  stopAll();
+  document.getElementById('fc-front').classList.remove('hidden');
+  document.getElementById('fc-back').classList.remove('visible');
+}
+
+function handleCardClick(e) {
+  if (e.target.closest('.audio-btns') || e.target.closest('.abtn') || e.target.closest('.spd-btn')) return;
+  fcFlipped = !fcFlipped;
+  document.getElementById('fc-front').classList.toggle('hidden', fcFlipped);
+  document.getElementById('fc-back').classList.toggle('visible', fcFlipped);
+  if (fcIdx === cards.length - 1 && fcFlipped) { doneFC = true; updateProg(); }
+}
+
+function fcNav(d) {
+  fcIdx = (fcIdx + d + cards.length) % cards.length;
+  renderFC(); updateDots();
+}
+
+// ─── QUIZ ─────────────────────────────────────────────────
+function renderQ() {
+  const q = quizData[qIdx];
+  document.getElementById('q-ctx').textContent = q.ctx;
+  document.getElementById('q-text').textContent = q.q;
+  document.getElementById('q-prog').textContent = 'Questão ' + (qIdx + 1) + ' de ' + quizData.length;
+  document.getElementById('q-fb').className = 'quiz-feedback';
+  document.getElementById('q-fb').textContent = '';
+  document.getElementById('btn-next').style.display = 'none';
+  qAnswered = false;
+  const opts = document.getElementById('q-opts');
+  opts.innerHTML = '';
+  q.opts.forEach((o, i) => {
+    const b = document.createElement('button');
+    b.className = 'quiz-opt';
+    b.textContent = o;
+    b.onclick = () => selectQ(i);
+    opts.appendChild(b);
+  });
+}
+
+function selectQ(i) {
+  if (qAnswered) return;
+  qAnswered = true;
+  const q = quizData[qIdx];
+  const btns = document.querySelectorAll('.quiz-opt');
+  btns.forEach((b, idx) => {
+    b.disabled = true;
+    if (idx === q.correct) b.classList.add('correct');
+    else if (idx === i && i !== q.correct) b.classList.add('wrong');
+  });
+  const fb = document.getElementById('q-fb');
+  if (i === q.correct) { score++; fb.className = 'quiz-feedback ok'; }
+  else { fb.className = 'quiz-feedback no'; }
+  fb.textContent = (i === q.correct ? '✓ ' : '✗ ') + q.fb;
+  document.getElementById('btn-next').style.display = 'inline-block';
+}
+
+function nextQ() {
+  qIdx++;
+  if (qIdx >= quizData.length) {
+    document.getElementById('quiz-block').style.display = 'none';
+    const sb = document.getElementById('score-block');
+    sb.classList.add('show');
+    document.getElementById('score-num').textContent = score + '/' + quizData.length;
+    const pct = Math.round(score / quizData.length * 100);
+    document.getElementById('score-msg').textContent = pct >= 75
+      ? 'Excelente. Você está pronto para a próxima aula.'
+      : 'Revise os flashcards e tente novamente — você já sabe o conteúdo.';
+    doneQuiz = true; updateProg();
+  } else { renderQ(); }
+}
+
+function restartQuiz() {
+  qIdx = 0; score = 0; qAnswered = false;
+  document.getElementById('quiz-block').style.display = 'block';
+  document.getElementById('score-block').classList.remove('show');
+  renderQ();
+}
+
+function goNext() {
+  alert('Configure o link para a Aula 2 aqui.');
+}
+
+// ─── INIT ─────────────────────────────────────────────────
+if (window.speechSynthesis) {
+  if (window.speechSynthesis.onvoiceschanged !== undefined) {
+    window.speechSynthesis.onvoiceschanged = loadVoices;
+  }
+  loadVoices();
+}
+
+buildDots();
+renderFC();
+renderQ();
+</script>
+</body>
+</html>
