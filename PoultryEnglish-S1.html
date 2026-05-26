@@ -656,6 +656,146 @@ body {
   .next-btn { width: 100%; justify-content: center; }
   .video-card { flex-wrap: wrap; }
 }
+
+/* FILL IN THE BLANK */
+.fitb-block { display: flex; flex-direction: column; gap: 14px; }
+.fitb-item { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.5rem; }
+.fitb-sentence { font-size: 14px; color: var(--text-primary); line-height: 1.8; margin-bottom: 10px; }
+.fitb-input-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.fitb-input { padding: 7px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--bg); font-size: 14px; color: var(--text-primary); font-family: 'DM Sans', sans-serif; outline: none; transition: border-color 0.15s; min-width: 160px; }
+.fitb-input:focus { border-color: var(--green-main); background: var(--white); }
+.fitb-input.correct { border-color: var(--green-main); background: var(--green-light); color: #085041; }
+.fitb-input.wrong { border-color: #fca5a5; background: #fef2f2; color: #7f1d1d; }
+.fitb-input:disabled { cursor: default; }
+.fitb-btn { padding: 7px 16px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: transparent; font-size: 13px; color: var(--text-secondary); cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.15s; white-space: nowrap; }
+.fitb-btn:hover { background: var(--green-light); border-color: var(--green-main); color: var(--green-main); }
+.fitb-feedback { font-size: 12px; margin-top: 8px; line-height: 1.5; display: none; padding: 8px 12px; border-radius: var(--radius-sm); }
+.fitb-feedback.ok { background: var(--green-light); color: #085041; display: block; }
+.fitb-feedback.no { background: #fef2f2; color: #7f1d1d; display: block; }
+.fitb-score { font-size: 13px; color: var(--text-muted); margin-top: 1rem; text-align: right; }
+
+/* MATCH THE TERM */
+.match-intro { font-size: 13px; color: var(--text-muted); margin-bottom: 1rem; }
+.match-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.match-col { display: flex; flex-direction: column; gap: 8px; }
+.match-col-label { font-size: 11px; font-weight: 500; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+.match-item { padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--white); font-size: 13px; color: var(--text-primary); cursor: pointer; transition: all 0.15s; line-height: 1.4; min-height: 52px; display: flex; align-items: center; }
+.match-item:hover { border-color: var(--green-main); background: var(--green-pale); }
+.match-item.selected { border-color: var(--green-main); background: var(--green-light); color: #085041; font-weight: 500; }
+.match-item.matched { border-color: var(--green-main); background: var(--green-light); color: #085041; cursor: default; opacity: 0.7; }
+.match-item.wrong-match { border-color: #fca5a5; background: #fef2f2; color: #7f1d1d; }
+.match-result { font-size: 13px; color: var(--text-muted); text-align: center; margin-top: 8px; display: none; }
+.match-result.show { display: block; }
+.match-reset { display: block; margin: 10px auto 0; padding: 7px 20px; border-radius: 99px; border: 1px solid var(--border); background: transparent; font-size: 13px; color: var(--text-secondary); cursor: pointer; font-family: 'DM Sans', sans-serif; }
+.match-reset:hover { background: var(--green-light); }
+
+@media (max-width: 600px) { .match-grid { grid-template-columns: 1fr; } }
+
+
+/* TABS DESAFIO */
+.tab-input { display:none; }
+.tab-labels { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:1.25rem; }
+.tab-label {
+  padding:8px 18px; border-radius:99px; border:1px solid var(--border);
+  background:var(--white); font-size:13px; font-weight:500; color:var(--text-secondary);
+  cursor:pointer; font-family:'DM Sans',sans-serif; transition:all .15s;
+  display:flex; align-items:center; gap:6px;
+}
+.tab-label:hover { background:var(--green-pale); border-color:var(--green-main); }
+#tab-broiler:checked ~ .tab-labels .tab-label[for="tab-broiler"],
+#tab-layer:checked ~ .tab-labels .tab-label[for="tab-layer"],
+#tab-hatchery:checked ~ .tab-labels .tab-label[for="tab-hatchery"],
+#tab-breeder:checked ~ .tab-labels .tab-label[for="tab-breeder"] {
+  background:var(--green-light); border-color:var(--green-main); color:#085041;
+}
+.tab-content { display:none; }
+#tab-broiler:checked ~ .tab-panels #panel-broiler,
+#tab-layer:checked ~ .tab-panels #panel-layer,
+#tab-hatchery:checked ~ .tab-panels #panel-hatchery,
+#tab-breeder:checked ~ .tab-panels #panel-breeder { display:block; }
+
+/* CAMPOS DO ROTEIRO */
+.script-field {
+  display:inline-block; border:none; border-bottom:2px solid var(--green-main);
+  background:transparent; font-family:'DM Sans',sans-serif; font-size:14px;
+  color:var(--text-primary); outline:none; padding:0 4px; min-width:90px;
+  transition:border-color .15s;
+}
+.script-field:focus { border-bottom-color:var(--gold); }
+.script-field::placeholder { color:var(--text-muted); font-size:12px; }
+.script-sentence {
+  font-size:14px; color:var(--text-secondary); line-height:2.4;
+  padding:1rem 1.25rem; background:var(--white);
+  border:1px solid var(--border); border-radius:var(--radius-sm);
+  margin-bottom:10px;
+}
+.script-section-label {
+  font-size:11px; font-weight:600; color:var(--green-main);
+  text-transform:uppercase; letter-spacing:.07em; margin:1rem 0 6px;
+}
+.script-note {
+  font-size:12px; color:var(--text-muted); font-style:italic;
+  padding:6px 12px; background:var(--green-pale); border-radius:var(--radius-sm);
+  margin-bottom:8px; line-height:1.6;
+}
+.copy-script-btn {
+  display:inline-flex; align-items:center; gap:6px;
+  padding:8px 18px; border-radius:99px; border:1px solid var(--green-main);
+  background:var(--green-light); color:#085041; font-size:13px; font-weight:500;
+  cursor:pointer; font-family:'DM Sans',sans-serif; transition:all .15s; margin-top:10px;
+}
+.copy-script-btn:hover { background:var(--green-main); color:white; }
+
+/* SOCIAL */
+.social-blk {
+  background:linear-gradient(135deg,#0d2b1f,#1a4a30);
+  border-radius:var(--radius); padding:1.5rem; margin-top:1.5rem;
+}
+.social-blk-title {
+  font-family:'Syne',sans-serif; font-size:15px; font-weight:700;
+  color:var(--white); margin-bottom:6px;
+}
+.social-blk-sub {
+  font-size:13px; color:rgba(255,255,255,0.5); line-height:1.6; margin-bottom:1rem;
+}
+.social-btns { display:flex; gap:8px; flex-wrap:wrap; }
+.soc-btn {
+  padding:8px 16px; border-radius:99px; border:1px solid rgba(255,255,255,0.2);
+  background:transparent; font-size:12px; color:rgba(255,255,255,0.7);
+  cursor:pointer; font-family:'DM Sans',sans-serif; transition:all .15s;
+  display:inline-flex; align-items:center; gap:6px; text-decoration:none;
+}
+.soc-btn:hover { background:rgba(255,255,255,0.1); }
+.soc-btn.primary { background:var(--green-main); border-color:var(--green-main); color:white; }
+.soc-btn.primary:hover { background:var(--green-mid); }
+
+
+/* FLASHCARD TABS POR PERFIL */
+.fc-tab-input { display:none; }
+.fc-tab-labels {
+  display:flex; gap:6px; flex-wrap:wrap; margin-bottom:1.25rem;
+}
+.fc-tab-label {
+  padding:6px 16px; border-radius:99px; border:1px solid var(--border);
+  background:var(--white); font-size:12px; font-weight:500; color:var(--text-secondary);
+  cursor:pointer; font-family:'DM Sans',sans-serif; transition:all .15s;
+  display:inline-flex; align-items:center; gap:5px;
+}
+.fc-tab-label:hover { background:var(--green-pale); border-color:var(--green-main); }
+#fct-all:checked ~ .fc-tab-labels .fc-tab-label[for="fct-all"],
+#fct-broiler:checked ~ .fc-tab-labels .fc-tab-label[for="fct-broiler"],
+#fct-layer:checked ~ .fc-tab-labels .fc-tab-label[for="fct-layer"],
+#fct-hatchery:checked ~ .fc-tab-labels .fc-tab-label[for="fct-hatchery"],
+#fct-breeder:checked ~ .fc-tab-labels .fc-tab-label[for="fct-breeder"] {
+  background:var(--green-light); border-color:var(--green-main); color:#085041;
+}
+.fc-tab-panel { display:none; }
+#fct-all:checked ~ .fc-tab-panels #fcp-all,
+#fct-broiler:checked ~ .fc-tab-panels #fcp-broiler,
+#fct-layer:checked ~ .fc-tab-panels #fcp-layer,
+#fct-hatchery:checked ~ .fc-tab-panels #fcp-hatchery,
+#fct-breeder:checked ~ .fc-tab-panels #fcp-breeder { display:block; }
+
 </style>
 </head>
 <body>
@@ -729,21 +869,21 @@ body {
     <div class="section-label">L — Listen · Vídeos da aula</div>
     <div class="video-blocks">
       <div class="video-card">
-        <div class="video-play">
+        <div class="video-play" onclick="window.open('https://youtu.be/vEDq-orSC44','_blank')" style="cursor:pointer;">
           <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
         </div>
         <div class="video-info">
-          <div class="video-title">Bloco 1 — As fases do flock cycle em inglês</div>
+          <div class="video-title"><a href="https://youtu.be/vEDq-orSC44" target="_blank" style="color:inherit;text-decoration:none;">Bloco 1 — As fases do flock cycle em inglês</a></div>
           <div class="video-desc">Placement, brooding, grow-out, depletion — cada fase com o nome e o contexto certo</div>
         </div>
         <div class="video-dur">5 min</div>
       </div>
       <div class="video-card">
-        <div class="video-play">
+        <div class="video-play" onclick="window.open('https://youtu.be/dQj7rQXvZfE','_blank')" style="cursor:pointer;">
           <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
         </div>
         <div class="video-info">
-          <div class="video-title">Bloco 2 — Como falar sobre seu lote agora</div>
+          <div class="video-title"><a href="https://youtu.be/dQj7rQXvZfE" target="_blank" style="color:inherit;text-decoration:none;">Bloco 2 — Como falar sobre seu lote agora</a></div>
           <div class="video-desc">Frases prontas para descrever número de aves, fase atual e dias de vida do lote</div>
         </div>
         <div class="video-dur">5 min</div>
@@ -756,65 +896,221 @@ body {
   <!-- O — OWN (FLASHCARDS) -->
   <section class="section">
     <div class="section-label">O — Own · Flashcards com áudio</div>
-    <p style="font-size:13px;color:var(--text-muted);margin-bottom:1rem;">Ouça o termo antes de virar o card. Depois ouça a frase completa em contexto.</p>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:1rem;">Selecione sua área de atuação. Ouça cada termo antes de virar o card — depois use esses termos para preencher o desafio do dia.</p>
 
-    <!-- Seletor de voz -->
+    <input type="radio" class="fc-tab-input" name="fc-tab" id="fct-all" checked>
+    <input type="radio" class="fc-tab-input" name="fc-tab" id="fct-broiler">
+    <input type="radio" class="fc-tab-input" name="fc-tab" id="fct-layer">
+    <input type="radio" class="fc-tab-input" name="fc-tab" id="fct-hatchery">
+    <input type="radio" class="fc-tab-input" name="fc-tab" id="fct-breeder">
+
+    <div class="fc-tab-labels">
+      <label class="fc-tab-label" for="fct-all">🌐 Todos</label>
+      <label class="fc-tab-label" for="fct-broiler">🐔 Frango de corte</label>
+      <label class="fc-tab-label" for="fct-layer">🥚 Poedeiras</label>
+      <label class="fc-tab-label" for="fct-hatchery">🐣 Incubatório</label>
+      <label class="fc-tab-label" for="fct-breeder">🐓 Matrizes</label>
+    </div>
+
+    <!-- Seletor de voz (compartilhado) -->
     <div class="voice-row">
       <span class="voice-label">Voz:</span>
       <span class="voices-loading" id="v-loading">Carregando vozes do seu navegador...</span>
       <div id="v-btns" style="display:flex;gap:6px;flex-wrap:wrap;"></div>
     </div>
 
-    <!-- Dots de progresso -->
-    <div class="fc-dots" id="fc-dots"></div>
+    <div class="fc-tab-panels" id="fc-tab-panels">
 
-    <!-- Nav -->
-    <div class="fc-nav-row">
-      <span class="fc-counter" id="fc-counter">1 de 9</span>
-      <div class="fc-arrows">
-        <button class="fc-arrow" onclick="fcNav(-1)" aria-label="Card anterior">
-          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-        </button>
-        <button class="fc-arrow" onclick="fcNav(1)" aria-label="Próximo card">
-          <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-        </button>
+      <!-- ABA: TODOS (termos comuns) -->
+      <div class="fc-tab-panel" id="fcp-all">
+        <div class="fc-dots" id="fc-dots-all"></div>
+        <div class="fc-nav-row">
+          <span class="fc-counter" id="fc-counter-all">1 de 9</span>
+          <div class="fc-arrows">
+            <button class="fc-arrow" onclick="fcNav('all',-1)"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+            <button class="fc-arrow" onclick="fcNav('all',1)"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+          </div>
+        </div>
+        <div class="flashcard" id="fc-all" onclick="handleCardClick(event,'all')">
+          <div class="fc-front" id="fc-front-all">
+            <div class="fc-side-label">Toque para ver a tradução</div>
+            <div class="fc-step-label" id="fc-step-all"></div>
+            <div class="fc-word" id="fc-word-all"></div>
+            <div class="fc-ipa" id="fc-ipa-all"></div>
+            <div class="audio-btns" onclick="event.stopPropagation()">
+              <button class="abtn" id="abtn-word-all" onclick="sayWord('all')"><svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>Ouvir termo</button>
+              <button class="spd-btn active" id="spd1-all" onclick="setSpd('all',1,event)">1×</button>
+              <button class="spd-btn" id="spd07-all" onclick="setSpd('all',0.7,event)">0.7×</button>
+            </div>
+            <div class="fc-hint">Toque no card para ver a tradução e o uso real</div>
+          </div>
+          <div class="fc-back" id="fc-back-all">
+            <div class="fc-side-label">Tradução e uso real</div>
+            <div class="fc-translation" id="fc-trans-all"></div>
+            <div class="audio-btns" onclick="event.stopPropagation()">
+              <button class="abtn" id="abtn-ex-all" onclick="sayEx('all')"><svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>Ouvir frase</button>
+              <button class="spd-btn active" id="exspd1-all" onclick="setExSpd('all',1,event)">1×</button>
+              <button class="spd-btn" id="exspd07-all" onclick="setExSpd('all',0.7,event)">0.7×</button>
+            </div>
+            <div class="fc-example" id="fc-ex-all"></div>
+            <div class="fc-example-pt" id="fc-ex-pt-all"></div>
+            <div class="fc-why" id="fc-why-all"></div>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <!-- Card -->
-    <div class="flashcard" id="flashcard" onclick="handleCardClick(event)">
-      <!-- FRENTE -->
-      <div class="fc-front" id="fc-front">
-        <div class="fc-side-label">Toque para ver a tradução</div>
-        <div class="fc-step-label" id="fc-step"></div>
-        <div class="fc-word" id="fc-word"></div>
-        <div class="fc-ipa" id="fc-ipa"></div>
-        <div class="audio-btns" onclick="event.stopPropagation()">
-          <button class="abtn" id="abtn-word" onclick="sayWord()">
-            <svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
-            Ouvir termo
-          </button>
-          <button class="spd-btn active" id="spd1" onclick="setSpd(1,event)">1×</button>
-          <button class="spd-btn" id="spd07" onclick="setSpd(0.7,event)">0.7×</button>
+      <!-- ABA: BROILER -->
+      <div class="fc-tab-panel" id="fcp-broiler">
+        <div class="fc-dots" id="fc-dots-broiler"></div>
+        <div class="fc-nav-row">
+          <span class="fc-counter" id="fc-counter-broiler">1 de 8</span>
+          <div class="fc-arrows">
+            <button class="fc-arrow" onclick="fcNav('broiler',-1)"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+            <button class="fc-arrow" onclick="fcNav('broiler',1)"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+          </div>
         </div>
-        <div class="fc-hint">Toque no card para ver a tradução e o uso real</div>
-      </div>
-      <!-- VERSO -->
-      <div class="fc-back" id="fc-back">
-        <div class="fc-side-label">Tradução e uso real</div>
-        <div class="fc-translation" id="fc-trans"></div>
-        <div class="audio-btns" onclick="event.stopPropagation()">
-          <button class="abtn" id="abtn-ex" onclick="sayEx()">
-            <svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
-            Ouvir frase
-          </button>
-          <button class="spd-btn active" id="exspd1" onclick="setExSpd(1,event)">1×</button>
-          <button class="spd-btn" id="exspd07" onclick="setExSpd(0.7,event)">0.7×</button>
+        <div class="flashcard" id="fc-broiler" onclick="handleCardClick(event,'broiler')">
+          <div class="fc-front" id="fc-front-broiler">
+            <div class="fc-side-label">Toque para ver a tradução</div>
+            <div class="fc-step-label" id="fc-step-broiler"></div>
+            <div class="fc-word" id="fc-word-broiler"></div>
+            <div class="fc-ipa" id="fc-ipa-broiler"></div>
+            <div class="audio-btns" onclick="event.stopPropagation()">
+              <button class="abtn" id="abtn-word-broiler" onclick="sayWord('broiler')"><svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>Ouvir termo</button>
+              <button class="spd-btn active" id="spd1-broiler" onclick="setSpd('broiler',1,event)">1×</button>
+              <button class="spd-btn" id="spd07-broiler" onclick="setSpd('broiler',0.7,event)">0.7×</button>
+            </div>
+            <div class="fc-hint">Toque no card para ver a tradução e o uso real</div>
+          </div>
+          <div class="fc-back" id="fc-back-broiler">
+            <div class="fc-side-label">Tradução e uso real</div>
+            <div class="fc-translation" id="fc-trans-broiler"></div>
+            <div class="audio-btns" onclick="event.stopPropagation()">
+              <button class="abtn" id="abtn-ex-broiler" onclick="sayEx('broiler')"><svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>Ouvir frase</button>
+              <button class="spd-btn active" id="exspd1-broiler" onclick="setExSpd('broiler',1,event)">1×</button>
+              <button class="spd-btn" id="exspd07-broiler" onclick="setExSpd('broiler',0.7,event)">0.7×</button>
+            </div>
+            <div class="fc-example" id="fc-ex-broiler"></div>
+            <div class="fc-example-pt" id="fc-ex-pt-broiler"></div>
+            <div class="fc-why" id="fc-why-broiler"></div>
+          </div>
         </div>
-        <div class="fc-example" id="fc-ex"></div>
-        <div class="fc-example-pt" id="fc-ex-pt"></div>
-        <div class="fc-why" id="fc-why"></div>
       </div>
+
+      <!-- ABA: LAYER -->
+      <div class="fc-tab-panel" id="fcp-layer">
+        <div class="fc-dots" id="fc-dots-layer"></div>
+        <div class="fc-nav-row">
+          <span class="fc-counter" id="fc-counter-layer">1 de 8</span>
+          <div class="fc-arrows">
+            <button class="fc-arrow" onclick="fcNav('layer',-1)"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+            <button class="fc-arrow" onclick="fcNav('layer',1)"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+          </div>
+        </div>
+        <div class="flashcard" id="fc-layer" onclick="handleCardClick(event,'layer')">
+          <div class="fc-front" id="fc-front-layer">
+            <div class="fc-side-label">Toque para ver a tradução</div>
+            <div class="fc-step-label" id="fc-step-layer"></div>
+            <div class="fc-word" id="fc-word-layer"></div>
+            <div class="fc-ipa" id="fc-ipa-layer"></div>
+            <div class="audio-btns" onclick="event.stopPropagation()">
+              <button class="abtn" id="abtn-word-layer" onclick="sayWord('layer')"><svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>Ouvir termo</button>
+              <button class="spd-btn active" id="spd1-layer" onclick="setSpd('layer',1,event)">1×</button>
+              <button class="spd-btn" id="spd07-layer" onclick="setSpd('layer',0.7,event)">0.7×</button>
+            </div>
+            <div class="fc-hint">Toque no card para ver a tradução e o uso real</div>
+          </div>
+          <div class="fc-back" id="fc-back-layer">
+            <div class="fc-side-label">Tradução e uso real</div>
+            <div class="fc-translation" id="fc-trans-layer"></div>
+            <div class="audio-btns" onclick="event.stopPropagation()">
+              <button class="abtn" id="abtn-ex-layer" onclick="sayEx('layer')"><svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>Ouvir frase</button>
+              <button class="spd-btn active" id="exspd1-layer" onclick="setExSpd('layer',1,event)">1×</button>
+              <button class="spd-btn" id="exspd07-layer" onclick="setExSpd('layer',0.7,event)">0.7×</button>
+            </div>
+            <div class="fc-example" id="fc-ex-layer"></div>
+            <div class="fc-example-pt" id="fc-ex-pt-layer"></div>
+            <div class="fc-why" id="fc-why-layer"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ABA: HATCHERY -->
+      <div class="fc-tab-panel" id="fcp-hatchery">
+        <div class="fc-dots" id="fc-dots-hatchery"></div>
+        <div class="fc-nav-row">
+          <span class="fc-counter" id="fc-counter-hatchery">1 de 8</span>
+          <div class="fc-arrows">
+            <button class="fc-arrow" onclick="fcNav('hatchery',-1)"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+            <button class="fc-arrow" onclick="fcNav('hatchery',1)"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+          </div>
+        </div>
+        <div class="flashcard" id="fc-hatchery" onclick="handleCardClick(event,'hatchery')">
+          <div class="fc-front" id="fc-front-hatchery">
+            <div class="fc-side-label">Toque para ver a tradução</div>
+            <div class="fc-step-label" id="fc-step-hatchery"></div>
+            <div class="fc-word" id="fc-word-hatchery"></div>
+            <div class="fc-ipa" id="fc-ipa-hatchery"></div>
+            <div class="audio-btns" onclick="event.stopPropagation()">
+              <button class="abtn" id="abtn-word-hatchery" onclick="sayWord('hatchery')"><svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>Ouvir termo</button>
+              <button class="spd-btn active" id="spd1-hatchery" onclick="setSpd('hatchery',1,event)">1×</button>
+              <button class="spd-btn" id="spd07-hatchery" onclick="setSpd('hatchery',0.7,event)">0.7×</button>
+            </div>
+            <div class="fc-hint">Toque no card para ver a tradução e o uso real</div>
+          </div>
+          <div class="fc-back" id="fc-back-hatchery">
+            <div class="fc-side-label">Tradução e uso real</div>
+            <div class="fc-translation" id="fc-trans-hatchery"></div>
+            <div class="audio-btns" onclick="event.stopPropagation()">
+              <button class="abtn" id="abtn-ex-hatchery" onclick="sayEx('hatchery')"><svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>Ouvir frase</button>
+              <button class="spd-btn active" id="exspd1-hatchery" onclick="setExSpd('hatchery',1,event)">1×</button>
+              <button class="spd-btn" id="exspd07-hatchery" onclick="setExSpd('hatchery',0.7,event)">0.7×</button>
+            </div>
+            <div class="fc-example" id="fc-ex-hatchery"></div>
+            <div class="fc-example-pt" id="fc-ex-pt-hatchery"></div>
+            <div class="fc-why" id="fc-why-hatchery"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ABA: BREEDER -->
+      <div class="fc-tab-panel" id="fcp-breeder">
+        <div class="fc-dots" id="fc-dots-breeder"></div>
+        <div class="fc-nav-row">
+          <span class="fc-counter" id="fc-counter-breeder">1 de 8</span>
+          <div class="fc-arrows">
+            <button class="fc-arrow" onclick="fcNav('breeder',-1)"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+            <button class="fc-arrow" onclick="fcNav('breeder',1)"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+          </div>
+        </div>
+        <div class="flashcard" id="fc-breeder" onclick="handleCardClick(event,'breeder')">
+          <div class="fc-front" id="fc-front-breeder">
+            <div class="fc-side-label">Toque para ver a tradução</div>
+            <div class="fc-step-label" id="fc-step-breeder"></div>
+            <div class="fc-word" id="fc-word-breeder"></div>
+            <div class="fc-ipa" id="fc-ipa-breeder"></div>
+            <div class="audio-btns" onclick="event.stopPropagation()">
+              <button class="abtn" id="abtn-word-breeder" onclick="sayWord('breeder')"><svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>Ouvir termo</button>
+              <button class="spd-btn active" id="spd1-breeder" onclick="setSpd('breeder',1,event)">1×</button>
+              <button class="spd-btn" id="spd07-breeder" onclick="setSpd('breeder',0.7,event)">0.7×</button>
+            </div>
+            <div class="fc-hint">Toque no card para ver a tradução e o uso real</div>
+          </div>
+          <div class="fc-back" id="fc-back-breeder">
+            <div class="fc-side-label">Tradução e uso real</div>
+            <div class="fc-translation" id="fc-trans-breeder"></div>
+            <div class="audio-btns" onclick="event.stopPropagation()">
+              <button class="abtn" id="abtn-ex-breeder" onclick="sayEx('breeder')"><svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>Ouvir frase</button>
+              <button class="spd-btn active" id="exspd1-breeder" onclick="setExSpd('breeder',1,event)">1×</button>
+              <button class="spd-btn" id="exspd07-breeder" onclick="setExSpd('breeder',0.7,event)">0.7×</button>
+            </div>
+            <div class="fc-example" id="fc-ex-breeder"></div>
+            <div class="fc-example-pt" id="fc-ex-pt-breeder"></div>
+            <div class="fc-why" id="fc-why-breeder"></div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -847,37 +1143,183 @@ body {
 
   <div class="divider"></div>
 
+  <!-- FILL IN THE BLANK -->
+  <section class="section">
+    <div class="section-label">C — Check · Complete a frase</div>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:1rem;">Digite o termo correto em inglês para completar cada frase. Sem dicas — você já sabe.</p>
+    <div class="fitb-block" id="fitb-block"></div>
+    <div class="fitb-score" id="fitb-score"></div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- MATCH THE TERM -->
+  <section class="section">
+    <div class="section-label">C — Check · Conecte o termo</div>
+    <p class="match-intro">Clique em um termo à esquerda e depois na definição correspondente à direita. Atenção — alguns são parecidos.</p>
+    <div class="match-grid">
+      <div class="match-col">
+        <div class="match-col-label">Termo em inglês</div>
+        <div id="match-terms"></div>
+      </div>
+      <div class="match-col">
+        <div class="match-col-label">Significado</div>
+        <div id="match-defs"></div>
+      </div>
+    </div>
+    <div class="match-result" id="match-result"></div>
+    <button class="match-reset" onclick="resetMatch()">Reiniciar</button>
+  </section>
+
+  <div class="divider"></div>
+
   <!-- K — KEEP (DESAFIO) -->
   <section class="section">
     <div class="section-label">K — Keep · Use hoje</div>
-    <div class="apply-block">
-      <div class="apply-header">
-        <div class="apply-icon">
-          <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:1rem;">Selecione sua área de atuação e preencha as lacunas com os dados reais do seu trabalho. Depois copie o texto e grave em voz alta.</p>
+
+    <input type="radio" class="tab-input" name="challenge-tab" id="tab-broiler" checked>
+    <input type="radio" class="tab-input" name="challenge-tab" id="tab-layer">
+    <input type="radio" class="tab-input" name="challenge-tab" id="tab-hatchery">
+    <input type="radio" class="tab-input" name="challenge-tab" id="tab-breeder">
+
+    <div class="tab-labels">
+      <label class="tab-label" for="tab-broiler">🐔 Frango de corte</label>
+      <label class="tab-label" for="tab-layer">🥚 Poedeiras</label>
+      <label class="tab-label" for="tab-hatchery">🐣 Incubatório</label>
+      <label class="tab-label" for="tab-breeder">🐓 Matrizes</label>
+    </div>
+
+    <div class="tab-panels">
+
+      <!-- BROILER -->
+      <div id="panel-broiler" class="tab-content">
+        <div class="script-section-label">Apresentação</div>
+        <div class="script-sentence">
+          "My name is <input class="script-field" id="br-name" placeholder="seu nome"> and I work as a <input class="script-field" id="br-title" placeholder="ex: Farm Manager" style="min-width:140px">.
         </div>
-        <div class="apply-title">Desafio de hoje — faça agora, leva 5 minutos</div>
+        <div class="script-section-label">Lote atual</div>
+        <div class="script-note">Brooding phase = pinteiro (dias 1–14) · Grow-out period = crescimento · Near flock depletion = próximo ao abate</div>
+        <div class="script-sentence">
+          We are currently in the <input class="script-field" id="br-phase" placeholder="ex: grow-out period" style="min-width:160px">. The birds are <input class="script-field" id="br-age" placeholder="ex: 22 days old">, with <input class="script-field" id="br-birds" placeholder="ex: 48,000 birds"> placed in <input class="script-field" id="br-houses" placeholder="ex: 4 houses">.
+        </div>
+        <div class="script-section-label">Estrutura e equipamentos</div>
+        <div class="script-note">Stocking density = aves/m² · Pan feeders = comedouros tipo prato · Nipple drinkers = bebedouros nipple · Tunnel ventilation = ventilação em túnel</div>
+        <div class="script-sentence">
+          Our stocking density is <input class="script-field" id="br-density" placeholder="ex: 13 birds/m²">. We use <input class="script-field" id="br-feeders" placeholder="ex: pan feeders" style="min-width:120px"> and <input class="script-field" id="br-drinkers" placeholder="ex: nipple drinkers" style="min-width:130px">, with <input class="script-field" id="br-vent" placeholder="ex: tunnel ventilation" style="min-width:150px">.
+        </div>
+        <div class="script-section-label">Metas e certificações</div>
+        <div class="script-note">Slaughter age = idade ao abate · Live weight = peso vivo · Litter = cama aviária (aprofundamos na Aula 3)</div>
+        <div class="script-sentence">
+          Our target slaughter age is <input class="script-field" id="br-slaughter" placeholder="ex: 42 days"> at <input class="script-field" id="br-weight" placeholder="ex: 2.8 kg"> kg live weight. <input class="script-field" id="br-cert" placeholder="ex: We follow BRC standards." style="min-width:220px">"
+        </div>
+        <button class="copy-script-btn" onclick="copyScript('broiler')">
+          <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;stroke-width:2;fill:none;"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copiar meu script
+        </button>
       </div>
-      <p class="apply-sub">Escreva 3 frases sobre o seu lote atual em inglês. Use os termos da aula. Pode ser no bloco de notas, no WhatsApp, em qualquer lugar.</p>
-      <div class="apply-steps">
-        <div class="apply-step">
-          <div class="step-num">1</div>
-          <div class="step-text">Descreva a fase do seu lote: <em>"Our flock is currently in the ___ phase. The birds are ___ days old."</em></div>
+
+      <!-- LAYER -->
+      <div id="panel-layer" class="tab-content">
+        <div class="script-section-label">Apresentação</div>
+        <div class="script-sentence">
+          "My name is <input class="script-field" id="ly-name" placeholder="seu nome"> and I work as a <input class="script-field" id="ly-title" placeholder="ex: Layer Farm Manager" style="min-width:160px">.
         </div>
-        <div class="apply-step">
-          <div class="step-num">2</div>
-          <div class="step-text">Informe o número de aves: <em>"We have ___ birds placed in house number ___."</em></div>
+        <div class="script-section-label">Plantel atual</div>
+        <div class="script-note">Laying phase = postura ativa · Rearing phase = cria e recria · Hen = galinha poedeira · Cage-free = livre de gaiola · Conventional cage = gaiola convencional</div>
+        <div class="script-sentence">
+          We currently have <input class="script-field" id="ly-hens" placeholder="ex: 120,000 hens"> in the <input class="script-field" id="ly-phase" placeholder="ex: laying phase" style="min-width:130px">, <input class="script-field" id="ly-age" placeholder="ex: 34 weeks of age" style="min-width:150px">, housed in a <input class="script-field" id="ly-housing" placeholder="ex: cage-free barn system" style="min-width:170px">.
         </div>
-        <div class="apply-step">
-          <div class="step-num">3</div>
-          <div class="step-text">Mencione o objetivo do lote: <em>"The target slaughter weight is ___ kg at ___ days."</em></div>
+        <div class="script-section-label">Desempenho</div>
+        <div class="script-note">Hen-day egg production = % de galinhas que botaram no dia (KPI principal de postura — aprofundamos na Semana 3)</div>
+        <div class="script-sentence">
+          Our current hen-day egg production is <input class="script-field" id="ly-prod" placeholder="ex: 94%">. We collect eggs <input class="script-field" id="ly-collect" placeholder="ex: 3 times per day" style="min-width:150px">.
         </div>
-        <div class="apply-step">
-          <div class="step-num">4</div>
-          <div class="step-text">Se não tiver lote ativo, use os dados do último: <em>"In our last flock cycle, we placed ___ birds and achieved a FCR of ___."</em></div>
+        <div class="script-section-label">Ciclo e certificações</div>
+        <div class="script-note">Forced molt = muda forçada · Depopulation = encerramento do plantel (você aprendeu esses termos na Aula 1)</div>
+        <div class="script-sentence">
+          Our production cycle runs approximately <input class="script-field" id="ly-cycle" placeholder="ex: 72 weeks"> before <input class="script-field" id="ly-molt" placeholder="ex: forced molt" style="min-width:120px">. <input class="script-field" id="ly-cert" placeholder="ex: We follow Global G.A.P. standards." style="min-width:250px">"
         </div>
+        <button class="copy-script-btn" onclick="copyScript('layer')">
+          <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;stroke-width:2;fill:none;"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copiar meu script
+        </button>
+      </div>
+
+      <!-- HATCHERY -->
+      <div id="panel-hatchery" class="tab-content">
+        <div class="script-section-label">Apresentação</div>
+        <div class="script-sentence">
+          "My name is <input class="script-field" id="ht-name" placeholder="seu nome"> and I work as a <input class="script-field" id="ht-title" placeholder="ex: Hatchery Manager" style="min-width:160px">.
+        </div>
+        <div class="script-section-label">Capacidade e operação</div>
+        <div class="script-note">Eggs per set = ovos por carga · Hatchability = taxa de eclosão (KPI principal do incubatório — aprofundamos na Semana 3) · Fertile eggs = ovos férteis</div>
+        <div class="script-sentence">
+          Our hatchery has a capacity of <input class="script-field" id="ht-cap" placeholder="ex: 500,000 eggs per set" style="min-width:190px">, producing approximately <input class="script-field" id="ht-out" placeholder="ex: 120,000 chicks per week" style="min-width:200px">.
+        </div>
+        <div class="script-section-label">Desempenho e genética</div>
+        <div class="script-note">Hatchability of fertile eggs set = % de ovos férteis que nasceram · Breeder farm = granja de matrizes · Day-old chick = pintinho de um dia (Aula 1)</div>
+        <div class="script-sentence">
+          Our average hatchability is <input class="script-field" id="ht-hatch" placeholder="ex: 87% of fertile eggs set" style="min-width:210px">. We work with <input class="script-field" id="ht-gen" placeholder="ex: Ross 308" style="min-width:100px"> genetics. Eggs are sourced from <input class="script-field" id="ht-src" placeholder="ex: our own breeder farms" style="min-width:200px">.
+        </div>
+        <div class="script-section-label">Vacinação e biosseguridade</div>
+        <div class="script-note">In-ovo vaccination = vacinação dentro do ovo · Spray vaccination = nebulização · SPAFAS = padrão internacional de biosseguridade para incubatórios (aprofundamos na Semana 2)</div>
+        <div class="script-sentence">
+          At hatch, chicks receive <input class="script-field" id="ht-vacc" placeholder="ex: in-ovo vaccination" style="min-width:180px">. Day-old chicks are delivered to <input class="script-field" id="ht-dest" placeholder="ex: integrated broiler farms" style="min-width:200px">. <input class="script-field" id="ht-cert" placeholder="ex: We follow SPAFAS biosecurity standards." style="min-width:270px">"
+        </div>
+        <button class="copy-script-btn" onclick="copyScript('hatchery')">
+          <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;stroke-width:2;fill:none;"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copiar meu script
+        </button>
+      </div>
+
+      <!-- BREEDER -->
+      <div id="panel-breeder" class="tab-content">
+        <div class="script-section-label">Apresentação</div>
+        <div class="script-sentence">
+          "My name is <input class="script-field" id="bd-name" placeholder="seu nome"> and I work as a <input class="script-field" id="bd-title" placeholder="ex: Breeder Farm Manager" style="min-width:190px">.
+        </div>
+        <div class="script-section-label">Plantel e fase</div>
+        <div class="script-note">PS flock = plantel de matrizes (Parent Stock) · Peak production = pico de postura · Pre-peak / Post-peak = antes/depois do pico · Rooster = galo</div>
+        <div class="script-sentence">
+          We work with <input class="script-field" id="bd-gen" placeholder="ex: Ross 308 PS" style="min-width:120px"> genetics. The flock is <input class="script-field" id="bd-age" placeholder="ex: 38 weeks of age" style="min-width:160px">, in the <input class="script-field" id="bd-phase" placeholder="ex: peak production phase" style="min-width:190px">. We have <input class="script-field" id="bd-hens" placeholder="ex: 12,000 hens"> and <input class="script-field" id="bd-roosters" placeholder="ex: 1,200 roosters">.
+        </div>
+        <div class="script-section-label">Desempenho e sistema</div>
+        <div class="script-note">Hatching egg production rate = % de galinhas que produziu ovos férteis no dia (KPI principal de matrizes — aprofundamos na Semana 3) · Natural mating = acasalamento natural · Nest boxes = ninhos</div>
+        <div class="script-sentence">
+          Our current hatching egg production rate is <input class="script-field" id="bd-rate" placeholder="ex: 82%">. We use <input class="script-field" id="bd-mating" placeholder="ex: natural mating on litter floor with nest boxes" style="min-width:300px">.
+        </div>
+        <div class="script-section-label">Destino dos ovos e biosseguridade</div>
+        <div class="script-note">Hatching eggs = ovos férteis · In-house hatchery = incubatório próprio · Floor egg = ovo de chão (não aproveitado) — aprofundamos na Semana 2</div>
+        <div class="script-sentence">
+          Hatching eggs are delivered to <input class="script-field" id="bd-dest" placeholder="ex: our in-house hatchery" style="min-width:210px">. <input class="script-field" id="bd-cert" placeholder="ex: We follow the genetics supplier biosecurity program." style="min-width:300px">"
+        </div>
+        <button class="copy-script-btn" onclick="copyScript('breeder')">
+          <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;stroke-width:2;fill:none;"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copiar meu script
+        </button>
+      </div>
+
+    </div>
+
+    <!-- SOCIAL -->
+    <div class="social-blk">
+      <div class="social-blk-title">📱 Compartilhe — sua rede precisa ver isso</div>
+      <p class="social-blk-sub">Você acabou de descrever seu trabalho em inglês com vocabulário técnico correto. Grave um áudio, poste um print e marque a gente. Cada post seu ajuda outros profissionais do agro a encontrar esse curso.</p>
+      <div class="social-btns">
+        <a class="soc-btn primary" href="https://www.instagram.com/talkagribusiness/" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;stroke-width:2;fill:none;"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          @talkagribusiness
+        </a>
+        <a class="soc-btn" href="https://www.linkedin.com/company/talk-agribusiness" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;stroke-width:2;fill:none;"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          Talk Agribusiness no LinkedIn
+        </a>
       </div>
     </div>
+
   </section>
+
 
   <div class="divider"></div>
 
@@ -924,11 +1366,7 @@ body {
     </div>
   </section>
 
-  <!-- PRÓXIMA AULA -->
-  <div class="next-cta">
-    <div>
-      <div class="next-label">Próxima aula</div>
-      <div class="next-title">Aula 2 — Pinteiro e aquecimento: brooding, heat source, chick behavior</div>
+  <!-- PRÓXIMA AULA --><div class="next-title">Aula 2 — Pinteiro e aquecimento: brooding, heat source, chick behavior</div>
     </div>
     <button class="next-btn" onclick="goNext()">
       Continuar
@@ -939,142 +1377,145 @@ body {
 </main>
 
 <script>
-// ─── DADOS ───────────────────────────────────────────────
-const cards = [
-  {
-    step: "Fase 1 — Início",
-    word: "Flock placement",
-    ipa: "/flɒk ˈpleɪsmənt/",
-    trans: "Alojamento do lote",
-    ex: "Flock placement took place on Monday with 45,000 day-old chicks.",
-    pt: "→ O alojamento do lote ocorreu na segunda-feira com 45.000 pintinhos de um dia.",
-    why: "Primeiro termo que aparece em qualquer relatório de início de ciclo"
-  },
-  {
-    step: "Fase 2 — Pinteiro",
-    word: "Brooding phase",
-    ipa: "/ˈbruːdɪŋ feɪz/",
-    trans: "Fase de aquecimento / pinteiro",
-    ex: "During the brooding phase, house temperature must stay above 32°C.",
-    pt: "→ Durante a fase de aquecimento, a temperatura do galpão deve permanecer acima de 32°C.",
-    why: "Termo técnico padrão nos manuais Cobb e Ross para a fase inicial"
-  },
-  {
-    step: "Fase 3 — Crescimento",
-    word: "Grow-out period",
-    ipa: "/ɡrəʊ aʊt ˈpɪəriəd/",
-    trans: "Período de crescimento / engorda",
-    ex: "The grow-out period for this flock is 42 days.",
-    pt: "→ O período de crescimento deste lote é de 42 dias.",
-    why: "Expressão mais usada em relatórios de integradoras internacionais"
-  },
-  {
-    step: "Fase 4 — Abate",
-    word: "Depletion / Flock depletion",
-    ipa: "/dɪˈpliːʃən/",
-    trans: "Retirada das aves para o abate",
-    ex: "Flock depletion is scheduled for next Thursday at 06:00 AM.",
-    pt: "→ A retirada das aves para o abate está agendada para a próxima quinta-feira às 06h.",
-    why: "Usado em schedules de abate e comunicação com frigoríficos"
-  },
-  {
-    step: "Essencial",
-    word: "Day-old chick",
-    ipa: "/deɪ əʊld tʃɪk/",
-    trans: "Pintinho de um dia",
-    ex: "We received 50,000 day-old chicks from the hatchery this morning.",
-    pt: "→ Recebemos 50.000 pintinhos de um dia do incubatório esta manhã.",
-    why: "Termo padrão em todas as comunicações com fornecedores de genética"
-  },
-  {
-    step: "Essencial",
-    word: "Flock performance",
-    ipa: "/flɒk pəˈfɔːməns/",
-    trans: "Desempenho do lote",
-    ex: "Flock performance this cycle exceeded our targets for FCR and livability.",
-    pt: "→ O desempenho do lote neste ciclo superou nossas metas de CA e viabilidade.",
-    why: "Expressão central em relatórios de desempenho e reuniões técnicas"
-  },
-  {
-    step: "Essencial",
-    word: "Flock cycle",
-    ipa: "/flɒk ˈsaɪkəl/",
-    trans: "Ciclo do lote / ciclo de produção",
-    ex: "This is the third flock cycle in house number 4 this year.",
-    pt: "→ Este é o terceiro ciclo de lote no galpão número 4 este ano.",
-    why: "Vocabulário básico de qualquer discussão sobre produção avícola"
-  },
-  {
-    step: "Essencial",
-    word: "Stocking density",
-    ipa: "/ˈstɒkɪŋ ˈdɛnsɪti/",
-    trans: "Densidade de alojamento",
-    ex: "Our stocking density is 12 birds per square meter.",
-    pt: "→ Nossa densidade de alojamento é de 12 aves por metro quadrado.",
-    why: "Exigência de certificações de exportação — BRC e Global G.A.P."
-  },
-  {
-    step: "Essencial",
-    word: "Slaughter age",
-    ipa: "/ˈslɔːtər eɪdʒ/",
-    trans: "Idade ao abate",
-    ex: "The target slaughter age for this flock is 42 days.",
-    pt: "→ A idade alvo ao abate para este lote é de 42 dias.",
-    why: "Informação obrigatória em contratos com frigoríficos e integradores"
-  }
-];
+// ─── DADOS: FLASHCARDS ───────────────────────────────────────────
+const allCards = {
+  all: [
+    { step:"Ciclo", word:"Flock placement", ipa:"/flɒk ˈpleɪsmənt/", trans:"Alojamento do lote", ex:"Flock placement took place on Monday with 45,000 day-old chicks.", pt:"→ O alojamento do lote ocorreu na segunda-feira com 45.000 pintinhos de um dia.", why:"Primeiro termo que aparece em qualquer relatório de início de ciclo" },
+    { step:"Ciclo", word:"Flock cycle", ipa:"/flɒk ˈsaɪkəl/", trans:"Ciclo do lote / ciclo de produção", ex:"This is the third flock cycle in house number 4 this year.", pt:"→ Este é o terceiro ciclo de lote no galpão número 4 este ano.", why:"Vocabulário básico de qualquer discussão sobre produção avícola" },
+    { step:"Ciclo", word:"Day-old chick", ipa:"/deɪ əʊld tʃɪk/", trans:"Pintinho de um dia", ex:"We received 50,000 day-old chicks from the hatchery this morning.", pt:"→ Recebemos 50.000 pintinhos de um dia do incubatório esta manhã.", why:"Termo padrão em contratos com fornecedores de genética — hatchery é o incubatório" },
+    { step:"Essencial", word:"Stocking density", ipa:"/ˈstɒkɪŋ ˈdɛnsɪti/", trans:"Densidade de alojamento (aves/m²)", ex:"Maximum stocking density for export markets is 33 kg per square meter.", pt:"→ A densidade máxima de alojamento para mercados de exportação é de 33 kg por metro quadrado.", why:"Exigência de certificações BRC e Global G.A.P. — todo auditor vai perguntar" },
+    { step:"Essencial", word:"Flock performance", ipa:"/flɒk pəˈfɔːməns/", trans:"Desempenho do lote", ex:"Flock performance this cycle exceeded our targets for FCR and livability.", pt:"→ O desempenho do lote neste ciclo superou nossas metas de CA e viabilidade.", why:"Expressão central em relatórios de desempenho e reuniões técnicas" },
+    { step:"Essencial", word:"Brooding phase", ipa:"/ˈbruːdɪŋ feɪz/", trans:"Fase de aquecimento / pinteiro", ex:"During the brooding phase, house temperature must stay above 32°C.", pt:"→ Durante a fase de aquecimento, a temperatura do galpão deve permanecer acima de 32°C.", why:"Termo técnico padrão nos manuais Cobb e Ross para a fase inicial" },
+    { step:"Essencial", word:"Grow-out period", ipa:"/ɡrəʊ aʊt ˈpɪəriəd/", trans:"Período de crescimento", ex:"The grow-out period for this flock is 42 days.", pt:"→ O período de crescimento deste lote é de 42 dias.", why:"Expressão mais usada em relatórios de integradoras internacionais" },
+    { step:"Essencial", word:"Flock depletion", ipa:"/flɒk dɪˈpliːʃən/", trans:"Retirada das aves para o abate", ex:"Flock depletion is scheduled for next Thursday at 06:00 AM.", pt:"→ A retirada das aves para o abate está agendada para a próxima quinta-feira às 06h.", why:"Usado em schedules de abate e comunicação com frigoríficos" },
+    { step:"Essencial", word:"Slaughter age", ipa:"/ˈslɔːtər eɪdʒ/", trans:"Idade ao abate", ex:"The target slaughter age for this flock is 42 days.", pt:"→ A idade alvo ao abate para este lote é de 42 dias.", why:"Informação obrigatória em contratos com frigoríficos e integradores" }
+  ],
+  broiler: [
+    { step:"Produção", word:"Broiler", ipa:"/ˈbrɔɪlər/", trans:"Frango de corte", ex:"Broiler houses must be cleaned and disinfected between each flock cycle.", pt:"→ Os galpões de frango de corte devem ser limpos e desinfectados entre cada ciclo de lote.", why:"Termo que diferencia frango de corte de poedeiras em qualquer documento técnico" },
+    { step:"Produção", word:"Live weight", ipa:"/laɪv weɪt/", trans:"Peso vivo das aves", ex:"Current live weight is 1.4 kg at day 22 of the grow-out period.", pt:"→ O peso vivo atual é de 1,4 kg no dia 22 do período de crescimento.", why:"Não confunda com carcass weight — peso vivo é antes do abate, carcaça é depois" },
+    { step:"Produção", word:"Feed conversion ratio", ipa:"/fiːd kənˈvɜːʃən ˈreɪʃiəʊ/", trans:"Conversão alimentar (CA)", ex:"Our target feed conversion ratio for broilers is 1.75 at 42 days.", pt:"→ Nossa meta de CA para frangos de corte é 1,75 aos 42 dias.", why:"KPI mais cobrado por compradores e integradores internacionais" },
+    { step:"Equipamentos", word:"Pan feeder", ipa:"/pæn ˈfiːdər/", trans:"Comedouro tipo prato", ex:"Pan feeders are adjusted daily to maintain the correct feed depth for the flock age.", pt:"→ Os comedouros tipo prato são ajustados diariamente para manter a profundidade correta de ração.", why:"Mais comum em frangos de corte — diferente de chain feeder (comedouro de corrente)" },
+    { step:"Equipamentos", word:"Nipple drinker", ipa:"/ˈnɪpəl ˈdrɪŋkər/", trans:"Bebedouro nipple / gotejador", ex:"Nipple drinker lines are set at a 45-degree angle to reduce water spillage.", pt:"→ As linhas de bebedouros nipple estão reguladas a 45 graus para reduzir o desperdício de água.", why:"Sistema padrão em granjas modernas — ângulo e pressão são cobrados em visitas técnicas" },
+    { step:"Ambiência", word:"Tunnel ventilation", ipa:"/ˈtʌnəl ˌvɛntɪˈleɪʃən/", trans:"Ventilação em túnel", ex:"We switch to full tunnel ventilation at 21 days when temperatures exceed 25°C.", pt:"→ Mudamos para ventilação em túnel completa aos 21 dias quando as temperaturas excedem 25°C.", why:"Sistema mais usado em granjas climatizadas — distinguir de cross ventilation é essencial" },
+    { step:"Ambiência", word:"Litter", ipa:"/ˈlɪtər/", trans:"Cama aviária", ex:"Litter moisture content should be kept below 30% to prevent caking and ammonia build-up.", pt:"→ O teor de umidade da cama deve ser mantido abaixo de 30% para prevenir empedramento e acúmulo de amônia.", why:"Aparece em todo checklist de auditoria BRC e Global G.A.P." },
+    { step:"Certificação", word:"Biosecurity breach", ipa:"/ˌbaɪəʊsɪˈkjʊərɪti briːtʃ/", trans:"Falha de biosseguridade", ex:"A biosecurity breach was identified after an unauthorized vehicle entered the farm.", pt:"→ Uma falha de biosseguridade foi identificada após a entrada de veículo não autorizado.", why:"Vocabulário obrigatório em relatórios de não conformidade — aprofundamos na Semana 2" }
+  ],
+  layer: [
+    { step:"Produção", word:"Layer", ipa:"/ˈleɪər/", trans:"Galinha de postura / poedeira", ex:"We have 120,000 layers in production at 34 weeks of age.", pt:"→ Temos 120.000 poedeiras em produção com 34 semanas de vida.", why:"Termo técnico para galinha de postura — diferente de hen (galinha adulta genérica)" },
+    { step:"Produção", word:"Laying phase", ipa:"/ˈleɪɪŋ feɪz/", trans:"Fase de postura", ex:"Our hens entered the laying phase at 18 weeks of age.", pt:"→ Nossas galinhas entraram na fase de postura com 18 semanas de vida.", why:"Fase principal do ciclo de poedeiras — também chamada de production phase" },
+    { step:"Produção", word:"Rearing phase", ipa:"/ˈrɪərɪŋ feɪz/", trans:"Fase de cria e recria", ex:"The rearing phase lasts approximately 16 weeks before hens are transferred to laying houses.", pt:"→ A fase de cria e recria dura aproximadamente 16 semanas antes das galinhas serem transferidas.", why:"Fase antes da postura — vocabulário diferente do frango de corte, que usa brooding phase" },
+    { step:"KPI", word:"Hen-day egg production", ipa:"/hɛn deɪ ɛɡ prəˈdʌkʃən/", trans:"Produção diária de ovos por galinha", ex:"Our current hen-day egg production is 94%, which is above the breed standard.", pt:"→ Nossa produção diária de ovos por galinha é de 94%, acima do padrão da linhagem.", why:"Principal KPI de postura — 94% = de cada 100 galinhas, 94 botaram no dia" },
+    { step:"Sistema", word:"Cage-free system", ipa:"/keɪdʒ friː ˈsɪstəm/", trans:"Sistema livre de gaiola", ex:"We operate a cage-free barn system with enriched nesting areas and perches.", pt:"→ Operamos um sistema livre de gaiola com áreas de nidificação enriquecidas e poleiros.", why:"Exigência crescente de compradores europeus e americanos — aprofundamos na Semana 5" },
+    { step:"Sistema", word:"Conventional cage", ipa:"/kənˈvɛnʃənəl keɪdʒ/", trans:"Gaiola convencional", ex:"Our conventional cage system houses 4 hens per cage at 550 cm² per bird.", pt:"→ Nosso sistema de gaiola convencional aloja 4 galinhas por gaiola com 550 cm² por ave.", why:"Sistema ainda comum no Brasil — proibido em vários mercados europeus" },
+    { step:"Ciclo", word:"Forced molt", ipa:"/fɔːrst məʊlt/", trans:"Muda forçada", ex:"We induced a forced molt at 72 weeks to extend the production cycle by 30 weeks.", pt:"→ Induzimos a muda forçada às 72 semanas para estender o ciclo de produção em 30 semanas.", why:"Você aprendeu esse termo na Aula 1 — aqui com contexto de quando e por que é feito" },
+    { step:"Ciclo", word:"Flock depopulation", ipa:"/flɒk ˌdiːpɒpjʊˈleɪʃən/", trans:"Encerramento definitivo do plantel", ex:"Flock depopulation is scheduled for week 80 when production drops below 50%.", pt:"→ O encerramento do plantel está programado para a semana 80 quando a produção cai abaixo de 50%.", why:"Diferente de depletion (frango de corte) — depopulation é específico para poedeiras e matrizes" }
+  ],
+  hatchery: [
+    { step:"Operação", word:"Hatchery", ipa:"/ˈhætʃəri/", trans:"Incubatório", ex:"Our hatchery has a weekly capacity of 500,000 eggs per set.", pt:"→ Nosso incubatório tem capacidade semanal de 500.000 ovos por carga.", why:"Termo específico para a instalação de incubação — diferente de farm ou house" },
+    { step:"KPI", word:"Hatchability", ipa:"/ˌhætʃəˈbɪlɪti/", trans:"Taxa de eclosão", ex:"Our average hatchability is 87% of fertile eggs set this quarter.", pt:"→ Nossa taxa média de eclosão é de 87% dos ovos férteis incubados neste trimestre.", why:"Principal KPI do incubatório — equivalente ao FCR no frango de corte" },
+    { step:"KPI", word:"Fertile eggs set", ipa:"/ˈfɜːrtaɪl ɛɡz sɛt/", trans:"Ovos férteis colocados para incubar", ex:"We set 480,000 fertile eggs this week with an expected hatchability of 88%.", pt:"→ Colocamos 480.000 ovos férteis para incubar esta semana com hatchability esperada de 88%.", why:"Denominador do cálculo de hatchability — aparece em todos os relatórios de incubatório" },
+    { step:"KPI", word:"Chick quality score", ipa:"/tʃɪk ˈkwɒlɪti skɔːr/", trans:"Pontuação de qualidade do pintinho", ex:"Our average chick quality score is 92 out of 100 using the Pasgar scoring system.", pt:"→ Nossa pontuação média de qualidade do pintinho é 92 de 100 usando o sistema Pasgar.", why:"Avalia umbigo, plumagem, pernas, olhos e vitalidade — exigido por clientes internacionais" },
+    { step:"Vacinação", word:"In-ovo vaccination", ipa:"/ɪn ˈəʊvəʊ væksɪˈneɪʃən/", trans:"Vacinação dentro do ovo", ex:"In-ovo vaccination for Marek's disease is applied on day 18 of incubation.", pt:"→ A vacinação in-ovo para doença de Marek é aplicada no dia 18 de incubação.", why:"Tecnologia de alta precisão — aprofundamos na Semana 2 com vocabulário completo de vacinas" },
+    { step:"Vacinação", word:"Spray vaccination", ipa:"/spreɪ væksɪˈneɪʃən/", trans:"Vacinação por nebulização", ex:"Spray vaccination for respiratory vaccines is applied immediately after hatching.", pt:"→ A vacinação por nebulização para vacinas respiratórias é aplicada imediatamente após o nascimento.", why:"Método mais comum para Newcastle e IB no nascedouro" },
+    { step:"Cadeia", word:"Breeder farm", ipa:"/ˈbriːdər fɑːrm/", trans:"Granja de matrizes", ex:"Hatching eggs are sourced exclusively from our own certified breeder farms.", pt:"→ Os ovos férteis são provenientes exclusivamente das nossas granjas de matrizes certificadas.", why:"Granja de matrizes = origem dos ovos férteis — diferente de broiler farm ou layer farm" },
+    { step:"Cadeia", word:"Chick sexing", ipa:"/tʃɪk ˈsɛksɪŋ/", trans:"Sexagem dos pintinhos", ex:"Chick sexing is performed by feather sexing for Ross 308 PS female progeny.", pt:"→ A sexagem dos pintinhos é feita por sexagem de penas para a progênie fêmea de Ross 308 PS.", why:"Feather sexing = sexagem pela plumagem. Vent sexing = sexagem por cloaca" }
+  ],
+  breeder: [
+    { step:"Cadeia", word:"Parent stock", ipa:"/ˈpɛərənt stɒk/", trans:"Plantel de matrizes (PS)", ex:"Our Ross 308 parent stock flock is currently at 38 weeks of age in peak production.", pt:"→ Nosso plantel de matrizes Ross 308 está atualmente com 38 semanas na fase de pico de produção.", why:"PS = Parent Stock — diferente de GP (Grandparent Stock) e commercial flock" },
+    { step:"Produção", word:"Hatching egg production rate", ipa:"/ˈhætʃɪŋ ɛɡ prəˈdʌkʃən reɪt/", trans:"Taxa de produção de ovos férteis", ex:"Our current hatching egg production rate is 82%, which is above the breed standard for week 38.", pt:"→ Nossa taxa atual de produção de ovos férteis é de 82%, acima do padrão da linhagem para a semana 38.", why:"Principal KPI de matrizes — equivalente ao hen-day production das poedeiras" },
+    { step:"Produção", word:"Peak production", ipa:"/piːk prəˈdʌkʃən/", trans:"Pico de produção / postura máxima", ex:"Ross 308 parent stock typically reaches peak production between weeks 28 and 32.", pt:"→ As matrizes Ross 308 tipicamente atingem o pico de produção entre as semanas 28 e 32.", why:"Momento mais crítico do ciclo — qualquer problema sanitário nessa fase é muito custoso" },
+    { step:"Produção", word:"Floor egg", ipa:"/flɔːr ɛɡ/", trans:"Ovo de chão (não aproveitado)", ex:"Floor egg percentage must be kept below 3% to maintain flock fertility and hatchability.", pt:"→ O percentual de ovos de chão deve ser mantido abaixo de 3% para manter a fertilidade e hatchability.", why:"Ovo de chão não é usado para incubação — alto índice indica problema de manejo de ninhos" },
+    { step:"Sistema", word:"Natural mating", ipa:"/ˈnætʃərəl ˈmeɪtɪŋ/", trans:"Acasalamento natural", ex:"We use natural mating with a rooster-to-hen ratio of 1:9 on litter floor with nest boxes.", pt:"→ Usamos acasalamento natural com proporção de 1 galo para 9 galinhas em cama com ninhos.", why:"Sistema mais comum em matrizes de frango de corte — diferente de AI (artificial insemination)" },
+    { step:"Sistema", word:"Nest box", ipa:"/nɛst bɒks/", trans:"Ninho / caixa de nidificação", ex:"Automated nest boxes collect hatching eggs and record production data in real time.", pt:"→ Os ninhos automatizados coletam os ovos férteis e registram dados de produção em tempo real.", why:"Onde as galinhas botam os ovos férteis — fundamental para controle de floor eggs" },
+    { step:"Saúde", word:"Vaccination program", ipa:"/ˌvæksɪˈneɪʃən ˈprəʊɡræm/", trans:"Programa de vacinação", ex:"Our vaccination program follows the Cobb breeder health management guidelines strictly.", pt:"→ Nosso programa de vacinação segue rigorosamente as diretrizes de saúde da Cobb para matrizes.", why:"Matrizes têm o programa de vacinação mais completo da cadeia — aprofundamos na Semana 2" },
+    { step:"Biosseguridade", word:"Biosecurity protocol", ipa:"/ˌbaɪəʊsɪˈkjʊərɪti ˈprəʊtəkɒl/", trans:"Protocolo de biosseguridade", ex:"Our biosecurity protocol requires shower-in, shower-out and a 48-hour downtime between visits.", pt:"→ Nosso protocolo de biosseguridade exige banho na entrada, saída e 48h de intervalo entre visitas.", why:"Matrizes têm biosseguridade máxima — qualquer falha afeta toda a cadeia downstream" }
+  ]
+};
 
+// ─── DADOS: EXERCÍCIOS ───────────────────────────────────────────
 const quizData = [
   {
-    ctx: "Um técnico da Cobb-Vantress visita sua granja e pergunta sobre o status do lote atual.",
+    ctx: "Um supervisor da Cobb-Vantress visita sua granja e pergunta sobre o status do lote atual.",
     q: "Ele diz: 'What stage is your current flock at?' O que ele está perguntando?",
     opts: ["Qual é o peso médio das aves", "Em que fase do ciclo produtivo seu lote está", "Quantos lotes você produziu este ano", "Qual é a temperatura do galpão"],
     correct: 1,
-    fb: "Correto. 'What stage is your flock at?' é a pergunta padrão para saber em que fase do ciclo o lote está — brooding, grow-out ou próximo ao abate. A resposta certa seria algo como: 'We are in the grow-out period, day 22.'"
+    fb: "Correto. 'What stage is your flock at?' é a pergunta padrão para saber em que fase do ciclo o lote está — brooding, grow-out ou próximo ao abate. A resposta certa seria: 'We are in the grow-out period, day 22.'"
   },
   {
     ctx: "Você está escrevendo um e-mail para o frigorífico confirmando o planejamento de abate.",
     q: "Qual termo correto para comunicar a data de retirada das aves para o abate?",
     opts: ["Flock placement is scheduled for Friday", "Flock depletion is scheduled for Friday", "Flock cycle ends on Friday", "Brooding phase ends on Friday"],
     correct: 1,
-    fb: "Correto. 'Flock depletion' é o termo técnico para a retirada das aves para o abate. 'Flock placement' é o oposto — é quando as aves chegam na granja. Misturar os dois em um e-mail cria confusão séria com o frigorífico."
+    fb: "Correto. 'Flock depletion' é o termo técnico para a retirada das aves para o abate. 'Flock placement' é o oposto — é quando as aves chegam na granja."
   },
   {
     ctx: "Um comprador estrangeiro está avaliando sua granja para certificação de exportação.",
     q: "Ele pergunta: 'What is your stocking density?' O que você deve informar?",
     opts: ["O número total de aves no lote", "O peso médio das aves", "A quantidade de aves por metro quadrado", "O número de galpões em produção"],
     correct: 2,
-    fb: "Correto. 'Stocking density' é a quantidade de aves por metro quadrado — não o total do lote. Para mercados europeus, o limite máximo é geralmente 33 kg/m². Saber responder isso com precisão é essencial para qualquer certificação de exportação."
+    fb: "Correto. 'Stocking density' é a quantidade de aves por metro quadrado. Para mercados europeus, o limite máximo é geralmente 33 kg/m²."
   },
   {
     ctx: "Você recebe um relatório da integradora em inglês com o termo 'grow-out period: 42 days'.",
     q: "O que esse termo indica no relatório?",
     opts: ["O tempo de aquecimento dos pintinhos no pinteiro", "O período total de crescimento das aves até o abate", "O tempo de limpeza e desinfecção entre lotes", "O intervalo entre o alojamento e o pico de consumo"],
     correct: 1,
-    fb: "Correto. 'Grow-out period' é o período total de crescimento — do alojamento até o abate. É diferente da 'brooding phase', que é apenas a fase inicial de aquecimento. Em relatórios de integradoras internacionais, esse é um dos termos mais frequentes."
+    fb: "Correto. 'Grow-out period' é o período total de crescimento — do alojamento até o abate. É diferente da 'brooding phase', que é apenas a fase inicial de aquecimento."
+  },
+  {
+    ctx: "Você está preenchendo um relatório de lote para enviar à integradora em inglês.",
+    q: "Qual termo você usa para informar o número de pintinhos recebidos no alojamento?",
+    opts: ["Flock size at grow-out", "Number of day-old chicks placed", "Stocking capacity per house", "Brooding capacity"],
+    correct: 1,
+    fb: "Correto. 'Number of day-old chicks placed' é a forma padrão. Day-old chick é o pintinho de um dia — usado em contratos de fornecimento de genética."
+  },
+  {
+    ctx: "Um gerente estrangeiro revisa o histórico da sua granja e pergunta sobre os ciclos do ano.",
+    q: "Como você diz em inglês que esse é o terceiro ciclo de produção no galpão 4 este ano?",
+    opts: ["This is the third brooding phase in house 4 this year", "This is the third flock cycle in house number 4 this year", "This is the third grow-out in brooder house 4", "This is the third placement schedule in facility 4"],
+    correct: 1,
+    fb: "Correto. 'Flock cycle' é o ciclo de produção completo — do alojamento ao abate. É exatamente como aparece em relatórios de integradoras internacionais."
   }
 ];
 
-// ─── ESTADO ───────────────────────────────────────────────
-let fcIdx = 0, fcFlipped = false;
-let voices = [], selVoice = null, spd = 1, exSpd = 1;
+const fitbData = [
+  { before:"Flock", blank:"placement", after:"took place on Monday with 45,000 day-old chicks.", hint:"alojamento", fb:"'Placement' é o alojamento do lote — o momento em que os pintinhos chegam na granja. Também pode aparecer como 'housing' em manuais europeus." },
+  { before:"The", blank:"grow-out period", after:"for this flock is 42 days.", hint:"período de crescimento", fb:"'Grow-out period' é o período de crescimento do lote — do alojamento até o abate. Um dos termos mais frequentes em relatórios de integradoras." },
+  { before:"Our", blank:"stocking density", after:"is 12 birds per square meter.", hint:"densidade de alojamento", fb:"'Stocking density' é a quantidade de aves por metro quadrado. Exigência obrigatória em certificações BRC e Global G.A.P." },
+  { before:"Flock", blank:"depletion", after:"is scheduled for next Thursday at 06:00 AM.", hint:"retirada para o abate", fb:"'Flock depletion' é a retirada das aves para o abate. Não confunda com 'flock placement' — que é o alojamento, o oposto." },
+  { before:"The target", blank:"slaughter age", after:"for this flock is 42 days.", hint:"idade ao abate", fb:"'Slaughter age' é a idade ao abate — informação obrigatória em contratos com frigoríficos e integradores." },
+  { before:"We received 50,000", blank:"day-old chicks", after:"from the hatchery this morning.", hint:"pintinhos de um dia", fb:"'Day-old chick' é o pintinho de um dia — termo padrão em contratos de fornecimento de genética e relatórios de recebimento." }
+];
+
+const matchData = [
+  { term:"Flock placement", def:"Alojamento dos pintinhos na granja" },
+  { term:"Grow-out period",  def:"Período de crescimento até o abate" },
+  { term:"Flock depletion",  def:"Retirada das aves para o abate" },
+  { term:"Day-old chick",    def:"Pintinho com um dia de vida" },
+  { term:"Stocking density", def:"Número de aves por metro quadrado" },
+  { term:"Slaughter age",    def:"Idade das aves no momento do abate" }
+];
+
+// ─── ESTADO ──────────────────────────────────────────────────────
+const fcState = {};
+['all','broiler','layer','hatchery','breeder'].forEach(t => {
+  fcState[t] = { idx:0, flipped:false, spd:1, exSpd:1 };
+});
+
 let qIdx = 0, score = 0, qAnswered = false;
-let doneFC = false, doneQuiz = false;
+let doneFC = false, doneQuiz = false, doneFitb = false, doneMatch = false;
+let fitbCorrect = 0;
+let matchSelected = null, matchedCount = 0, shuffledDefs = [];
 
-// ─── PROGRESSO GERAL ──────────────────────────────────────
-function updateProg() {
-  let p = 0;
-  if (doneFC) p += 50;
-  if (doneQuiz) p += 50;
-  document.getElementById('prog-fill').style.width = p + '%';
-}
+const STORAGE_KEY = 'poultry-english:s1-aula01';
 
-// ─── VOZES ────────────────────────────────────────────────
+// ─── VOZES ───────────────────────────────────────────────────────
+let voices = [], selVoice = null;
 function loadVoices() {
   const all = window.speechSynthesis.getVoices();
   voices = all.filter(v => v.lang.startsWith('en'));
   if (!voices.length) { setTimeout(loadVoices, 300); return; }
-  const pref = ['Google US English', 'Samantha', 'Karen', 'Google UK English Female', 'Microsoft Aria'];
+  const pref = ['Google US English','Samantha','Karen','Google UK English Female','Microsoft Aria'];
   const sorted = [...voices].sort((a, b) => {
     const ai = pref.findIndex(p => a.name.includes(p.split(' ')[0]) && a.name.includes(p.split(' ').pop()));
     const bi = pref.findIndex(p => b.name.includes(p.split(' ')[0]) && b.name.includes(p.split(' ').pop()));
@@ -1088,23 +1529,20 @@ function loadVoices() {
   top.forEach((v, i) => {
     const b = document.createElement('button');
     b.className = 'vbtn' + (i === 0 ? ' active' : '');
-    b.textContent = v.name.replace('Google ', '').replace('Microsoft ', '').replace(' Online', '');
+    b.textContent = v.name.replace('Google ','').replace('Microsoft ','').replace(' Online','');
     b.onclick = () => {
-      selVoice = v;
-      stopAll();
+      selVoice = v; stopAll();
       document.querySelectorAll('.vbtn').forEach(x => x.classList.remove('active'));
       b.classList.add('active');
     };
     container.appendChild(b);
   });
 }
-
 function stopAll() {
   window.speechSynthesis && window.speechSynthesis.cancel();
   document.querySelectorAll('.abtn').forEach(b => b.classList.remove('playing'));
 }
-
-function say(text, rate, btnId) {
+function sayText(text, rate, btnId) {
   stopAll();
   if (!window.speechSynthesis) return;
   const u = new SpeechSynthesisUtterance(text);
@@ -1115,74 +1553,82 @@ function say(text, rate, btnId) {
   u.onend = u.onerror = () => { if (btn) btn.classList.remove('playing'); };
   window.speechSynthesis.speak(u);
 }
-
-function sayWord() { say(cards[fcIdx].word, spd, 'abtn-word'); }
-function sayEx() { say(cards[fcIdx].ex, exSpd, 'abtn-ex'); }
-
-function setSpd(s, e) {
-  e.stopPropagation(); spd = s;
-  document.getElementById('spd1').classList.toggle('active', s === 1);
-  document.getElementById('spd07').classList.toggle('active', s === 0.7);
-  sayWord();
+function sayWord(t) { const s=fcState[t]; const c=allCards[t][s.idx]; sayText(c.word, s.spd, 'abtn-word-'+t); }
+function sayEx(t)   { const s=fcState[t]; const c=allCards[t][s.idx]; sayText(c.ex, s.exSpd, 'abtn-ex-'+t); }
+function setSpd(t, spd, e) {
+  e.stopPropagation(); fcState[t].spd = spd;
+  document.getElementById('spd1-'+t).classList.toggle('active', spd===1);
+  document.getElementById('spd07-'+t).classList.toggle('active', spd===0.7);
+  sayWord(t);
 }
-function setExSpd(s, e) {
-  e.stopPropagation(); exSpd = s;
-  document.getElementById('exspd1').classList.toggle('active', s === 1);
-  document.getElementById('exspd07').classList.toggle('active', s === 0.7);
-  sayEx();
+function setExSpd(t, spd, e) {
+  e.stopPropagation(); fcState[t].exSpd = spd;
+  document.getElementById('exspd1-'+t).classList.toggle('active', spd===1);
+  document.getElementById('exspd07-'+t).classList.toggle('active', spd===0.7);
+  sayEx(t);
 }
 
-// ─── FLASHCARDS ───────────────────────────────────────────
-function buildDots() {
-  const c = document.getElementById('fc-dots');
+// ─── FLASHCARDS ──────────────────────────────────────────────────
+function buildDots(t) {
+  const c = document.getElementById('fc-dots-'+t);
+  if (!c) return;
   c.innerHTML = '';
-  cards.forEach((_, i) => {
+  allCards[t].forEach((_, i) => {
     const d = document.createElement('div');
     d.className = 'fc-dot' + (i === 0 ? ' active' : '');
-    d.id = 'dot-' + i;
-    d.onclick = () => { fcIdx = i; renderFC(); updateDots(); };
+    d.id = 'dot-'+t+'-'+i;
+    d.onclick = () => { fcState[t].idx = i; renderFC(t); updateDots(t); };
     c.appendChild(d);
   });
 }
-
-function updateDots() {
-  cards.forEach((_, i) => {
-    const d = document.getElementById('dot-' + i);
+function updateDots(t) {
+  allCards[t].forEach((_, i) => {
+    const d = document.getElementById('dot-'+t+'-'+i);
     if (!d) return;
-    d.className = 'fc-dot' + (i === fcIdx ? ' active' : i < fcIdx ? ' done' : '');
+    const idx = fcState[t].idx;
+    d.className = 'fc-dot' + (i === idx ? ' active' : i < idx ? ' done' : '');
   });
 }
-
-function renderFC() {
-  const c = cards[fcIdx];
-  document.getElementById('fc-step').textContent = c.step;
-  document.getElementById('fc-word').textContent = c.word;
-  document.getElementById('fc-ipa').textContent = c.ipa;
-  document.getElementById('fc-trans').textContent = c.trans;
-  document.getElementById('fc-ex').textContent = c.ex;
-  document.getElementById('fc-ex-pt').textContent = c.pt;
-  document.getElementById('fc-why').textContent = 'Por que importa: ' + c.why;
-  document.getElementById('fc-counter').textContent = (fcIdx + 1) + ' de ' + cards.length;
-  fcFlipped = false;
-  stopAll();
-  document.getElementById('fc-front').classList.remove('hidden');
-  document.getElementById('fc-back').classList.remove('visible');
+function renderFC(t) {
+  const s = fcState[t];
+  const c = allCards[t][s.idx];
+  document.getElementById('fc-step-'+t).textContent = c.step;
+  document.getElementById('fc-word-'+t).textContent = c.word;
+  document.getElementById('fc-ipa-'+t).textContent = c.ipa;
+  document.getElementById('fc-trans-'+t).textContent = c.trans;
+  document.getElementById('fc-ex-'+t).textContent = c.ex;
+  document.getElementById('fc-ex-pt-'+t).textContent = c.pt;
+  document.getElementById('fc-why-'+t).textContent = 'Por que importa: ' + c.why;
+  document.getElementById('fc-counter-'+t).textContent = (s.idx + 1) + ' de ' + allCards[t].length;
+  s.flipped = false; stopAll();
+  document.getElementById('fc-front-'+t).classList.remove('hidden');
+  document.getElementById('fc-back-'+t).classList.remove('visible');
 }
-
-function handleCardClick(e) {
+function handleCardClick(e, t) {
   if (e.target.closest('.audio-btns') || e.target.closest('.abtn') || e.target.closest('.spd-btn')) return;
-  fcFlipped = !fcFlipped;
-  document.getElementById('fc-front').classList.toggle('hidden', fcFlipped);
-  document.getElementById('fc-back').classList.toggle('visible', fcFlipped);
-  if (fcIdx === cards.length - 1 && fcFlipped) { doneFC = true; updateProg(); }
+  const s = fcState[t];
+  s.flipped = !s.flipped;
+  document.getElementById('fc-front-'+t).classList.toggle('hidden', s.flipped);
+  document.getElementById('fc-back-'+t).classList.toggle('visible', s.flipped);
+  if (s.idx === allCards[t].length - 1 && s.flipped) { doneFC = true; updateProg(); }
+}
+function fcNav(t, d) {
+  const s = fcState[t];
+  s.idx = (s.idx + d + allCards[t].length) % allCards[t].length;
+  renderFC(t); updateDots(t);
 }
 
-function fcNav(d) {
-  fcIdx = (fcIdx + d + cards.length) % cards.length;
-  renderFC(); updateDots();
+// ─── PROGRESSO ───────────────────────────────────────────────────
+function updateProg() {
+  let p = 0;
+  if (doneFC) p += 25;
+  if (doneQuiz) p += 25;
+  if (doneFitb) p += 25;
+  if (doneMatch) p += 25;
+  document.getElementById('prog-fill').style.width = p + '%';
 }
 
-// ─── QUIZ ─────────────────────────────────────────────────
+// ─── QUIZ ────────────────────────────────────────────────────────
 function renderQ() {
   const q = quizData[qIdx];
   document.getElementById('q-ctx').textContent = q.ctx;
@@ -1202,7 +1648,6 @@ function renderQ() {
     opts.appendChild(b);
   });
 }
-
 function selectQ(i) {
   if (qAnswered) return;
   qAnswered = true;
@@ -1219,7 +1664,6 @@ function selectQ(i) {
   fb.textContent = (i === q.correct ? '✓ ' : '✗ ') + q.fb;
   document.getElementById('btn-next').style.display = 'inline-block';
 }
-
 function nextQ() {
   qIdx++;
   if (qIdx >= quizData.length) {
@@ -1234,7 +1678,6 @@ function nextQ() {
     doneQuiz = true; updateProg();
   } else { renderQ(); }
 }
-
 function restartQuiz() {
   qIdx = 0; score = 0; qAnswered = false;
   document.getElementById('quiz-block').style.display = 'block';
@@ -1242,21 +1685,227 @@ function restartQuiz() {
   renderQ();
 }
 
+// ─── FILL IN THE BLANK ───────────────────────────────────────────
+function buildFitb(){
+  const block = document.getElementById('fitb-block');
+  fitbData.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'fitb-item';
+    div.innerHTML = `
+      <div class="fitb-sentence">${item.before} <strong>[___]</strong> ${item.after}</div>
+      <div class="fitb-input-row">
+        <input class="fitb-input" id="fitb-inp-${i}" type="text" placeholder="Digite em inglês..." autocomplete="off" autocorrect="off" spellcheck="false">
+        <button class="fitb-btn" onclick="checkFitb(${i})">Verificar</button>
+      </div>
+      <div class="fitb-feedback" id="fitb-fb-${i}"></div>
+    `;
+    block.appendChild(div);
+    div.querySelector('input').addEventListener('keydown', e => { if(e.key === 'Enter') checkFitb(i); });
+  });
+}
+function checkFitb(i){
+  const inp = document.getElementById('fitb-inp-'+i);
+  const fb  = document.getElementById('fitb-fb-'+i);
+  if(inp.disabled) return;
+  const val = inp.value.trim().toLowerCase();
+  const correct = fitbData[i].blank.toLowerCase();
+  inp.disabled = true;
+  if(val === correct || (correct.includes(val) && val.length > 3)){
+    inp.classList.add('correct');
+    fb.className = 'fitb-feedback ok';
+    fb.textContent = '✓ Correto! ' + fitbData[i].fb;
+    fitbCorrect++;
+  } else {
+    inp.classList.add('wrong');
+    fb.className = 'fitb-feedback no';
+    fb.textContent = '✗ A resposta correta é "' + fitbData[i].blank + '". ' + fitbData[i].fb;
+  }
+  const done = document.querySelectorAll('.fitb-input:disabled').length;
+  if(done === fitbData.length){
+    document.getElementById('fitb-score').textContent = fitbCorrect + '/' + fitbData.length + ' corretas';
+    doneFitb = true; updateProg();
+  }
+}
+
+// ─── MATCH THE TERM ──────────────────────────────────────────────
+function buildMatch(){
+  shuffledDefs = [...matchData].sort(() => Math.random() - 0.5);
+  const termsEl = document.getElementById('match-terms');
+  const defsEl  = document.getElementById('match-defs');
+  termsEl.innerHTML = ''; defsEl.innerHTML = '';
+  matchData.forEach((item, i) => {
+    const t = document.createElement('div');
+    t.className = 'match-item'; t.textContent = item.term;
+    t.dataset.idx = i; t.dataset.type = 'term';
+    t.onclick = () => handleMatch(t, 'term', i);
+    termsEl.appendChild(t);
+  });
+  shuffledDefs.forEach((item, i) => {
+    const d = document.createElement('div');
+    d.className = 'match-item'; d.textContent = item.def;
+    d.dataset.idx = i; d.dataset.type = 'def';
+    d.onclick = () => handleMatch(d, 'def', i);
+    defsEl.appendChild(d);
+  });
+}
+function handleMatch(el, type, idx){
+  if(el.classList.contains('matched')) return;
+  if(!matchSelected && type === 'def') return;
+  if(!matchSelected){
+    document.querySelectorAll('#match-terms .match-item').forEach(x => x.classList.remove('selected'));
+    el.classList.add('selected');
+    matchSelected = { el, idx };
+    return;
+  }
+  if(type === 'term'){
+    document.querySelectorAll('#match-terms .match-item').forEach(x => x.classList.remove('selected'));
+    el.classList.add('selected');
+    matchSelected = { el, idx };
+    return;
+  }
+  const termTerm = matchData[matchSelected.idx].term;
+  const defTerm  = shuffledDefs[idx].term;
+  const prevEl   = matchSelected.el;
+  matchSelected  = null;
+  if(termTerm === defTerm){
+    prevEl.classList.remove('selected'); prevEl.classList.add('matched');
+    el.classList.add('matched'); matchedCount++;
+    if(matchedCount === matchData.length){
+      const r = document.getElementById('match-result');
+      r.textContent = 'Perfeito! Todos os pares conectados corretamente.';
+      r.classList.add('show');
+      doneMatch = true; updateProg();
+    }
+  } else {
+    prevEl.classList.remove('selected'); prevEl.classList.add('wrong-match');
+    el.classList.add('wrong-match');
+    setTimeout(() => { prevEl.classList.remove('wrong-match'); el.classList.remove('wrong-match'); }, 800);
+  }
+}
+function resetMatch(){ matchSelected = null; matchedCount = 0; buildMatch(); document.getElementById('match-result').classList.remove('show'); }
+
+// ─── STORAGE ─────────────────────────────────────────────────────
+async function saveProgress(){
+  try {
+    const state = {
+      fcIdx, doneFC,
+      quizScore: score, quizIdx: qIdx, doneQuiz,
+      fitbAnswers: fitbData.map((_,i) => {
+        const inp = document.getElementById('fitb-inp-'+i);
+        return inp ? { value: inp.value, disabled: inp.disabled, correct: inp.classList.contains('correct') } : null;
+      }),
+      fitbCorrect, doneFitb,
+      doneMatch, matchedCount,
+      savedAt: Date.now()
+    };
+    await window.storage.set(STORAGE_KEY, JSON.stringify(state));
+  } catch(e) {}
+}
+async function loadProgress(){
+  try {
+    const r = await window.storage.get(STORAGE_KEY);
+    if(!r) return null;
+    return JSON.parse(r.value);
+  } catch(e) { return null; }
+}
+async function restoreProgress(state){
+  if(!state) return;
+  if(state.doneFC){ doneFC = true; fcIdx = cards.length - 1; }
+  else if(state.fcIdx){ fcIdx = state.fcIdx; }
+  renderFC(); updateDots();
+  if(state.doneQuiz){
+    doneQuiz = true; score = state.quizScore || 0; qIdx = quizData.length;
+    document.getElementById('quiz-block').style.display = 'none';
+    const sb = document.getElementById('score-block'); sb.classList.add('show');
+    document.getElementById('score-num').textContent = score+'/'+quizData.length;
+    const pct = Math.round(score/quizData.length*100);
+    document.getElementById('score-msg').textContent = pct>=75 ? 'Excelente. Você está pronto para a próxima aula.' : 'Revise os flashcards e tente novamente.';
+  } else if(state.quizIdx > 0){ qIdx = state.quizIdx; score = state.quizScore||0; renderQ(); }
+  if(state.fitbAnswers){
+    state.fitbAnswers.forEach((ans, i) => {
+      if(!ans || !ans.disabled) return;
+      const inp = document.getElementById('fitb-inp-'+i);
+      const fb  = document.getElementById('fitb-fb-'+i);
+      if(!inp || !fb) return;
+      inp.value = ans.value; inp.disabled = true;
+      if(ans.correct){
+        inp.classList.add('correct'); fb.className = 'fitb-feedback ok';
+        fb.textContent = '✓ Correto! ' + fitbData[i].fb;
+      } else {
+        inp.classList.add('wrong'); fb.className = 'fitb-feedback no';
+        fb.textContent = '✗ A resposta correta é "' + fitbData[i].blank + '". ' + fitbData[i].fb;
+      }
+    });
+    fitbCorrect = state.fitbCorrect || 0;
+    if(state.doneFitb){ doneFitb = true; document.getElementById('fitb-score').textContent = fitbCorrect+'/'+fitbData.length+' corretas'; }
+  }
+  if(state.doneMatch){
+    doneMatch = true; matchedCount = matchData.length;
+    document.querySelectorAll('#match-terms .match-item,#match-defs .match-item').forEach(el => el.classList.add('matched'));
+    const r = document.getElementById('match-result');
+    r.textContent = 'Perfeito! Todos os pares conectados corretamente.'; r.classList.add('show');
+  }
+  updateProg();
+  if(state.savedAt){
+    const mins = Math.round((Date.now()-state.savedAt)/60000);
+    const label = mins < 60 ? mins+'min atrás' : Math.round(mins/60)+'h atrás';
+    showToast('Progresso restaurado — salvo '+label);
+  }
+}
+function patchSave(){
+  const save = () => setTimeout(saveProgress, 400);
+  const _selectQ = selectQ; window.selectQ = function(i){ _selectQ(i); save(); };
+  const _nextQ = nextQ; window.nextQ = function(){ _nextQ(); save(); };
+  const _checkFitb = checkFitb; window.checkFitb = function(i){ _checkFitb(i); save(); };
+  const _handleMatch = handleMatch; window.handleMatch = function(el,type,idx){ _handleMatch(el,type,idx); save(); };
+  const _handleCardClick = handleCardClick; window.handleCardClick = function(e,t){ _handleCardClick(e,t); if(doneFC) save(); };
+}
+
+// ─── DESAFIO: CÓPIA DO SCRIPT ────────────────────────────────────
+function copyScript(profile){
+  const fields = {
+    broiler:['br-name','br-title','br-phase','br-age','br-birds','br-houses','br-density','br-feeders','br-drinkers','br-vent','br-slaughter','br-weight','br-cert'],
+    layer:['ly-name','ly-title','ly-hens','ly-phase','ly-age','ly-housing','ly-prod','ly-collect','ly-cycle','ly-molt','ly-cert'],
+    hatchery:['ht-name','ht-title','ht-cap','ht-out','ht-hatch','ht-gen','ht-src','ht-vacc','ht-dest','ht-cert'],
+    breeder:['bd-name','bd-title','bd-gen','bd-age','bd-phase','bd-hens','bd-roosters','bd-rate','bd-mating','bd-dest','bd-cert']
+  };
+  const templates = {
+    broiler: (v) => `"My name is ${v('br-name')} and I work as a ${v('br-title')}.\n\nWe are currently in the ${v('br-phase')}. The birds are ${v('br-age')}, with ${v('br-birds')} placed in ${v('br-houses')}.\n\nOur stocking density is ${v('br-density')}. We use ${v('br-feeders')} and ${v('br-drinkers')}, with ${v('br-vent')}.\n\nOur target slaughter age is ${v('br-slaughter')} at ${v('br-weight')} kg live weight. ${v('br-cert')}"`,
+    layer: (v) => `"My name is ${v('ly-name')} and I work as a ${v('ly-title')}.\n\nWe currently have ${v('ly-hens')} in the ${v('ly-phase')}, ${v('ly-age')}, housed in a ${v('ly-housing')}.\n\nOur current hen-day egg production is ${v('ly-prod')}. We collect eggs ${v('ly-collect')}.\n\nOur production cycle runs approximately ${v('ly-cycle')} before ${v('ly-molt')}. ${v('ly-cert')}"`,
+    hatchery: (v) => `"My name is ${v('ht-name')} and I work as a ${v('ht-title')}.\n\nOur hatchery has a capacity of ${v('ht-cap')}, producing approximately ${v('ht-out')}.\n\nOur average hatchability is ${v('ht-hatch')}. We work with ${v('ht-gen')} genetics. Eggs are sourced from ${v('ht-src')}.\n\nAt hatch, chicks receive ${v('ht-vacc')}. Day-old chicks are delivered to ${v('ht-dest')}. ${v('ht-cert')}"`,
+    breeder: (v) => `"My name is ${v('bd-name')} and I work as a ${v('bd-title')}.\n\nWe work with ${v('bd-gen')} genetics. The flock is ${v('bd-age')}, in the ${v('bd-phase')}. We have ${v('bd-hens')} and ${v('bd-roosters')}.\n\nOur current hatching egg production rate is ${v('bd-rate')}. We use ${v('bd-mating')}.\n\nHatching eggs are delivered to ${v('bd-dest')}. ${v('bd-cert')}"`
+  };
+  const v = (id) => { const el=document.getElementById(id); return el&&el.value.trim() ? el.value.trim() : '['+id+']'; };
+  const text = templates[profile](v);
+  navigator.clipboard.writeText(text)
+    .then(()=>showToast('Script copiado — cole no bloco de notas e grave em voz alta!'))
+    .catch(()=>showToast('Selecione o texto para copiar manualmente'));
+}
+
+// ─── UTILS ───────────────────────────────────────────────────────
+function showToast(msg){
+  const t = document.createElement('div');
+  Object.assign(t.style,{position:"fixed",bottom:"24px",left:"50%",transform:"translateX(-50%)",background:"#0d2b1f",color:"#E1F5EE",fontSize:"13px",padding:"10px 20px",borderRadius:"99px",border:"1px solid #1D9E75",zIndex:"999",fontFamily:"DM Sans,sans-serif",boxShadow:"0 4px 20px rgba(0,0,0,0.3)",opacity:"0",transition:"opacity 0.3s"});
+  t.textContent = msg;
+  document.body.appendChild(t);
+  requestAnimationFrame(() => { t.style.opacity = '1'; });
+  setTimeout(() => { t.style.opacity = '0'; setTimeout(() => t.remove(), 300); }, 3000);
+}
 function goNext() {
   alert('Configure o link para a Aula 2 aqui.');
 }
 
-// ─── INIT ─────────────────────────────────────────────────
+// ─── INIT ────────────────────────────────────────────────────────
 if (window.speechSynthesis) {
-  if (window.speechSynthesis.onvoiceschanged !== undefined) {
-    window.speechSynthesis.onvoiceschanged = loadVoices;
-  }
+  if (window.speechSynthesis.onvoiceschanged !== undefined) window.speechSynthesis.onvoiceschanged = loadVoices;
   loadVoices();
 }
-
-buildDots();
-renderFC();
+['all','broiler','layer','hatchery','breeder'].forEach(t => { buildDots(t); renderFC(t); });
 renderQ();
+buildFitb();
+buildMatch();
+patchSave();
+(async()=>{ const s=await loadProgress(); if(s) await restoreProgress(s); })();
 </script>
 </body>
 </html>
