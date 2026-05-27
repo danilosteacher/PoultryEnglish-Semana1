@@ -701,6 +701,22 @@ body {
   cursor:pointer; font-family:'DM Sans',sans-serif; transition:all .15s;
   display:flex; align-items:center; gap:6px;
 }
+
+@media (max-width: 600px) {
+  .script-sentence { font-size: 13px; line-height: 2.2; }
+  .script-field { min-width: 70px !important; font-size: 13px; }
+  .tab-labels { gap: 6px; }
+  .tab-label { font-size: 12px; padding: 6px 12px; }
+  .fc-tab-labels { gap: 5px; }
+  .fc-tab-label { font-size: 11px; padding: 5px 10px; }
+  .flashcard { min-height: 200px; padding: 1.25rem 1rem; }
+  .fc-word { font-size: 22px; }
+  .audio-btns { flex-wrap: wrap; gap: 6px; }
+  .social-btns { flex-direction: column; }
+  .soc-btn { width: 100%; justify-content: center; }
+  .copy-script-btn { width: 100%; justify-content: center; }
+  .script-note { font-size: 11px; }
+}
 .tab-label:hover { background:var(--green-pale); border-color:var(--green-main); }
 #tab-broiler:checked ~ .tab-labels .tab-label[for="tab-broiler"],
 #tab-layer:checked ~ .tab-labels .tab-label[for="tab-layer"],
@@ -1366,7 +1382,8 @@ body {
     </div>
   </section>
 
-  
+ 
+
 </main>
 
 <script>
@@ -1780,8 +1797,29 @@ function resetMatch(){ matchSelected = null; matchedCount = 0; buildMatch(); doc
 // ─── STORAGE ─────────────────────────────────────────────────────
 async function saveProgress(){
   try {
+    // Estado das abas de flashcard
+    const fcTabState = {};
+    ['all','broiler','layer','hatchery','breeder'].forEach(t => {
+      fcTabState['fc_'+t] = fcState[t].idx;
+    });
+    // Campos do desafio por perfil
+    const desafioFields = {
+      broiler: ['br-name','br-title','br-phase','br-age','br-birds','br-houses','br-density','br-feeders','br-drinkers','br-vent','br-slaughter','br-weight','br-cert'],
+      layer:   ['ly-name','ly-title','ly-hens','ly-phase','ly-age','ly-housing','ly-prod','ly-collect','ly-cycle','ly-molt','ly-cert'],
+      hatchery:['ht-name','ht-title','ht-cap','ht-out','ht-hatch','ht-gen','ht-src','ht-vacc','ht-dest','ht-cert'],
+      breeder: ['bd-name','bd-title','bd-gen','bd-age','bd-phase','bd-hens','bd-roosters','bd-rate','bd-mating','bd-dest','bd-cert']
+    };
+    const desafioVals = {};
+    Object.entries(desafioFields).forEach(([profile, ids]) => {
+      desafioVals[profile] = {};
+      ids.forEach(id => {
+        const el = document.getElementById(id);
+        if(el) desafioVals[profile][id] = el.value;
+      });
+    });
     const state = {
-      fcIdx, doneFC,
+      ...fcTabState,
+      doneFC,
       quizScore: score, quizIdx: qIdx, doneQuiz,
       fitbAnswers: fitbData.map((_,i) => {
         const inp = document.getElementById('fitb-inp-'+i);
@@ -1789,7 +1827,8 @@ async function saveProgress(){
       }),
       fitbCorrect, doneFitb,
       doneMatch, matchedCount,
-      savedAt: Date.now()
+      savedAt: Date.now(),
+      desafioVals
     };
     await window.storage.set(STORAGE_KEY, JSON.stringify(state));
   } catch(e) {}
@@ -1803,9 +1842,12 @@ async function loadProgress(){
 }
 async function restoreProgress(state){
   if(!state) return;
-  if(state.doneFC){ doneFC = true; fcIdx = cards.length - 1; }
-  else if(state.fcIdx){ fcIdx = state.fcIdx; }
-  renderFC(); updateDots();
+  // Restaura flashcards de todas as abas
+  ['all','broiler','layer','hatchery','breeder'].forEach(t => {
+    if(state['fc_'+t] !== undefined) fcState[t].idx = state['fc_'+t];
+    renderFC(t); updateDots(t);
+  });
+  if(state.doneFC) doneFC = true;
   if(state.doneQuiz){
     doneQuiz = true; score = state.quizScore || 0; qIdx = quizData.length;
     document.getElementById('quiz-block').style.display = 'none';
@@ -1839,6 +1881,15 @@ async function restoreProgress(state){
     r.textContent = 'Perfeito! Todos os pares conectados corretamente.'; r.classList.add('show');
   }
   updateProg();
+  // Restaura campos do desafio
+  if(state.desafioVals){
+    Object.entries(state.desafioVals).forEach(([profile, fields]) => {
+      Object.entries(fields).forEach(([id, val]) => {
+        const el = document.getElementById(id);
+        if(el && val) el.value = val;
+      });
+    });
+  }
   if(state.savedAt){
     const mins = Math.round((Date.now()-state.savedAt)/60000);
     const label = mins < 60 ? mins+'min atrás' : Math.round(mins/60)+'h atrás';
@@ -1852,6 +1903,10 @@ function patchSave(){
   const _checkFitb = checkFitb; window.checkFitb = function(i){ _checkFitb(i); save(); };
   const _handleMatch = handleMatch; window.handleMatch = function(el,type,idx){ _handleMatch(el,type,idx); save(); };
   const _handleCardClick = handleCardClick; window.handleCardClick = function(e,t){ _handleCardClick(e,t); if(doneFC) save(); };
+  // Salva automaticamente ao digitar nos campos do desafio
+  document.querySelectorAll('.script-field').forEach(inp => {
+    inp.addEventListener('input', () => save());
+  });
 }
 
 // ─── DESAFIO: CÓPIA DO SCRIPT ────────────────────────────────────
