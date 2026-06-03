@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aula 2 — Pinteiro e Aquecimento | Poultry English</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green-deep: #0d2b1f;
+  --green-mid: #1a4a30;
+  --green-main: #1D9E75;
+  --green-light: #E1F5EE;
+  --green-pale: #f0faf5;
+  --gold: #c9a84c;
+  --text-primary: #0d1f17;
+  --text-secondary: #3d5a4a;
+  --text-muted: #7a9e8a;
+  --border: #d4e8dd;
+  --bg: #f7fbf8;
+  --white: #ffffff;
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text-primary); min-height: 100vh; font-size: 15px; line-height: 1.6; }
+
+.site-header { background: var(--green-deep); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 56px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 16px; color: var(--white); letter-spacing: 0.02em; }
+.logo span { color: var(--green-main); }
+.header-meta { font-size: 12px; color: rgba(255,255,255,0.4); font-weight: 300; }
+
+.progress-strip { background: var(--border); height: 3px; position: sticky; top: 56px; z-index: 99; }
+.progress-fill { height: 3px; background: linear-gradient(90deg, var(--green-main), var(--gold)); width: 0%; transition: width 0.6s ease; }
+
+.lesson-hero { background: var(--green-deep); padding: 3rem 2rem 2.5rem; position: relative; overflow: hidden; }
+.lesson-hero::before { content: ''; position: absolute; top: -60px; right: -60px; width: 280px; height: 280px; border-radius: 50%; background: radial-gradient(circle, rgba(29,158,117,0.15) 0%, transparent 70%); pointer-events: none; }
+.lesson-hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--green-main), transparent); }
+.hero-inner { max-width: 720px; margin: 0 auto; position: relative; }
+.lesson-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.25rem; }
+.badge { font-size: 11px; font-weight: 500; padding: 4px 12px; border-radius: 99px; letter-spacing: 0.04em; text-transform: uppercase; }
+.badge-week { background: rgba(29,158,117,0.2); color: var(--green-main); border: 1px solid rgba(29,158,117,0.3); }
+.badge-time { background: rgba(201,168,76,0.15); color: var(--gold); border: 1px solid rgba(201,168,76,0.2); }
+.badge-method { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.1); }
+.lesson-number { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; color: var(--green-main); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
+.lesson-title { font-family: 'Syne', sans-serif; font-size: clamp(22px, 4vw, 32px); font-weight: 800; color: var(--white); line-height: 1.2; margin-bottom: 10px; }
+.lesson-title em { color: var(--green-main); font-style: normal; }
+.lesson-sub { font-size: 14px; color: rgba(255,255,255,0.5); font-weight: 300; max-width: 480px; line-height: 1.6; }
+
+.main { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+.section { margin-bottom: 2.5rem; }
+.section-label { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; color: var(--green-main); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.divider { height: 1px; background: var(--border); margin: 2rem 0; }
+
+.focus-block { background: var(--white); border: 1px solid var(--border); border-left: 4px solid var(--green-main); border-radius: 0 var(--radius) var(--radius) 0; padding: 1.25rem 1.5rem; }
+.focus-label { font-size: 11px; font-weight: 500; color: var(--green-main); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+.focus-text { font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+.focus-quote { margin-top: 1rem; padding: 0.875rem 1rem; background: var(--green-pale); border-radius: var(--radius-sm); font-size: 13px; color: var(--text-primary); font-style: italic; border-left: 3px solid var(--green-main); }
+
+.objectives { display: flex; flex-direction: column; gap: 10px; }
+.obj-item { display: flex; align-items: flex-start; gap: 12px; background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.25rem; }
+.obj-check { width: 22px; height: 22px; border-radius: 50%; background: var(--green-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+.obj-check svg { width: 12px; height: 12px; stroke: var(--green-main); stroke-width: 2.5; fill: none; }
+.obj-text { font-size: 14px; color: var(--text-primary); line-height: 1.5; }
+
+.video-blocks { display: flex; flex-direction: column; gap: 10px; }
+.video-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.1rem 1.25rem; display: flex; align-items: center; gap: 14px; }
+.video-play { width: 44px; height: 44px; border-radius: 50%; background: var(--green-main); display: flex; align-items: center; justify-content: center; flex-shrink: 0; cursor: pointer; transition: transform 0.2s, background 0.2s; }
+.video-play:hover { transform: scale(1.08); background: var(--green-mid); }
+.video-play svg { width: 16px; height: 16px; fill: white; margin-left: 2px; }
+.video-info { flex: 1; }
+.video-title { font-size: 14px; font-weight: 500; color: var(--text-primary); margin-bottom: 3px; }
+.video-desc { font-size: 12px; color: var(--text-muted); }
+.video-dur { font-size: 12px; font-weight: 500; color: var(--text-muted); background: var(--bg); padding: 4px 10px; border-radius: 99px; border: 1px solid var(--border); white-space: nowrap; }
+
+.voice-row { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-bottom: 1rem; }
+.voice-label { font-size: 12px; color: var(--text-muted); }
+.vbtn { padding: 4px 12px; border-radius: 99px; border: 1px solid var(--border); background: transparent; font-size: 12px; color: var(--text-secondary); cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.15s; }
+.vbtn:hover { background: var(--green-light); border-color: var(--green-main); }
+.vbtn.active { background: var(--green-light); color: var(--green-main); border-color: var(--green-main); font-weight: 500; }
+.voices-loading { font-size: 12px; color: var(--text-muted); font-style: italic; }
+
+.fc-nav-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.fc-counter { font-size: 13px; color: var(--text-muted); }
+.fc-arrows { display: flex; gap: 6px; }
+.fc-arrow { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--border); background: var(--white); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s; }
+.fc-arrow:hover { background: var(--green-light); border-color: var(--green-main); }
+.fc-arrow svg { width: 14px; height: 14px; stroke: var(--text-secondary); stroke-width: 2; fill: none; }
+
+.fc-dots { display: flex; gap: 5px; justify-content: center; margin-bottom: 12px; flex-wrap: wrap; }
+.fc-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); cursor: pointer; transition: all 0.2s; }
+.fc-dot.active { background: var(--green-main); transform: scale(1.3); }
+.fc-dot.done { background: var(--green-main); opacity: 0.4; }
+
+.flashcard { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); min-height: 240px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 2rem 1.5rem; gap: 10px; position: relative; transition: border-color 0.2s, box-shadow 0.2s; user-select: none; }
+.flashcard:hover { border-color: var(--green-main); box-shadow: 0 0 0 3px rgba(29,158,117,0.08); }
+.fc-side-label { position: absolute; top: 1rem; right: 1rem; font-size: 10px; font-weight: 500; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.fc-front { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%; }
+.fc-front.hidden { display: none; }
+.fc-back { display: none; flex-direction: column; align-items: center; gap: 10px; width: 100%; }
+.fc-back.visible { display: flex; }
+.fc-step-label { font-size: 11px; font-weight: 500; color: var(--green-main); text-transform: uppercase; letter-spacing: 0.06em; }
+.fc-word { font-family: 'Syne', sans-serif; font-size: 26px; font-weight: 700; color: var(--text-primary); line-height: 1.2; }
+.fc-ipa { font-size: 13px; color: var(--text-muted); font-style: italic; }
+.audio-btns { display: flex; gap: 8px; align-items: center; margin-top: 4px; }
+.abtn { display: flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 99px; border: 1px solid var(--border); background: transparent; font-size: 12px; color: var(--text-secondary); cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.15s; }
+.abtn:hover { background: var(--green-light); border-color: var(--green-main); color: var(--green-main); }
+.abtn.playing { background: var(--green-light); border-color: var(--green-main); color: var(--green-main); }
+.abtn svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2; fill: none; flex-shrink: 0; }
+.spd-btn { padding: 4px 10px; border-radius: 99px; border: 1px solid var(--border); background: transparent; font-size: 11px; color: var(--text-muted); cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.15s; }
+.spd-btn.active { background: var(--green-light); border-color: var(--green-main); color: var(--green-main); }
+.fc-hint { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
+.fc-translation { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 600; color: var(--green-main); }
+.fc-example { font-size: 13px; color: var(--text-secondary); line-height: 1.6; border-left: 3px solid var(--green-main); padding-left: 12px; text-align: left; width: 100%; }
+.fc-example-pt { font-size: 12px; color: var(--text-muted); padding-left: 15px; text-align: left; width: 100%; font-style: italic; }
+.fc-why { font-size: 12px; background: var(--green-light); color: #085041; padding: 6px 14px; border-radius: 99px; margin-top: 4px; }
+
+/* QUIZ */
+.quiz-q-block { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; }
+.quiz-situation { font-size: 12px; font-weight: 500; color: var(--green-main); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+.quiz-context { font-size: 13px; color: var(--text-secondary); background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 0.875rem 1rem; margin-bottom: 1rem; line-height: 1.6; font-style: italic; }
+.quiz-q { font-size: 15px; font-weight: 500; color: var(--text-primary); margin-bottom: 1rem; line-height: 1.5; }
+.quiz-opts { display: flex; flex-direction: column; gap: 8px; }
+.quiz-opt { padding: 0.875rem 1.1rem; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--white); font-size: 14px; color: var(--text-primary); cursor: pointer; text-align: left; line-height: 1.5; font-family: 'DM Sans', sans-serif; transition: all 0.15s; }
+.quiz-opt:hover:not(:disabled) { background: var(--green-pale); border-color: var(--green-main); }
+.quiz-opt.correct { background: var(--green-light); border-color: var(--green-main); color: #085041; font-weight: 500; }
+.quiz-opt.wrong { background: #fef2f2; border-color: #fca5a5; color: #7f1d1d; }
+.quiz-opt:disabled { cursor: default; }
+.quiz-feedback { margin-top: 12px; padding: 1rem 1.1rem; border-radius: var(--radius-sm); font-size: 13px; line-height: 1.6; display: none; }
+.quiz-feedback.ok { background: var(--green-light); color: #085041; display: block; border: 1px solid #9FE1CB; }
+.quiz-feedback.no { background: #fef2f2; color: #7f1d1d; display: block; border: 1px solid #fca5a5; }
+.quiz-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; }
+.quiz-prog { font-size: 12px; color: var(--text-muted); }
+.btn-next { padding: 8px 20px; border-radius: 99px; border: 1px solid var(--border); background: var(--white); font-size: 13px; color: var(--text-primary); cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.15s; display: none; }
+.btn-next:hover { background: var(--green-light); border-color: var(--green-main); color: var(--green-main); }
+.score-block { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; text-align: center; display: none; }
+.score-block.show { display: block; }
+.score-num { font-family: 'Syne', sans-serif; font-size: 48px; font-weight: 800; color: var(--green-main); line-height: 1; margin-bottom: 8px; }
+.score-msg { font-size: 14px; color: var(--text-secondary); margin-bottom: 1.25rem; }
+.btn-retry { padding: 8px 20px; border-radius: 99px; border: 1px solid var(--border); background: transparent; font-size: 13px; color: var(--text-secondary); cursor: pointer; font-family: 'DM Sans', sans-serif; }
+.btn-retry:hover { background: var(--green-light); }
+
+/* FILL IN THE BLANK */
+.fitb-block { display: flex; flex-direction: column; gap: 14px; }
+.fitb-item { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.5rem; }
+.fitb-sentence { font-size: 14px; color: var(--text-primary); line-height: 1.8; margin-bottom: 10px; }
+.fitb-input-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.fitb-input { padding: 7px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--bg); font-size: 14px; color: var(--text-primary); font-family: 'DM Sans', sans-serif; outline: none; transition: border-color 0.15s; min-width: 160px; }
+.fitb-input:focus { border-color: var(--green-main); background: var(--white); }
+.fitb-input.correct { border-color: var(--green-main); background: var(--green-light); color: #085041; }
+.fitb-input.wrong { border-color: #fca5a5; background: #fef2f2; color: #7f1d1d; }
+.fitb-input:disabled { cursor: default; }
+.fitb-btn { padding: 7px 16px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: transparent; font-size: 13px; color: var(--text-secondary); cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.15s; white-space: nowrap; }
+.fitb-btn:hover { background: var(--green-light); border-color: var(--green-main); color: var(--green-main); }
+.fitb-feedback { font-size: 12px; margin-top: 8px; line-height: 1.5; display: none; padding: 8px 12px; border-radius: var(--radius-sm); }
+.fitb-feedback.ok { background: var(--green-light); color: #085041; display: block; }
+.fitb-feedback.no { background: #fef2f2; color: #7f1d1d; display: block; }
+.fitb-score { font-size: 13px; color: var(--text-muted); margin-top: 1rem; text-align: right; }
+
+/* MATCH THE TERM */
+.match-block { display: flex; flex-direction: column; gap: 12px; }
+.match-intro { font-size: 13px; color: var(--text-muted); margin-bottom: 0.5rem; }
+.match-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.match-col { display: flex; flex-direction: column; gap: 8px; }
+.match-col-label { font-size: 11px; font-weight: 500; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+.match-item { padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--white); font-size: 13px; color: var(--text-primary); cursor: pointer; transition: all 0.15s; line-height: 1.4; min-height: 52px; display: flex; align-items: center; }
+.match-item:hover { border-color: var(--green-main); background: var(--green-pale); }
+.match-item.selected { border-color: var(--green-main); background: var(--green-light); color: #085041; font-weight: 500; }
+.match-item.matched { border-color: var(--green-main); background: var(--green-light); color: #085041; cursor: default; opacity: 0.7; }
+.match-item.wrong-match { border-color: #fca5a5; background: #fef2f2; color: #7f1d1d; }
+.match-item:disabled { cursor: default; }
+.match-result { font-size: 13px; color: var(--text-muted); text-align: center; margin-top: 8px; display: none; }
+.match-result.show { display: block; }
+.match-reset { display: block; margin: 10px auto 0; padding: 7px 20px; border-radius: 99px; border: 1px solid var(--border); background: transparent; font-size: 13px; color: var(--text-secondary); cursor: pointer; font-family: 'DM Sans', sans-serif; }
+.match-reset:hover { background: var(--green-light); }
+
+/* APPLY */
+.apply-block { background: var(--green-deep); border-radius: var(--radius); padding: 1.5rem; position: relative; overflow: hidden; }
+.apply-block::before { content: ''; position: absolute; top: -40px; right: -40px; width: 200px; height: 200px; border-radius: 50%; background: radial-gradient(circle, rgba(29,158,117,0.2) 0%, transparent 70%); pointer-events: none; }
+.apply-header { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+.apply-icon { width: 32px; height: 32px; border-radius: 50%; background: rgba(29,158,117,0.2); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.apply-icon svg { width: 16px; height: 16px; stroke: var(--green-main); stroke-width: 2; fill: none; }
+.apply-title { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; color: var(--white); }
+.apply-sub { font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 1.25rem; line-height: 1.6; }
+.apply-steps { display: flex; flex-direction: column; gap: 10px; }
+.apply-step { display: flex; gap: 12px; align-items: flex-start; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-sm); padding: 0.875rem 1rem; }
+.step-num { width: 24px; height: 24px; border-radius: 50%; background: var(--green-main); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: white; flex-shrink: 0; margin-top: 1px; }
+.step-text { font-size: 13px; color: rgba(255,255,255,0.75); line-height: 1.6; }
+.step-text em { color: var(--green-main); font-style: normal; font-weight: 500; }
+
+/* SOURCES */
+.sources-block { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; }
+.sources-title { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+.sources-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 1.25rem; line-height: 1.5; }
+.source-list { display: flex; flex-direction: column; gap: 10px; }
+.source-item { display: flex; gap: 12px; align-items: flex-start; padding: 0.875rem 1rem; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm); }
+.source-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green-main); flex-shrink: 0; margin-top: 6px; }
+.source-content { flex: 1; }
+.source-name { font-size: 13px; font-weight: 500; color: var(--text-primary); margin-bottom: 2px; }
+.source-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-bottom: 5px; }
+.source-link { font-size: 12px; color: var(--green-main); text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; gap: 4px; }
+.source-link:hover { text-decoration: underline; }
+.source-link svg { width: 12px; height: 12px; stroke: currentColor; stroke-width: 2; fill: none; }
+
+/* NEXT */
+.next-cta { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.next-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; font-weight: 500; }
+.next-title { font-size: 15px; font-weight: 500; color: var(--text-primary); }
+.next-btn { display: flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 99px; border: none; background: var(--green-main); color: white; font-size: 13px; font-weight: 500; cursor: pointer; white-space: nowrap; font-family: 'DM Sans', sans-serif; transition: all 0.15s; }
+.next-btn:hover { background: var(--green-mid); }
+.next-btn svg { width: 14px; height: 14px; stroke: white; stroke-width: 2; fill: none; }
+
+@media (max-width: 600px) {
+  .lesson-hero { padding: 2rem 1.25rem 2rem; }
+  .main { padding: 1.5rem 1rem 3rem; }
+  .next-cta { flex-direction: column; align-items: flex-start; }
+  .next-btn { width: 100%; justify-content: center; }
+  .match-grid { grid-template-columns: 1fr; }
+}
+
+/* FLASHCARD TABS */
+.fc-tab-input{display:none;}
+.fc-tab-labels{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.25rem;}
+.fc-tab-label{padding:6px 16px;border-radius:99px;border:1px solid var(--border);background:var(--white);font-size:12px;font-weight:500;color:var(--text-secondary);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;display:inline-flex;align-items:center;gap:5px;}
+.fc-tab-label:hover{background:var(--green-pale);border-color:var(--green-main);}
+#fct-all:checked ~ .fc-tab-labels .fc-tab-label[for="fct-all"],
+#fct-broiler:checked ~ .fc-tab-labels .fc-tab-label[for="fct-broiler"],
+#fct-layer:checked ~ .fc-tab-labels .fc-tab-label[for="fct-layer"],
+#fct-hatchery:checked ~ .fc-tab-labels .fc-tab-label[for="fct-hatchery"],
+#fct-breeder:checked ~ .fc-tab-labels .fc-tab-label[for="fct-breeder"]{background:var(--green-light);border-color:var(--green-main);color:#085041;}
+.fc-tab-panel{display:none;}
+#fct-all:checked ~ .fc-tab-panels #fcp-all,
+#fct-broiler:checked ~ .fc-tab-panels #fcp-broiler,
+#fct-layer:checked ~ .fc-tab-panels #fcp-layer,
+#fct-hatchery:checked ~ .fc-tab-panels #fcp-hatchery,
+#fct-breeder:checked ~ .fc-tab-panels #fcp-breeder{display:block;}
+/* DESAFIO TABS */
+.tab-input{display:none;}
+.tab-labels{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1.25rem;}
+.tab-label{padding:8px 18px;border-radius:99px;border:1px solid var(--border);background:var(--white);font-size:13px;font-weight:500;color:var(--text-secondary);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;}
+.tab-label:hover{background:var(--green-pale);border-color:var(--green-main);}
+#tab-broiler:checked ~ .tab-labels .tab-label[for="tab-broiler"],
+#tab-layer:checked ~ .tab-labels .tab-label[for="tab-layer"],
+#tab-hatchery:checked ~ .tab-labels .tab-label[for="tab-hatchery"],
+#tab-breeder:checked ~ .tab-labels .tab-label[for="tab-breeder"]{background:var(--green-light);border-color:var(--green-main);color:#085041;}
+.tab-content{display:none;}
+#tab-broiler:checked ~ .tab-panels #panel-broiler,
+#tab-layer:checked ~ .tab-panels #panel-layer,
+#tab-hatchery:checked ~ .tab-panels #panel-hatchery,
+#tab-breeder:checked ~ .tab-panels #panel-breeder{display:block;}
+/* SCRIPT FIELDS */
+.script-field{display:inline-block;border:none;border-bottom:2px solid var(--green-main);background:transparent;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text-primary);outline:none;padding:0 4px;min-width:90px;transition:border-color .15s;}
+.script-field:focus{border-bottom-color:var(--gold);}
+.script-field::placeholder{color:var(--text-muted);font-size:12px;}
+.script-sentence{font-size:14px;color:var(--text-secondary);line-height:2.4;padding:1rem 1.25rem;background:var(--white);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:10px;}
+.script-section-label{font-size:11px;font-weight:600;color:var(--green-main);text-transform:uppercase;letter-spacing:.07em;margin:1rem 0 6px;}
+.script-note{font-size:12px;color:var(--text-muted);font-style:italic;padding:6px 12px;background:var(--green-pale);border-radius:var(--radius-sm);margin-bottom:8px;line-height:1.6;}
+.copy-script-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:99px;border:1px solid var(--green-main);background:var(--green-light);color:#085041;font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;margin-top:10px;}
+.copy-script-btn:hover{background:var(--green-main);color:white;}
+.social-blk{background:linear-gradient(135deg,#0d2b1f,#1a4a30);border-radius:var(--radius);padding:1.5rem;margin-top:1.5rem;}
+.social-blk-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--white);margin-bottom:6px;}
+.social-blk-sub{font-size:13px;color:rgba(255,255,255,0.5);line-height:1.6;margin-bottom:1rem;}
+.social-btns{display:flex;gap:8px;flex-wrap:wrap;}
+.soc-btn{padding:8px 16px;border-radius:99px;border:1px solid rgba(255,255,255,0.2);background:transparent;font-size:12px;color:rgba(255,255,255,0.7);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;display:inline-flex;align-items:center;gap:6px;text-decoration:none;}
+.soc-btn:hover{background:rgba(255,255,255,0.1);}
+.soc-btn.primary{background:var(--green-main);border-color:var(--green-main);color:white;}
+.soc-btn.primary:hover{background:var(--green-mid);}
+@media(max-width:600px){
+  .script-sentence{font-size:13px;line-height:2.2;}
+  .script-field{min-width:70px !important;font-size:13px;}
+  .tab-labels,.fc-tab-labels{gap:5px;}
+  .tab-label{font-size:12px;padding:6px 12px;}
+  .fc-tab-label{font-size:11px;padding:5px 10px;}
+  .flashcard{min-height:200px;padding:1.25rem 1rem;}
+  .fc-word{font-size:22px;}
+  .audio-btns{flex-wrap:wrap;gap:6px;}
+  .social-btns{flex-direction:column;}
+  .soc-btn,.copy-script-btn{width:100%;justify-content:center;}
+  .script-note{font-size:11px;}
+}
+
+
+/* QUIZ TABS */
+.qz-tab-input { display:none; }
+.qz-tab-labels { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:1.25rem; }
+.qz-tab-label {
+  padding:6px 16px; border-radius:99px; border:1px solid var(--border);
+  background:var(--white); font-size:12px; font-weight:500; color:var(--text-secondary);
+  cursor:pointer; font-family:'DM Sans',sans-serif; transition:all .15s;
+}
+.qz-tab-label:hover { background:var(--green-pale); border-color:var(--green-main); }
+#qzt-all:checked ~ .qz-tab-labels .qz-tab-label[for="qzt-all"],
+#qzt-broiler:checked ~ .qz-tab-labels .qz-tab-label[for="qzt-broiler"],
+#qzt-layer:checked ~ .qz-tab-labels .qz-tab-label[for="qzt-layer"],
+#qzt-hatchery:checked ~ .qz-tab-labels .qz-tab-label[for="qzt-hatchery"],
+#qzt-breeder:checked ~ .qz-tab-labels .qz-tab-label[for="qzt-breeder"] {
+  background:var(--green-light); border-color:var(--green-main); color:#085041;
+}
+.qz-tab-panel { display:none; }
+#qzt-all:checked ~ .qz-tab-panels #qzp-all,
+#qzt-broiler:checked ~ .qz-tab-panels #qzp-broiler,
+#qzt-layer:checked ~ .qz-tab-panels #qzp-layer,
+#qzt-hatchery:checked ~ .qz-tab-panels #qzp-hatchery,
+#qzt-breeder:checked ~ .qz-tab-panels #qzp-breeder { display:block; }
+
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="logo">POULTRY <span>ENGLISH</span></div>
+  <div class="header-meta">Semana 1 · Aula 2 de 30</div>
+</header>
+
+<div class="progress-strip">
+  <div class="progress-fill" id="prog-fill"></div>
+</div>
+
+<div class="lesson-hero">
+  <div class="hero-inner">
+    <div class="lesson-badges">
+      <span class="badge badge-week">Semana 1</span>
+      <span class="badge badge-time">⏱ 20 minutos</span>
+      <span class="badge badge-method">Método FLOCK</span>
+    </div>
+    <div class="lesson-number">Aula 02</div>
+    <h1 class="lesson-title">Pinteiro e aquecimento —<br><em>brooding, heat source, chick behavior</em></h1>
+    <p class="lesson-sub">Os termos que aparecem em manuais de manejo e visitas técnicas internacionais — para você descrever o pinteiro em inglês com precisão.</p>
+  </div>
+</div>
+
+<main class="main">
+
+  <!-- F — FOCUS -->
+  <section class="section">
+    <div class="section-label">F — Focus</div>
+    <div class="focus-block">
+      <div class="focus-label">Por que você precisa dessa aula</div>
+      <p class="focus-text">A fase de aquecimento é onde o lote se define — qualquer técnico estrangeiro sabe disso. Quando um supervisor da Aviagen ou um auditor do BRC visita sua granja no início do ciclo, as primeiras perguntas são sempre sobre o pinteiro: temperatura, fonte de aquecimento e comportamento das aves. Se você não souber responder em inglês, perde credibilidade em segundos.</p>
+      <div class="focus-quote">
+        "What heat source are you using? What's the brooding temperature right now? Are the chicks showing any signs of huddling?"<br>
+        <span style="font-size:12px;color:var(--text-muted);font-style:normal;">— Perguntas padrão de qualquer supervisor estrangeiro ao visitar o pinteiro.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- OBJETIVOS -->
+  <section class="section">
+    <div class="section-label">O que você vai conseguir fazer</div>
+    <div class="objectives">
+      <div class="obj-item">
+        <div class="obj-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="obj-text">Descrever em inglês a fonte de aquecimento, a temperatura do pinteiro e o comportamento dos pintinhos</div>
+      </div>
+      <div class="obj-item">
+        <div class="obj-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="obj-text">Entender e responder as perguntas mais comuns de supervisores estrangeiros durante a fase de brooding</div>
+      </div>
+      <div class="obj-item">
+        <div class="obj-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="obj-text">Usar os termos corretos que aparecem nos manuais Cobb, Ross e Aviagen para a fase inicial de criação</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- L — LISTEN -->
+  <section class="section">
+    <div class="section-label">L — Listen · Vídeos da aula</div>
+    <div class="video-blocks">
+      <div class="video-card">
+        <div class="video-play" onclick="window.open('https://youtu.be/RYt-tIGuNEo','_blank')" style="cursor:pointer;"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+        <div class="video-info">
+          <div class="video-title"><a href="https://youtu.be/RYt-tIGuNEo" target="_blank" style="color:inherit;text-decoration:none;">Bloco 1 — Fontes de aquecimento e temperatura de brooding</a></div>
+          <div class="video-desc">Heat source, brooder, temperature zones — o vocabulário de ambiência do pinteiro</div>
+        </div>
+        <div class="video-dur">5 min</div>
+      </div>
+      <div class="video-card">
+        <div class="video-play" onclick="window.open('https://youtu.be/cUtO8pcSkOU','_blank')" style="cursor:pointer;"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+        <div class="video-info">
+          <div class="video-title"><a href="https://youtu.be/cUtO8pcSkOU" target="_blank" style="color:inherit;text-decoration:none;">Bloco 2 — Comportamento dos pintinhos como indicador de conforto</a></div>
+          <div class="video-desc">Huddling, spreading, panting — como descrever o que você vê no pinteiro em inglês</div>
+        </div>
+        <div class="video-dur">5 min</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- O — OWN (FLASHCARDS) -->
+  <section class="section">
+    <div class="section-label">O — Own · Flashcards com áudio</div>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:1rem;">Selecione sua área de atuação. Ouça cada termo antes de virar o card.</p>
+    <input type="radio" class="fc-tab-input" name="fc-tab" id="fct-all" checked>
+    <input type="radio" class="fc-tab-input" name="fc-tab" id="fct-broiler">
+    <input type="radio" class="fc-tab-input" name="fc-tab" id="fct-layer">
+    <input type="radio" class="fc-tab-input" name="fc-tab" id="fct-hatchery">
+    <input type="radio" class="fc-tab-input" name="fc-tab" id="fct-breeder">
+    <div class="fc-tab-labels">
+      <label class="fc-tab-label" for="fct-all">🌐 Todos</label>
+      <label class="fc-tab-label" for="fct-broiler">🐔 Frango de corte</label>
+      <label class="fc-tab-label" for="fct-layer">🥚 Poedeiras</label>
+      <label class="fc-tab-label" for="fct-hatchery">🐣 Incubatório</label>
+      <label class="fc-tab-label" for="fct-breeder">🐓 Matrizes</label>
+    </div>
+    <div class="voice-row">
+      <span class="voice-label">Voz:</span>
+      <span class="voices-loading" id="v-loading">Carregando vozes...</span>
+      <div id="v-btns" style="display:flex;gap:6px;flex-wrap:wrap;"></div>
+    </div>
+    <div class="fc-tab-panels" id="fc-tab-panels">
+      <div class="fc-tab-panel" id="fcp-all">
+        <div class="fc-dots" id="fc-dots-all"></div>
+        <div class="fc-nav-row">
+          <span class="fc-counter" id="fc-counter-all">1 de 9</span>
+          <div class="fc-arrows">
+            <button class="fc-arrow" onclick="fcNav('all',-1)"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+            <button class="fc-arrow" onclick="fcNav('all',1)"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+          </div>
+        </div>
+        <div class="flashcard" id="fc-all" onclick="handleCardClick(event,'all')">
+          <div class="fc-front" id="fc-front-all">
+            <div class="fc-side-label">Toque para ver a tradução</div>
+            <div class="fc-step-label" id="fc-step-all"></div>
+            <div class="fc-word" id="fc-word-all"></div>
+            <div class="fc-ipa" id="fc-ipa-all"></div>
+            <div class="audio-btns" onclick="event.stopPropagation()">
+              <button class="abtn" id="abtn-word-all" onclick="sayWord('all')"><svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>Ouvir termo</button>
+              <button class="spd-btn active" id="spd1-all" onclick="setSpd('all',1,event)">1×</button>
+              <button class="spd-btn" id="spd07-all" onclick="setSpd('all',0.7,event)">0.7×</button>
+            </div>
+            <div class="fc-hint">Toque no card para ver a tradução e o uso real</div>
+          </div>
+          <div class="fc-back" id="fc-back-all">
+            <div class="fc-side-label">Tradução e uso real</div>
+            <div class="fc-translation" id="fc-trans-all"></div>
+            <div class="audio-btns" onclick="event.stopPropagation()">
+              <button class="abtn" id="abtn-ex-all" onclick="sayEx('all')"><svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>Ouvir frase</button>
+              <button class="spd-btn active" id="exspd1-all" onclick="setExSpd('all',1,event)">1×</button>
+              <button class="spd-btn" id="exspd07-all" onclick="setExSpd('all',0.7,event)">0.7×</button>
+            </div>
+            <div class="fc-example" id="fc-ex-all"></div>
+            <div class="fc-example-pt" id="fc-ex-pt-all"></div>
+            <div class="fc-why" id="fc-why-all"></div>
+          </div>
+        </div>
+      </div>
+      <div class="fc-tab-panel" id="fcp-broiler">
+        <div class="fc-dots" id="fc-dots-broiler"></div>
+        <div class="fc-nav-row">
+          <span class="fc-counter" id="fc-counter-broiler">1 de 9</span>
+          <div class="fc-arrows">
+            <button class="fc-arrow" onclick="fcNav('broiler',-1)"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+            <button class="fc-arrow" onclick="fcNav('broiler',1)"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+          </div>
+        </div>
+        <div class="flashcard" id="fc-broiler" onclick="handleCardClick(event,'broiler')">
+          <div class="fc-front" id="fc-front-broiler">
+            <div class="fc-side-label">Toque para ver a tradução</div>
+            <div class="fc-step-label" id="fc-step-broiler"></div>
+            <div class="fc-word" id="fc-word-broiler"></div>
+            <div class="fc-ipa" id="fc-ipa-broiler"></div>
+            <div class="audio-btns" onclick="event.stopPropagation()">
+              <button class="abtn" id="abtn-word-broiler" onclick="sayWord('broiler')"><svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>Ouvir termo</button>
+              <button class="spd-btn active" id="spd1-broiler" onclick="setSpd('broiler',1,event)">1×</button>
+              <button class="spd-btn" id="spd07-broiler" onclick="setSpd('broiler',0.7,event)">0.7×</button>
+            </div>
+            <div class="fc-hint">Toque no card para ver a tradução e o uso real</div>
+          </div>
+          <div class="fc-back" id="fc-back-broiler">
+            <div class="fc-side-label">Tradução e uso real</div>
+            <div class="fc-translation" id="fc-trans-broiler"></div>
+            <div class="audio-btns" onclick="event.stopPropagation()">
+              <button class="abtn" id="abtn-ex-broiler" onclick="sayEx('broiler')"><svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>Ouvir frase</button>
+              <button class="spd-btn active" id="exspd1-broiler" onclick="setExSpd('broiler',1,event)">1×</button>
+              <button class="spd-btn" id="exspd07-broiler" onclick="setExSpd('broiler',0.7,event)">0.7×</button>
+            </div>
+            <div class="fc-example" id="fc-ex-broiler"></div>
+            <div class="fc-example-pt" id="fc-ex-pt-broiler"></div>
+            <div class="fc-why" id="fc-why-broiler"></div>
+          </div>
+        </div>
+      </div>
+      <div class="fc-tab-panel" id="fcp-layer">
+        <div class="fc-dots" id="fc-dots-layer"></div>
+        <div class="fc-nav-row">
+          <span class="fc-counter" id="fc-counter-layer">1 de 9</span>
+          <div class="fc-arrows">
+            <button class="fc-arrow" onclick="fcNav('layer',-1)"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+            <button class="fc-arrow" onclick="fcNav('layer',1)"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+          </div>
+        </div>
+        <div class="flashcard" id="fc-layer" onclick="handleCardClick(event,'layer')">
+          <div class="fc-front" id="fc-front-layer">
+            <div class="fc-side-label">Toque para ver a tradução</div>
+            <div class="fc-step-label" id="fc-step-layer"></div>
+            <div class="fc-word" id="fc-word-layer"></div>
+            <div class="fc-ipa" id="fc-ipa-layer"></div>
+            <div class="audio-btns" onclick="event.stopPropagation()">
+              <button class="abtn" id="abtn-word-layer" onclick="sayWord('layer')"><svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>Ouvir termo</button>
+              <button class="spd-btn active" id="spd1-layer" onclick="setSpd('layer',1,event)">1×</button>
+              <button class="spd-btn" id="spd07-layer" onclick="setSpd('layer',0.7,event)">0.7×</button>
+            </div>
+            <div class="fc-hint">Toque no card para ver a tradução e o uso real</div>
+          </div>
+          <div class="fc-back" id="fc-back-layer">
+            <div class="fc-side-label">Tradução e uso real</div>
+            <div class="fc-translation" id="fc-trans-layer"></div>
+            <div class="audio-btns" onclick="event.stopPropagation()">
+              <button class="abtn" id="abtn-ex-layer" onclick="sayEx('layer')"><svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>Ouvir frase</button>
+              <button class="spd-btn active" id="exspd1-layer" onclick="setExSpd('layer',1,event)">1×</button>
+              <button class="spd-btn" id="exspd07-layer" onclick="setExSpd('layer',0.7,event)">0.7×</button>
+            </div>
+            <div class="fc-example" id="fc-ex-layer"></div>
+            <div class="fc-example-pt" id="fc-ex-pt-layer"></div>
+            <div class="fc-why" id="fc-why-layer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="fc-tab-panel" id="fcp-hatchery">
+        <div class="fc-dots" id="fc-dots-hatchery"></div>
+        <div class="fc-nav-row">
+          <span class="fc-counter" id="fc-counter-hatchery">1 de 9</span>
+          <div class="fc-arrows">
+            <button class="fc-arrow" onclick="fcNav('hatchery',-1)"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+            <button class="fc-arrow" onclick="fcNav('hatchery',1)"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+          </div>
+        </div>
+        <div class="flashcard" id="fc-hatchery" onclick="handleCardClick(event,'hatchery')">
+          <div class="fc-front" id="fc-front-hatchery">
+            <div class="fc-side-label">Toque para ver a tradução</div>
+            <div class="fc-step-label" id="fc-step-hatchery"></div>
+            <div class="fc-word" id="fc-word-hatchery"></div>
+            <div class="fc-ipa" id="fc-ipa-hatchery"></div>
+            <div class="audio-btns" onclick="event.stopPropagation()">
+              <button class="abtn" id="abtn-word-hatchery" onclick="sayWord('hatchery')"><svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>Ouvir termo</button>
+              <button class="spd-btn active" id="spd1-hatchery" onclick="setSpd('hatchery',1,event)">1×</button>
+              <button class="spd-btn" id="spd07-hatchery" onclick="setSpd('hatchery',0.7,event)">0.7×</button>
+            </div>
+            <div class="fc-hint">Toque no card para ver a tradução e o uso real</div>
+          </div>
+          <div class="fc-back" id="fc-back-hatchery">
+            <div class="fc-side-label">Tradução e uso real</div>
+            <div class="fc-translation" id="fc-trans-hatchery"></div>
+            <div class="audio-btns" onclick="event.stopPropagation()">
+              <button class="abtn" id="abtn-ex-hatchery" onclick="sayEx('hatchery')"><svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>Ouvir frase</button>
+              <button class="spd-btn active" id="exspd1-hatchery" onclick="setExSpd('hatchery',1,event)">1×</button>
+              <button class="spd-btn" id="exspd07-hatchery" onclick="setExSpd('hatchery',0.7,event)">0.7×</button>
+            </div>
+            <div class="fc-example" id="fc-ex-hatchery"></div>
+            <div class="fc-example-pt" id="fc-ex-pt-hatchery"></div>
+            <div class="fc-why" id="fc-why-hatchery"></div>
+          </div>
+        </div>
+      </div>
+      <div class="fc-tab-panel" id="fcp-breeder">
+        <div class="fc-dots" id="fc-dots-breeder"></div>
+        <div class="fc-nav-row">
+          <span class="fc-counter" id="fc-counter-breeder">1 de 9</span>
+          <div class="fc-arrows">
+            <button class="fc-arrow" onclick="fcNav('breeder',-1)"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+            <button class="fc-arrow" onclick="fcNav('breeder',1)"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+          </div>
+        </div>
+        <div class="flashcard" id="fc-breeder" onclick="handleCardClick(event,'breeder')">
+          <div class="fc-front" id="fc-front-breeder">
+            <div class="fc-side-label">Toque para ver a tradução</div>
+            <div class="fc-step-label" id="fc-step-breeder"></div>
+            <div class="fc-word" id="fc-word-breeder"></div>
+            <div class="fc-ipa" id="fc-ipa-breeder"></div>
+            <div class="audio-btns" onclick="event.stopPropagation()">
+              <button class="abtn" id="abtn-word-breeder" onclick="sayWord('breeder')"><svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>Ouvir termo</button>
+              <button class="spd-btn active" id="spd1-breeder" onclick="setSpd('breeder',1,event)">1×</button>
+              <button class="spd-btn" id="spd07-breeder" onclick="setSpd('breeder',0.7,event)">0.7×</button>
+            </div>
+            <div class="fc-hint">Toque no card para ver a tradução e o uso real</div>
+          </div>
+          <div class="fc-back" id="fc-back-breeder">
+            <div class="fc-side-label">Tradução e uso real</div>
+            <div class="fc-translation" id="fc-trans-breeder"></div>
+            <div class="audio-btns" onclick="event.stopPropagation()">
+              <button class="abtn" id="abtn-ex-breeder" onclick="sayEx('breeder')"><svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>Ouvir frase</button>
+              <button class="spd-btn active" id="exspd1-breeder" onclick="setExSpd('breeder',1,event)">1×</button>
+              <button class="spd-btn" id="exspd07-breeder" onclick="setExSpd('breeder',0.7,event)">0.7×</button>
+            </div>
+            <div class="fc-example" id="fc-ex-breeder"></div>
+            <div class="fc-example-pt" id="fc-ex-pt-breeder"></div>
+            <div class="fc-why" id="fc-why-breeder"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- C — CHECK: QUIZ -->
+  <section class="section">
+    <div class="section-label">C — Check · Quiz situacional</div>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:1rem;">Selecione sua área. Situações reais do pinteiro — testa se você sabe usar o termo quando precisar.</p>
+
+    <input type="radio" class="qz-tab-input" name="qz-tab" id="qzt-all" checked>
+    <input type="radio" class="qz-tab-input" name="qz-tab" id="qzt-broiler">
+    <input type="radio" class="qz-tab-input" name="qz-tab" id="qzt-layer">
+    <input type="radio" class="qz-tab-input" name="qz-tab" id="qzt-hatchery">
+    <input type="radio" class="qz-tab-input" name="qz-tab" id="qzt-breeder">
+
+    <div class="qz-tab-labels">
+      <label class="qz-tab-label" for="qzt-all">🌐 Todos</label>
+      <label class="qz-tab-label" for="qzt-broiler">🐔 Frango de corte</label>
+      <label class="qz-tab-label" for="qzt-layer">🥚 Poedeiras</label>
+      <label class="qz-tab-label" for="qzt-hatchery">🐣 Incubatório</label>
+      <label class="qz-tab-label" for="qzt-breeder">🐓 Matrizes</label>
+    </div>
+
+    <div class="qz-tab-panels">
+      <div class="qz-tab-panel" id="qzp-all">
+        <div class="quiz-q-block" id="quiz-block-all">
+          <div class="quiz-situation">Situação real</div>
+          <div class="quiz-context" id="q-ctx-all"></div>
+          <div class="quiz-q" id="q-text-all"></div>
+          <div class="quiz-opts" id="q-opts-all"></div>
+          <div class="quiz-feedback" id="q-fb-all"></div>
+          <div class="quiz-nav">
+            <span class="quiz-prog" id="q-prog-all"></span>
+            <button class="btn-next" id="btn-next-all" onclick="nextQ('all')">Próxima →</button>
+          </div>
+        </div>
+        <div class="score-block" id="score-block-all">
+          <div class="score-num" id="score-num-all"></div>
+          <div class="score-msg" id="score-msg-all"></div>
+          <button class="btn-retry" onclick="restartQuiz('all')">Refazer o quiz</button>
+        </div>
+      </div>
+      <div class="qz-tab-panel" id="qzp-broiler">
+        <div class="quiz-q-block" id="quiz-block-broiler">
+          <div class="quiz-situation">Situação real</div>
+          <div class="quiz-context" id="q-ctx-broiler"></div>
+          <div class="quiz-q" id="q-text-broiler"></div>
+          <div class="quiz-opts" id="q-opts-broiler"></div>
+          <div class="quiz-feedback" id="q-fb-broiler"></div>
+          <div class="quiz-nav">
+            <span class="quiz-prog" id="q-prog-broiler"></span>
+            <button class="btn-next" id="btn-next-broiler" onclick="nextQ('broiler')">Próxima →</button>
+          </div>
+        </div>
+        <div class="score-block" id="score-block-broiler">
+          <div class="score-num" id="score-num-broiler"></div>
+          <div class="score-msg" id="score-msg-broiler"></div>
+          <button class="btn-retry" onclick="restartQuiz('broiler')">Refazer o quiz</button>
+        </div>
+      </div>
+      <div class="qz-tab-panel" id="qzp-layer">
+        <div class="quiz-q-block" id="quiz-block-layer">
+          <div class="quiz-situation">Situação real</div>
+          <div class="quiz-context" id="q-ctx-layer"></div>
+          <div class="quiz-q" id="q-text-layer"></div>
+          <div class="quiz-opts" id="q-opts-layer"></div>
+          <div class="quiz-feedback" id="q-fb-layer"></div>
+          <div class="quiz-nav">
+            <span class="quiz-prog" id="q-prog-layer"></span>
+            <button class="btn-next" id="btn-next-layer" onclick="nextQ('layer')">Próxima →</button>
+          </div>
+        </div>
+        <div class="score-block" id="score-block-layer">
+          <div class="score-num" id="score-num-layer"></div>
+          <div class="score-msg" id="score-msg-layer"></div>
+          <button class="btn-retry" onclick="restartQuiz('layer')">Refazer o quiz</button>
+        </div>
+      </div>
+      <div class="qz-tab-panel" id="qzp-hatchery">
+        <div class="quiz-q-block" id="quiz-block-hatchery">
+          <div class="quiz-situation">Situação real</div>
+          <div class="quiz-context" id="q-ctx-hatchery"></div>
+          <div class="quiz-q" id="q-text-hatchery"></div>
+          <div class="quiz-opts" id="q-opts-hatchery"></div>
+          <div class="quiz-feedback" id="q-fb-hatchery"></div>
+          <div class="quiz-nav">
+            <span class="quiz-prog" id="q-prog-hatchery"></span>
+            <button class="btn-next" id="btn-next-hatchery" onclick="nextQ('hatchery')">Próxima →</button>
+          </div>
+        </div>
+        <div class="score-block" id="score-block-hatchery">
+          <div class="score-num" id="score-num-hatchery"></div>
+          <div class="score-msg" id="score-msg-hatchery"></div>
+          <button class="btn-retry" onclick="restartQuiz('hatchery')">Refazer o quiz</button>
+        </div>
+      </div>
+      <div class="qz-tab-panel" id="qzp-breeder">
+        <div class="quiz-q-block" id="quiz-block-breeder">
+          <div class="quiz-situation">Situação real</div>
+          <div class="quiz-context" id="q-ctx-breeder"></div>
+          <div class="quiz-q" id="q-text-breeder"></div>
+          <div class="quiz-opts" id="q-opts-breeder"></div>
+          <div class="quiz-feedback" id="q-fb-breeder"></div>
+          <div class="quiz-nav">
+            <span class="quiz-prog" id="q-prog-breeder"></span>
+            <button class="btn-next" id="btn-next-breeder" onclick="nextQ('breeder')">Próxima →</button>
+          </div>
+        </div>
+        <div class="score-block" id="score-block-breeder">
+          <div class="score-num" id="score-num-breeder"></div>
+          <div class="score-msg" id="score-msg-breeder"></div>
+          <button class="btn-retry" onclick="restartQuiz('breeder')">Refazer o quiz</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- FILL IN THE BLANK -->
+  <section class="section">
+    <div class="section-label">C — Check · Complete a frase</div>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:1rem;">Digite o termo correto em inglês para completar cada frase. Sem dicas — você já sabe.</p>
+    <div class="fitb-block" id="fitb-block"></div>
+    <div class="fitb-score" id="fitb-score"></div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- MATCH THE TERM -->
+  <section class="section">
+    <div class="section-label">C — Check · Conecte o termo</div>
+    <p class="match-intro" style="font-size:13px;color:var(--text-muted);margin-bottom:1rem;">Clique em um termo à esquerda e depois na definição correspondente à direita. Atenção — alguns são parecidos.</p>
+    <div class="match-block">
+      <div class="match-grid">
+        <div class="match-col">
+          <div class="match-col-label">Termo em inglês</div>
+          <div id="match-terms"></div>
+        </div>
+        <div class="match-col">
+          <div class="match-col-label">Significado</div>
+          <div id="match-defs"></div>
+        </div>
+      </div>
+      <div class="match-result" id="match-result"></div>
+      <button class="match-reset" onclick="resetMatch()">Reiniciar</button>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- K — KEEP -->
+  <section class="section">
+    <div class="section-label">K — Keep · Use hoje</div>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:1rem;">Selecione sua área e preencha as lacunas. Depois copie e grave em voz alta.</p>
+    <input type="radio" class="tab-input" name="challenge-tab" id="tab-broiler" checked>
+    <input type="radio" class="tab-input" name="challenge-tab" id="tab-layer">
+    <input type="radio" class="tab-input" name="challenge-tab" id="tab-hatchery">
+    <input type="radio" class="tab-input" name="challenge-tab" id="tab-breeder">
+    <div class="tab-labels">
+      <label class="tab-label" for="tab-broiler">🐔 Frango de corte</label>
+      <label class="tab-label" for="tab-layer">🥚 Poedeiras</label>
+      <label class="tab-label" for="tab-hatchery">🐣 Incubatório</label>
+      <label class="tab-label" for="tab-breeder">🐓 Matrizes</label>
+    </div>
+    <div class="tab-panels">
+      <!-- BROILER -->
+      <div id="panel-broiler" class="tab-content">
+        <div class="script-section-label">Fonte de aquecimento</div>
+        <div class="script-note">Heat source = fonte de aquecimento · Brooder = campânula/aquecedor · Gas brooder = campânula a gás · Electric brooder = aquecedor elétrico · Radiant heater = aquecedor radiante</div>
+        <div class="script-sentence">"We use <input class="script-field" id="br2-heatsrc" placeholder="ex: gas brooders" style="min-width:130px"> as our heat source. The brooder is set to <input class="script-field" id="br2-temp" placeholder="ex: 33°C"> at chick level during the first week."</div>
+        <div class="script-section-label">Temperatura e comportamento</div>
+        <div class="script-note">Brooding temperature = temperatura de aquecimento · Spreading evenly = distribuição uniforme (ideal) · Huddling = amontoamento (frio) · Panting = ofegação (calor)</div>
+        <div class="script-sentence">"The brooding temperature in week one is <input class="script-field" id="br2-wk1temp" placeholder="ex: 33°C">, decreasing by <input class="script-field" id="br2-decrease" placeholder="ex: 2–3°C"> per week. The chicks are <input class="script-field" id="br2-behavior" placeholder="ex: spreading evenly" style="min-width:150px">, which indicates the temperature is correct."</div>
+        <div class="script-section-label">Ventilação e qualidade do ar</div>
+        <div class="script-note">Minimum ventilation = ventilação mínima · Ammonia level = nível de amônia · 10 ppm = limite máximo durante o brooding</div>
+        <div class="script-sentence">"Minimum ventilation during brooding is set to <input class="script-field" id="br2-vent" placeholder="ex: 0.5 m³/h per kg" style="min-width:170px"> to keep ammonia levels below 10 ppm. <input class="script-field" id="br2-extra" placeholder="ex: Side curtains are kept closed at night." style="min-width:280px">"</div>
+        <button class="copy-script-btn" onclick="copyDesafio2('broiler')"><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;stroke-width:2;fill:none;"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copiar meu script</button>
+      </div>
+      <!-- LAYER -->
+      <div id="panel-layer" class="tab-content">
+        <div class="script-section-label">Pinteiro das poedeiras</div>
+        <div class="script-note">Pullet = franga (poedeira jovem) · Rearing house = galpão de cria · Heat source = fonte de aquecimento · Brooding temperature = temperatura de aquecimento</div>
+        <div class="script-sentence">"We use <input class="script-field" id="ly2-heatsrc" placeholder="ex: electric brooders" style="min-width:150px"> as our heat source in the rearing house. The brooding temperature starts at <input class="script-field" id="ly2-temp" placeholder="ex: 33°C"> in week one and decreases by <input class="script-field" id="ly2-decrease" placeholder="ex: 2°C"> per week."</div>
+        <div class="script-section-label">Comportamento e bem-estar</div>
+        <div class="script-note">Spreading evenly = distribuição uniforme (ideal) · Huddling = amontoamento (frio) · Panting = ofegação (calor) · Pullet = franga</div>
+        <div class="script-sentence">"Currently the pullets are <input class="script-field" id="ly2-behavior" placeholder="ex: spreading evenly" style="min-width:150px">, indicating the temperature is correct. We maintain clear temperature zones across the house."</div>
+        <div class="script-section-label">Ventilação</div>
+        <div class="script-note">Minimum ventilation = ventilação mínima · Ammonia level = nível de amônia · Natural ventilation = ventilação natural</div>
+        <div class="script-sentence">"Minimum ventilation is maintained at all times to keep ammonia below 10 ppm. <input class="script-field" id="ly2-vent" placeholder="ex: We use side curtains and ridge vents." style="min-width:280px">"</div>
+        <button class="copy-script-btn" onclick="copyDesafio2('layer')"><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;stroke-width:2;fill:none;"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copiar meu script</button>
+      </div>
+      <!-- HATCHERY -->
+      <div id="panel-hatchery" class="tab-content">
+        <div class="script-section-label">Temperatura na nacedoura</div>
+        <div class="script-note">Hatcher = nacedoura · Hatcher temperature = temperatura da nacedoura · Hatcher humidity = umidade da nacedoura · Chick holding room = sala de espera dos pintinhos</div>
+        <div class="script-sentence">"In our hatcher, the temperature is maintained at <input class="script-field" id="ht2-temp" placeholder="ex: 36.5°C"> and humidity at <input class="script-field" id="ht2-humid" placeholder="ex: 70%"> during the hatching window."</div>
+        <div class="script-section-label">Sala de espera e comportamento</div>
+        <div class="script-note">Chick holding room = sala de espera · Panting = ofegação · Huddling = amontoamento · Chick comfort = conforto térmico dos pintinhos</div>
+        <div class="script-sentence">"After hatching, chicks are held in the chick holding room at <input class="script-field" id="ht2-holdtemp" placeholder="ex: 26°C"> until placement. We monitor for signs of <input class="script-field" id="ht2-signs" placeholder="ex: huddling or panting" style="min-width:180px"> to ensure chick comfort before delivery."</div>
+        <div class="script-section-label">Qualidade do ar</div>
+        <div class="script-note">CO₂ levels = níveis de CO₂ · Ammonia in holding room = amônia na sala de espera (deve ser zero)</div>
+        <div class="script-sentence">"We monitor CO₂ and ammonia levels in the hatchery continuously. <input class="script-field" id="ht2-air" placeholder="ex: Ammonia must be zero in the chick holding area." style="min-width:320px">"</div>
+        <button class="copy-script-btn" onclick="copyDesafio2('hatchery')"><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;stroke-width:2;fill:none;"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copiar meu script</button>
+      </div>
+      <!-- BREEDER -->
+      <div id="panel-breeder" class="tab-content">
+        <div class="script-section-label">Pinteiro das matrizes</div>
+        <div class="script-note">Broiler breeder chick = pintinho de matriz · Rearing house = galpão de cria · Gender separation = separação por sexo · Brooding temperature = temperatura de aquecimento</div>
+        <div class="script-sentence">"Broiler breeder chicks are received in our rearing house at <input class="script-field" id="bd2-age" placeholder="ex: one day of age">. We use <input class="script-field" id="bd2-heatsrc" placeholder="ex: gas brooders" style="min-width:130px"> with an initial brooding temperature of <input class="script-field" id="bd2-temp" placeholder="ex: 32°C"> at chick level."</div>
+        <div class="script-section-label">Comportamento e uniformidade</div>
+        <div class="script-note">Spreading evenly = distribuição uniforme · Huddling = amontoamento · Panting = ofegação · Body weight uniformity = uniformidade de peso corporal (crítico em matrizes desde o pinteiro)</div>
+        <div class="script-sentence">"The chicks are currently <input class="script-field" id="bd2-behavior" placeholder="ex: spreading evenly" style="min-width:150px">. <input class="script-field" id="bd2-uniform" placeholder="ex: Body weight uniformity is above 80%." style="min-width:260px">"</div>
+        <div class="script-section-label">Ventilação</div>
+        <div class="script-note">Minimum ventilation = ventilação mínima · Ammonia level = nível de amônia · Em matrizes a qualidade do ar no pinteiro impacta a saúde respiratória do plantel adulto</div>
+        <div class="script-sentence">"Minimum ventilation is maintained to keep ammonia below 10 ppm throughout brooding. <input class="script-field" id="bd2-vent" placeholder="ex: We use curtain adjustments and ridge ventilation." style="min-width:310px">"</div>
+        <button class="copy-script-btn" onclick="copyDesafio2('breeder')"><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;stroke-width:2;fill:none;"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copiar meu script</button>
+      </div>
+    </div>
+    <!-- SOCIAL -->
+    <div class="social-blk">
+      <div class="social-blk-title">📱 Compartilhe — sua rede precisa ver isso</div>
+      <p class="social-blk-sub">Você descreveu o pinteiro da sua granja em inglês com vocabulário técnico correto. Poste um áudio ou print e marque a gente.</p>
+      <div class="social-btns">
+        <a class="soc-btn primary" href="https://www.instagram.com/talkagribusiness/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;stroke-width:2;fill:none;"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>@talkagribusiness</a>
+        <a class="soc-btn" href="https://www.linkedin.com/company/talk-agribusiness" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;stroke-width:2;fill:none;"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>Talk Agribusiness no LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- BASE TÉCNICA -->
+  <section class="section">
+    <div class="sources-block">
+      <div class="sources-title">Base técnica desta aula</div>
+      <p class="sources-sub">O vocabulário desta aula vem de fontes usadas por profissionais e empresas do setor avícola mundial — para todos os perfis.</p>
+      <div class="source-list">
+        <div class="source-item">
+          <div class="source-dot"></div>
+          <div class="source-content">
+            <div class="source-name">Cobb Broiler Management Guide — Brooding Section</div>
+            <div class="source-desc">Parâmetros completos de temperatura, comportamento dos pintinhos, ventilação mínima e qualidade do ar no pinteiro de frango de corte. Vocabulário padrão usado em visitas técnicas internacionais.</div>
+            <a class="source-link" href="https://cobbgenetics.com/resources/broiler-resources/" target="_blank" rel="noopener">Acessar documento <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+          </div>
+        </div>
+        <div class="source-item">
+          <div class="source-dot"></div>
+          <div class="source-content">
+            <div class="source-name">Hy-Line Layer Management Guide — Pullet Rearing</div>
+            <div class="source-desc">Guia de manejo da Hy-Line com parâmetros de pinteiro para poedeiras — temperatura de aquecimento, comportamento das frangas, ventilação natural e metas de peso na recria.</div>
+            <a class="source-link" href="https://www.hyline.com/UserDocs/Pages/BROWN_COM_ENG.pdf" target="_blank" rel="noopener">Acessar documento <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+          </div>
+        </div>
+        <div class="source-item">
+          <div class="source-dot"></div>
+          <div class="source-content">
+            <div class="source-name">Aviagen Hatchery Management Guide</div>
+            <div class="source-desc">Manual da Aviagen com parâmetros completos de nacedoura — hatcher temperature, hatcher humidity, chick holding room e chick transport. Vocabulário usado em auditorias de qualidade de incubatório.</div>
+            <a class="source-link" href="https://www.aviagen.com/brands/ross/resources/" target="_blank" rel="noopener">Acessar documento <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+          </div>
+        </div>
+        <div class="source-item">
+          <div class="source-dot"></div>
+          <div class="source-content">
+            <div class="source-name">Ross Breeder Management Handbook — Brooding</div>
+            <div class="source-desc">Manual da Aviagen para matrizes Ross com parâmetros de pinteiro — brooding temperature, gender separation, body weight uniformity e feed allocation desde a primeira semana.</div>
+            <a class="source-link" href="https://www.aviagen.com/brands/ross/resources/" target="_blank" rel="noopener">Acessar documento <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+          </div>
+        </div>
+        <div class="source-item">
+          <div class="source-dot"></div>
+          <div class="source-content">
+            <div class="source-name">Merck Veterinary Manual — Poultry Brooding</div>
+            <div class="source-desc">Referência veterinária mundial com definições técnicas de comportamento das aves no brooding — huddling, panting e spreading. Vocabulário usado em relatórios sanitários internacionais.</div>
+            <a class="source-link" href="https://www.merckvetmanual.com/poultry" target="_blank" rel="noopener">Acessar documento <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+// ─── DADOS: FLASHCARDS ───────────────────────────────────────────
+const allCards = {
+  all: [
+    {step:"Aquecimento",word:"Heat source",ipa:"/hiːt sɔːrs/",trans:"Fonte de aquecimento",ex:"We use gas brooders as our primary heat source during the first week of brooding.",pt:"→ Usamos campânulas a gás como principal fonte de aquecimento durante a primeira semana.",why:"Primeiro termo que qualquer auditor ou técnico vai perguntar ao entrar no pinteiro"},
+    {step:"Equipamento",word:"Brooder",ipa:"/ˈbruːdər/",trans:"Campânula / aquecedor do pinteiro",ex:"The brooder is set to 33°C at chick level during the first three days.",pt:"→ A campânula está regulada a 33°C na altura dos pintinhos durante os primeiros três dias.",why:"Brooder é o equipamento, brooding é o processo — saber os dois evita confusão com técnicos estrangeiros"},
+    {step:"Temperatura",word:"Brooding temperature",ipa:"/ˈbruːdɪŋ ˈtɛmprɪtʃər/",trans:"Temperatura de aquecimento do pinteiro",ex:"Brooding temperature in week one is 33°C, decreasing by 2 to 3 degrees per week.",pt:"→ A temperatura de aquecimento na primeira semana é de 33°C, reduzindo 2 a 3 graus por semana.",why:"Parâmetro mais cobrado em visitas técnicas na fase de pinteiro — sempre cite em Celsius"},
+    {step:"Temperatura",word:"Temperature zones",ipa:"/ˈtɛmprɪtʃər zəʊnz/",trans:"Zonas de temperatura no galpão",ex:"Proper temperature zones allow chicks to self-regulate by moving closer or further from the heat source.",pt:"→ Zonas de temperatura adequadas permitem que os pintinhos se autorregulem.",why:"Conceito fundamental do pinteiro — aparece nos manuais Cobb e Ross como critério de avaliação"},
+    {step:"Comportamento",word:"Spreading evenly",ipa:"/ˈsprɛdɪŋ ˈiːvənli/",trans:"Distribuição uniforme — temperatura ideal",ex:"Chicks spreading evenly around the brooder indicates the temperature is correct.",pt:"→ Pintinhos distribuídos uniformemente indicam que a temperatura está correta.",why:"A observação visual é mais confiável que o termômetro — auditores testam esse conhecimento"},
+    {step:"Comportamento",word:"Huddling",ipa:"/ˈhʌdlɪŋ/",trans:"Amontoamento — indica frio ou corrente de ar",ex:"Huddling under the brooder indicates the temperature is too low or there is a draft.",pt:"→ Amontoamento sob a campânula indica temperatura baixa ou corrente de ar.",why:"Sinal crítico — amontoamento causa mortalidade por esmagamento nas primeiras 48 horas"},
+    {step:"Comportamento",word:"Panting",ipa:"/ˈpæntɪŋ/",trans:"Ofegação — indica calor excessivo",ex:"Panting and wing spreading indicate heat stress — reduce brooder temperature immediately.",pt:"→ Ofegação e abertura de asas indicam estresse térmico — reduza a temperatura imediatamente.",why:"Pintinhos que ofegam nas primeiras 72h têm imunidade comprometida"},
+    {step:"Ventilação",word:"Minimum ventilation",ipa:"/ˈmɪnɪməm ˌvɛntɪˈleɪʃən/",trans:"Ventilação mínima",ex:"Minimum ventilation during brooding must be maintained even in cold weather to prevent ammonia build-up.",pt:"→ A ventilação mínima deve ser mantida mesmo no frio para evitar acúmulo de amônia.",why:"Conflito clássico entre manter calor e ventilar — técnicos estrangeiros sempre perguntam como você equilibra"},
+    {step:"Qualidade do ar",word:"Ammonia level",ipa:"/əˈməʊniə ˈlɛvəl/",trans:"Nível de amônia",ex:"Ammonia levels during brooding must stay below 10 ppm to protect chick respiratory health.",pt:"→ Os níveis de amônia durante o pinteiro devem permanecer abaixo de 10 ppm.",why:"Limite mais restrito que no crescimento — 10 ppm vs 20 ppm. Auditores de bem-estar sempre verificam"}
+  ],
+  broiler: [
+    {step:"Equipamento",word:"Gas brooder",ipa:"/ɡæs ˈbruːdər/",trans:"Campânula a gás",ex:"We use gas brooders suspended 60 cm above the litter during the first week.",pt:"→ Usamos campânulas a gás suspensas a 60 cm da cama durante a primeira semana.",why:"Mais comum no Brasil — saber nomear o tipo é essencial ao receber técnicos de fornecedores estrangeiros"},
+    {step:"Equipamento",word:"Radiant heater",ipa:"/ˈreɪdiənt ˈhiːtər/",trans:"Aquecedor radiante",ex:"Radiant heaters are more energy-efficient than gas brooders for large broiler houses.",pt:"→ Aquecedores radiantes são mais eficientes que campânulas a gás em galpões grandes.",why:"Tecnologia crescente — aparece em catálogos de fornecedores como Big Dutchman e Roxell"},
+    {step:"Manejo",word:"Chick guard",ipa:"/tʃɪk ɡɑːrd/",trans:"Cercado do pinteiro",ex:"Chick guards are placed around the brooder to keep chicks close to the heat source for the first three days.",pt:"→ Os cercados são colocados ao redor da campânula para manter os pintinhos próximos nos primeiros três dias.",why:"Prática padrão nos manuais Cobb e Ross — técnicos estrangeiros verificam o uso do chick guard"},
+    {step:"Manejo",word:"Litter temperature",ipa:"/ˈlɪtər ˈtɛmprɪtʃər/",trans:"Temperatura da cama na recepção",ex:"Litter temperature should be between 28 and 30°C before chick placement to prevent leg problems.",pt:"→ A temperatura da cama deve estar entre 28 e 30°C antes do alojamento para prevenir problemas de pernas.",why:"Parâmetro específico do pinteiro de frango — distinto da temperatura do ar, cobrado em auditorias"},
+    {step:"Ventilação",word:"Tunnel curtain",ipa:"/ˈtʌnəl ˈkɜːtən/",trans:"Cortina de túnel / cortina lateral",ex:"Tunnel curtains are kept closed during brooding to maintain temperature and prevent drafts.",pt:"→ As cortinas de túnel são mantidas fechadas durante o pinteiro para evitar correntes de ar.",why:"Específico de galpões com ventilação em túnel — diferente de side curtain em galpões convencionais"},
+    {step:"Qualidade do ar",word:"CO₂ level",ipa:"/siː əʊ tuː ˈlɛvəl/",trans:"Nível de CO₂",ex:"CO₂ levels above 3,000 ppm during brooding indicate insufficient ventilation.",pt:"→ Níveis de CO₂ acima de 3.000 ppm indicam ventilação insuficiente.",why:"Com amônia, é o parâmetro de qualidade do ar mais cobrado — aprofundamos na Aula 4"},
+    {step:"Desempenho",word:"First-week mortality",ipa:"/fɜːst wiːk mɔːˈtælɪti/",trans:"Mortalidade na primeira semana",ex:"First-week mortality above 0.5% requires immediate investigation of brooding conditions.",pt:"→ Mortalidade acima de 0,5% na primeira semana exige investigação imediata das condições do pinteiro.",why:"KPI crítico do pinteiro — aparece em todos os relatórios de desempenho de integradoras internacionais"},
+    {step:"Desempenho",word:"Chick uniformity",ipa:"/tʃɪk ˌjuːnɪˈfɔːmɪti/",trans:"Uniformidade dos pintinhos",ex:"Good chick uniformity at placement is essential for achieving uniform flock performance at slaughter.",pt:"→ Boa uniformidade no alojamento é essencial para desempenho uniforme ao abate.",why:"Avaliado na chegada — impacta diretamente o FCR e o peso ao abate"}
+  ],
+  layer: [
+    {step:"Fase",word:"Pullet",ipa:"/ˈpʊlɪt/",trans:"Franga — poedeira jovem (antes de 18 semanas)",ex:"Pullets are kept in the rearing house until they reach 16 to 18 weeks of age.",pt:"→ As frangas são mantidas no galpão de cria até atingirem de 16 a 18 semanas.",why:"Usar hen para uma franga é erro técnico em documentos internacionais"},
+    {step:"Fase",word:"Rearing house",ipa:"/ˈrɪərɪŋ haʊs/",trans:"Galpão de cria e recria",ex:"The rearing house must be set up and heated 24 hours before pullet placement.",pt:"→ O galpão de cria deve ser preparado e aquecido 24 horas antes do alojamento.",why:"Diferente de laying house — saber nomear cada instalação é essencial em visitas técnicas"},
+    {step:"Equipamento",word:"Electric brooder",ipa:"/ɪˈlɛktrɪk ˈbruːdər/",trans:"Aquecedor elétrico do pinteiro",ex:"Electric brooders provide more precise temperature control than gas brooders for pullet rearing.",pt:"→ Aquecedores elétricos fornecem controle mais preciso para a cria de frangas.",why:"Comum em granjas de poedeiras — mais limpo e controlável que gás, especialmente em cage-free"},
+    {step:"Manejo",word:"Beak trimming",ipa:"/biːk ˈtrɪmɪŋ/",trans:"Debicagem",ex:"Beak trimming is performed between 7 and 10 days of age to prevent feather pecking and cannibalism.",pt:"→ A debicagem é realizada entre 7 e 10 dias para prevenir bicagem de penas e canibalismo.",why:"Prática com vocabulário específico e implicações em certificações de bem-estar"},
+    {step:"Desempenho",word:"Body weight target",ipa:"/ˈbɒdi weɪt ˈtɑːɡɪt/",trans:"Meta de peso corporal",ex:"Meeting the body weight target at each rearing checkpoint is critical for achieving on-time sexual maturity.",pt:"→ Atingir a meta de peso em cada ponto de controle é crítico para a maturidade sexual no prazo.",why:"KPI fundamental da recria — peso abaixo do target na semana 6 impacta o pico de postura"},
+    {step:"Ventilação",word:"Natural ventilation",ipa:"/ˈnætʃərəl ˌvɛntɪˈleɪʃən/",trans:"Ventilação natural",ex:"Natural ventilation in rearing houses uses side curtains and ridge vents to maintain air quality.",pt:"→ A ventilação natural usa cortinas laterais e aberturas de cume para manter a qualidade do ar.",why:"Sistema mais comum em granjas de poedeiras no Brasil — diferente do tunnel ventilation de frangos"},
+    {step:"Bem-estar",word:"Perch",ipa:"/pɜːtʃ/",trans:"Poleiro",ex:"Providing perches from day one in cage-free rearing houses improves pullet welfare and bone strength.",pt:"→ Fornecer poleiros desde o primeiro dia melhora o bem-estar e a resistência óssea das frangas.",why:"Exigência obrigatória em sistemas cage-free e enriched colony — aprofundamos na Semana 5"},
+    {step:"Bem-estar",word:"Scratch area",ipa:"/skrætʃ ˈɛəriə/",trans:"Área para ciscar",ex:"Scratch areas with litter material must be available from day one in cage-free pullet rearing.",pt:"→ Áreas para ciscar devem estar disponíveis desde o primeiro dia na cria cage-free.",why:"Certificações de bem-estar exigem acesso a scratch area desde o pinteiro"}
+  ],
+  hatchery: [
+    {step:"Equipamento",word:"Hatcher",ipa:"/ˈhætʃər/",trans:"Nacedoura — máquina de nascimento",ex:"Eggs are transferred from the setter to the hatcher on day 18 of incubation.",pt:"→ Os ovos são transferidos da incubadora para a nacedoura no dia 18 de incubação.",why:"Diferente de setter (incubadora) — saber a distinção é básico para conversas com fornecedores"},
+    {step:"Parâmetros",word:"Hatcher temperature",ipa:"/ˈhætʃər ˈtɛmprɪtʃər/",trans:"Temperatura da nacedoura",ex:"Hatcher temperature is typically set at 36.5°C during the hatching window.",pt:"→ A temperatura da nacedoura é tipicamente ajustada para 36,5°C durante a janela de nascimento.",why:"Temperatura fora do ideal reduz hatchability e compromete a qualidade do pintinho"},
+    {step:"Parâmetros",word:"Hatcher humidity",ipa:"/ˈhætʃər hjuːˈmɪdɪti/",trans:"Umidade da nacedoura",ex:"Hatcher humidity is increased to 70% during the last three days to facilitate chick emergence.",pt:"→ A umidade é aumentada para 70% nos últimos três dias para facilitar a eclosão.",why:"Controlar umidade na nacedoura é diferente de controlar na incubadora — parâmetros distintos"},
+    {step:"Qualidade",word:"Chick holding room",ipa:"/tʃɪk ˈhəʊldɪŋ ruːm/",trans:"Sala de espera dos pintinhos",ex:"The chick holding room must be maintained at 24 to 26°C to prevent chick dehydration.",pt:"→ A sala de espera deve ser mantida a 24–26°C para evitar desidratação dos pintinhos.",why:"Temperatura e umidade impactam diretamente a qualidade do pintinho entregue"},
+    {step:"Qualidade",word:"Navel score",ipa:"/ˈneɪvəl skɔːr/",trans:"Escore de cicatrização do umbigo",ex:"Navel score is one of the five parameters evaluated in the Pasgar chick quality assessment.",pt:"→ O escore do umbigo é um dos cinco parâmetros do sistema de qualidade Pasgar.",why:"Umbigo mal cicatrizado indica problema na nacedoura — temperatura alta ou ventilação insuficiente"},
+    {step:"Qualidade",word:"Dehydrated chick",ipa:"/ˌdiːˈhaɪdreɪtɪd tʃɪk/",trans:"Pintinho desidratado",ex:"Dehydrated chicks have sunken eyes and dry skin — a sign of overheating in the hatcher.",pt:"→ Pintinhos desidratados têm olhos fundos e pele seca — sinal de superaquecimento na nacedoura.",why:"Problema grave que impacta o desempenho do lote inteiro — identificar e reportar em inglês é essencial"},
+    {step:"Processo",word:"Chick processing",ipa:"/tʃɪk ˈprəʊsɛsɪŋ/",trans:"Processamento dos pintinhos",ex:"Chick processing includes sexing, vaccination, counting and boxing before delivery.",pt:"→ O processamento inclui sexagem, vacinação, contagem e embalagem antes da entrega.",why:"Conjunto de operações pós-nascimento — cada etapa tem vocabulário que aparece em relatórios"},
+    {step:"Processo",word:"Chick transport",ipa:"/tʃɪk ˈtrænspɔːt/",trans:"Transporte dos pintinhos",ex:"Chick transport temperature must be maintained between 22 and 26°C to prevent stress.",pt:"→ A temperatura do transporte deve ser mantida entre 22 e 26°C para evitar estresse.",why:"Temperatura errada no transporte anula todo o trabalho da nacedoura"}
+  ],
+  breeder: [
+    {step:"Fase",word:"Broiler breeder chick",ipa:"/ˈbrɔɪlər ˈbriːdər tʃɪk/",trans:"Pintinho de matriz de frango de corte",ex:"Broiler breeder chicks are received at one day of age and reared separately by sex.",pt:"→ Os pintinhos de matrizes são recebidos com um dia de vida e criados separados por sexo.",why:"O manejo do pinteiro em matrizes é muito mais rigoroso que em broilers comerciais"},
+    {step:"Manejo",word:"Gender separation",ipa:"/ˈdʒɛndər ˌsɛpəˈreɪʃən/",trans:"Separação por sexo desde o alojamento",ex:"Gender separation from day one allows for precise feed management in broiler breeders.",pt:"→ A separação por sexo desde o primeiro dia permite manejo preciso da alimentação.",why:"Obrigatório em matrizes — galos e galinhas têm curvas de crescimento e dietas diferentes"},
+    {step:"Desempenho",word:"Body weight uniformity",ipa:"/ˈbɒdi weɪt ˌjuːnɪˈfɔːmɪti/",trans:"Uniformidade de peso corporal",ex:"Body weight uniformity above 80% at end of brooding is the target for breeder flocks.",pt:"→ Uniformidade acima de 80% ao final do pinteiro é a meta para lotes de matrizes.",why:"KPI crítico desde o pinteiro — uniformidade baixa compromete a produção de ovos férteis no pico"},
+    {step:"Desempenho",word:"Feed allocation",ipa:"/fiːd ˌæləˈkeɪʃən/",trans:"Alocação de ração fornecida",ex:"Feed allocation in broiler breeders during rearing is strictly controlled to avoid overweight birds.",pt:"→ A alocação de ração é rigorosamente controlada para evitar aves com sobrepeso.",why:"Matrizes têm alimentação controlada desde o pinteiro — diferente de broilers que comem à vontade"},
+    {step:"Equipamento",word:"Grille feeder",ipa:"/ɡrɪl ˈfiːdər/",trans:"Comedouro com grade (exclusivo para galinhas)",ex:"Grille feeders allow hens to access feed while preventing roosters from stealing it.",pt:"→ Comedouros com grade permitem que as galinhas acessem a ração impedindo os galos.",why:"Equipamento específico de matrizes — não existe em broiler ou layer"},
+    {step:"Saúde",word:"Vaccination at placement",ipa:"/ˌvæksɪˈneɪʃən æt ˈpleɪsmənt/",trans:"Vacinação no alojamento",ex:"Vaccination at placement for Marek's disease is mandatory for all broiler breeder flocks.",pt:"→ A vacinação no alojamento contra Marek é obrigatória para todos os lotes de matrizes.",why:"Vocabulário completo de vacinação será coberto na Semana 2"},
+    {step:"Saúde",word:"Respiratory challenge",ipa:"/ˈrɛspɪrətri ˈtʃælɪndʒ/",trans:"Desafio respiratório",ex:"Maintaining minimum ventilation during brooding reduces respiratory challenge in young breeder flocks.",pt:"→ Manter ventilação mínima reduz o risco de desafio respiratório em lotes jovens de matrizes.",why:"Termo usado em relatórios sanitários — matrizes têm imunidade comprometida nas primeiras semanas"},
+    {step:"Saúde",word:"Leg health",ipa:"/lɛɡ hɛlθ/",trans:"Saúde das pernas",ex:"Litter temperature and brooding conditions directly impact leg health in broiler breeders.",pt:"→ Temperatura da cama e condições do pinteiro impactam a saúde das pernas em matrizes.",why:"Galos com problemas locomotores comprometem o índice de fertilidade natural no pico"}
+  ]
+};
+
+// ─── DADOS: EXERCÍCIOS ───────────────────────────────────────────
+const quizData = {
+  all: [
+    { ctx:"Um técnico estrangeiro entra no pinteiro e observa os pintinhos amontoados sob a campânula.",
+      q:"O que esse comportamento indica em inglês?",
+      opts:["The chicks are panting, indicating heat stress","The chicks are huddling, indicating the temperature is too low or there is a draft","The chicks are spreading evenly, indicating the temperature is correct","The chicks are vocalizing, indicating they are hungry"],
+      correct:1, fb:"Correto. Huddling = amontoamento sob a fonte de calor — indica frio ou corrente de ar. O oposto é spreading evenly (distribuição uniforme), que indica temperatura ideal. Panting (ofegação) indica calor excessivo." },
+    { ctx:"Você está explicando para um supervisor estrangeiro como monitora a temperatura no pinteiro.",
+      q:"Qual é a diferença entre brooding temperature e temperature zones?",
+      opts:["São sinônimos — ambos se referem à temperatura do ar no galpão","Brooding temperature é o parâmetro alvo, temperature zones são áreas com diferentes temperaturas que permitem aos pintinhos se autorregular","Brooding temperature é medida no chão, temperature zones são medidas no teto","Temperature zones são usadas apenas no inverno"],
+      correct:1, fb:"Correto. Brooding temperature é o parâmetro de temperatura alvo na altura dos pintinhos. Temperature zones são áreas com diferentes temperaturas dentro do galpão — essencial para que os pintinhos se movam para onde estão confortáveis. Esse conceito aparece nos manuais Cobb e Ross." },
+    { ctx:"Um auditor de bem-estar verifica seus registros de qualidade do ar no pinteiro.",
+      q:"Qual é o limite máximo de ammonia level durante o brooding, segundo os padrões internacionais?",
+      opts:["Abaixo de 5 ppm","Abaixo de 10 ppm","Abaixo de 20 ppm","Abaixo de 50 ppm"],
+      correct:1, fb:"Correto. Durante o brooding, o limite de amônia é abaixo de 10 ppm — mais restrito que no grow-out (20 ppm). Pintinhos têm o sistema respiratório muito mais sensível. Citar esse número em inglês com precisão é o que diferencia um profissional técnico em auditorias." },
+    { ctx:"Você precisa explicar em inglês por que não fecha completamente o galpão no pinteiro mesmo quando está frio.",
+      q:"Como você explica a importância do minimum ventilation durante o brooding?",
+      opts:["Minimum ventilation prevents heat loss during cold weather","Minimum ventilation must be maintained even in cold weather to prevent ammonia build-up and maintain air quality","Minimum ventilation is only required when ammonia levels exceed 20 ppm","Minimum ventilation replaces the need for a heat source during warm weather"],
+      correct:1, fb:"Correto. Minimum ventilation deve ser mantida mesmo no frio para evitar ammonia build-up (acúmulo de amônia). Esse é o conflito clássico do pinteiro: manter calor vs manter qualidade do ar. Técnicos estrangeiros sempre perguntam como você equilibra isso." },
+    { ctx:"Um pintinho com temperatura corporal baixa está tentando se aquecer.",
+      q:"Qual comportamento você descreveria em inglês para indicar que os pintinhos estão com frio?",
+      opts:["The chicks are panting and opening their wings","The chicks are huddling together under the heat source","The chicks are spreading evenly around the brooder","The chicks are scratching the litter near the feeders"],
+      correct:1, fb:"Correto. Huddling = amontoamento sob a campânula — sinal claro de que os pintinhos estão com frio ou há corrente de ar. É o comportamento mais associado a mortalidade nas primeiras 48 horas por esmagamento." },
+    { ctx:"Você está escrevendo um relatório em inglês sobre as condições do pinteiro desta semana.",
+      q:"Como você descreve corretamente que os pintinhos estão com temperatura ideal?",
+      opts:["The chicks are huddling, indicating optimal brooding conditions","The chicks are panting, indicating the heat source is working correctly","The chicks are spreading evenly around the brooder, indicating the temperature is correct","The chicks are vocalizing loudly, indicating they are comfortable"],
+      correct:2, fb:"Correto. Spreading evenly = distribuição uniforme ao redor da campânula — o sinal visual de que a temperatura está correta. Essa descrição aparece exatamente assim nos checklists de visita técnica dos manuais Cobb e Ross." }
+  ],
+  broiler: [
+    { ctx:"Você recebe pintinhos de um dia e precisa verificar a temperatura da cama antes do alojamento.",
+      q:"Qual termo descreve esse parâmetro e qual é o valor correto?",
+      opts:["Litter temperature should be between 15 and 20°C before chick placement","Litter temperature should be between 28 and 30°C before chick placement to prevent leg problems","Litter temperature should match the air temperature exactly at all times","Litter temperature is only relevant during cold weather conditions"],
+      correct:1, fb:"Correto. Litter temperature deve estar entre 28 e 30°C antes do alojamento. Temperatura da cama baixa causa problemas locomotores nos pintinhos — um parâmetro específico de frango de corte, diferente da temperatura do ar." },
+    { ctx:"Um técnico da Cobb visita seu galpão e pergunta sobre o uso de chick guards.",
+      q:"O que são chick guards e por que são usados nos primeiros dias?",
+      opts:["Metal cages that keep chicks separated by weight during the first week","Circular barriers placed around the brooder to keep chicks close to the heat source for the first three days","Protective covers placed over feeders to prevent feed contamination","Curtains installed to prevent drafts near the brooding area"],
+      correct:1, fb:"Correto. Chick guards são cercados circulares ao redor da campânula para manter os pintinhos próximos à fonte de calor e ao comedouro nos primeiros 3 dias. Prática padrão nos manuais Cobb e Ross — técnicos estrangeiros sempre perguntam se você usa." },
+    { ctx:"Você está descrevendo seu sistema de aquecimento para um comprador internacional.",
+      q:"Como você diferencia gas brooder de radiant heater em inglês?",
+      opts:["Gas brooders use electricity, radiant heaters use gas — the opposite of their names","Gas brooders use an open flame for direct heat, radiant heaters use infrared radiation for more efficient heating","Gas brooders are only used in cold climates, radiant heaters in warm climates","They are synonyms for the same type of heating equipment"],
+      correct:1, fb:"Correto. Gas brooder usa chama de gás para aquecimento direto. Radiant heater usa radiação infravermelha — mais eficiente energeticamente para galpões maiores. Saber distinguir é essencial ao discutir equipamentos com fornecedores como Big Dutchman ou Roxell." },
+    { ctx:"O CO₂ no seu pinteiro está acima do limite recomendado.",
+      q:"O que um CO₂ level acima de 3,000 ppm durante o brooding indica?",
+      opts:["The brooding temperature is too high and needs to be reduced","There is insufficient ventilation in the brooding house","The chicks are consuming too much oxygen during rapid growth","The litter moisture content is too high causing gas release"],
+      correct:1, fb:"Correto. CO₂ acima de 3.000 ppm durante o brooding indica ventilação insuficiente. Junto com ammonia level, é o parâmetro de qualidade do ar mais cobrado em visitas técnicas. Aprofundaremos ventilação na Aula 4." },
+    { ctx:"Seu relatório de primeira semana mostra mortalidade de 0,8%.",
+      q:"Como você descreveria essa situação em inglês e o que ela indica?",
+      opts:["First-week mortality of 0.8% is within acceptable limits and requires no action","First-week mortality of 0.8% is above the 0.5% threshold and requires immediate investigation of brooding conditions","First-week mortality only becomes a concern when it exceeds 2% in the first week","First-week mortality is not a reliable indicator of brooding quality"],
+      correct:1, fb:"Correto. First-week mortality acima de 0,5% é um red flag — exige investigação imediata das condições do pinteiro: temperatura, ventilação, qualidade do pintinho. Esse threshold aparece em todos os relatórios de desempenho de integradoras internacionais." },
+    { ctx:"Você precisa reportar chick uniformity baixa ao seu supervisor estrangeiro.",
+      q:"Como você explica o impacto de baixa chick uniformity no desempenho do lote?",
+      opts:["Poor chick uniformity at placement only affects the first week of production","Poor chick uniformity at placement leads to uneven flock performance, affecting FCR and live weight at slaughter","Chick uniformity is only important for broiler breeders, not commercial broilers","Low chick uniformity can be corrected by adjusting the feeding system after day 7"],
+      correct:1, fb:"Correto. Baixa chick uniformity no alojamento resulta em desempenho não uniforme do lote — impacta FCR e peso ao abate. É avaliada na chegada dos pintinhos e é responsabilidade tanto do incubatório quanto do manejo inicial na granja." }
+  ],
+  layer: [
+    { ctx:"Você está apresentando seu sistema de cria para um auditor de bem-estar animal.",
+      q:"Qual é a diferença entre pullet e hen em inglês?",
+      opts:["They are synonyms — both refer to adult female chickens","A pullet is a young female chicken under 18 weeks of age, a hen is an adult female chicken in production","A pullet is a male chicken, a hen is a female chicken","Pullet refers to cage-free birds, hen refers to caged birds"],
+      correct:1, fb:"Correto. Pullet = franga (fêmea jovem, antes dos 18 meses). Hen = galinha adulta em postura. Usar hen para se referir a uma franga é erro técnico em documentos e relatórios internacionais — auditores notam essa distinção." },
+    { ctx:"Você recebe uma visita técnica da Hy-Line e ela pergunta sobre seu rearing house.",
+      q:"Como você diferencia rearing house de laying house em inglês?",
+      opts:["Rearing house and laying house are the same facility — only the name changes","Rearing house is where pullets are raised from day one to 16-18 weeks, laying house is where hens produce eggs","Rearing house is for broilers, laying house is for layers","Rearing house is used only in cage-free systems"],
+      correct:1, fb:"Correto. Rearing house = galpão de cria e recria (pintinhos até 16-18 semanas). Laying house = galpão de postura (galinhas adultas em produção). Saber nomear cada instalação corretamente é essencial em visitas técnicas e relatórios." },
+    { ctx:"Um auditor verifica suas práticas de bem-estar animal na cria.",
+      q:"Em que contexto beak trimming é realizado e qual é o período correto?",
+      opts:["Beak trimming is performed at 4 weeks of age to improve feed conversion","Beak trimming is performed between 7 and 10 days of age to prevent feather pecking and cannibalism","Beak trimming is prohibited in all international welfare certifications","Beak trimming is only performed in free-range systems"],
+      correct:1, fb:"Correto. Beak trimming é realizado entre 7 e 10 dias para prevenir feather pecking (bicagem de penas) e canibalismo. Tem implicações em certificações de bem-estar — algumas proibem a prática, outras permitem com restrições. Aprofundaremos na Semana 5." },
+    { ctx:"Seu plantel está na semana 6 da recria e o peso está abaixo do body weight target.",
+      q:"Qual é o impacto de não atingir o body weight target na semana 6?",
+      opts:["Missing the body weight target at week 6 only affects egg size in the laying phase","Missing the body weight target at week 6 can delay sexual maturity and shift the production curve","Body weight target at week 6 is not critical — only the final weight before transfer matters","Missing the body weight target can be corrected by switching to a higher protein diet at week 10"],
+      correct:1, fb:"Correto. Peso abaixo do target na semana 6 pode atrasar a maturidade sexual e deslocar o pico de postura. É um dos checkpoints mais críticos da recria — monitorado em todos os manuais de manejo de poedeiras como Hy-Line e Lohmann." },
+    { ctx:"Você está descrevendo seu sistema de ventilação para um comprador europeu.",
+      q:"Como você explica natural ventilation em um rearing house?",
+      opts:["Natural ventilation uses exhaust fans and inlets to control air movement","Natural ventilation uses side curtains and ridge vents to allow air movement without mechanical systems","Natural ventilation is not suitable for pullet rearing in tropical climates","Natural ventilation and tunnel ventilation are the same system"],
+      correct:1, fb:"Correto. Natural ventilation usa cortinas laterais (side curtains) e aberturas de cume (ridge vents) para circulação de ar sem sistemas mecânicos. É o sistema mais comum em granjas de poedeiras no Brasil — diferente do tunnel ventilation de frangos de corte." },
+    { ctx:"Você opera um sistema cage-free e recebe um auditor Certified Humane.",
+      q:"Quais elementos são obrigatórios desde o pinteiro em um sistema cage-free?",
+      opts:["Only nipple drinkers and pan feeders are required from day one in cage-free rearing","Perches and scratch areas must be available from day one in cage-free pullet rearing","Outdoor access is required from day one in cage-free certified systems","Cage-free systems only require additional space compared to conventional cages"],
+      correct:1, fb:"Correto. Perches (poleiros) e scratch areas (áreas para ciscar) devem estar disponíveis desde o primeiro dia na cria cage-free. São comportamentos naturais das galinhas — certificações de bem-estar como Certified Humane exigem desde o pinteiro. Aprofundaremos na Semana 5." }
+  ],
+  hatchery: [
+    { ctx:"Você está explicando o processo de incubação para um visitante técnico estrangeiro.",
+      q:"Qual é a diferença entre setter e hatcher?",
+      opts:["Setter and hatcher are different names for the same incubation machine","The setter is the incubator where eggs are placed for the first 18 days, the hatcher is where eggs are transferred for the final 3 days until hatching","The setter is used for layer eggs, the hatcher for broiler eggs","The hatcher is used for artificial insemination, the setter for natural incubation"],
+      correct:1, fb:"Correto. Setter = incubadora (dias 1 a 18). Hatcher = nacedoura (dias 18 a 21, onde ocorre a eclosão). Saber essa distinção é básico para qualquer conversa técnica com fornecedores de equipamentos como Petersime ou Pas Reform." },
+    { ctx:"Os parâmetros da sua nacedoura estão sendo auditados por um cliente internacional.",
+      q:"Qual é a temperatura correta da hatcher durante a janela de nascimento?",
+      opts:["37.8°C — the same as the setter temperature throughout incubation","36.5°C — slightly lower than the setter to support chick emergence","38.5°C — higher than the setter to accelerate hatching","35.0°C — significantly lower to prevent overheating during hatching"],
+      correct:1, fb:"Correto. Hatcher temperature é tipicamente 36,5°C — ligeiramente mais baixa que a setter (37,5-37,8°C). A diferença é importante: temperatura fora do range na nacedoura reduz hatchability e compromete o navel score do pintinho." },
+    { ctx:"Um pintinho chegou na granja com olhos fundos e pele seca.",
+      q:"Como você descreve esse problema em inglês e qual é a causa provável?",
+      opts:["The chick has low navel score, caused by bacterial infection in the hatchery","The chick is dehydrated, likely caused by overheating in the hatcher or holding room","The chick has respiratory challenge, caused by high ammonia in the hatchery","The chick has leg problems, caused by incorrect hatcher humidity"],
+      correct:1, fb:"Correto. Dehydrated chick = pintinho desidratado — olhos fundos e pele seca. Causa provável: superaquecimento na nacedoura ou na chick holding room. É um dos problemas mais sérios porque impacta o desempenho do lote inteiro desde o alojamento." },
+    { ctx:"Você precisa reportar a qualidade dos pintinhos desta semana para o cliente.",
+      q:"O que o navel score avalia no sistema Pasgar de qualidade?",
+      opts:["The navel score evaluates the chick's weight and uniformity at hatch","The navel score evaluates the quality of umbilical cord healing — one of five parameters in the Pasgar system","The navel score is a measure of hatchability across all setters","The navel score evaluates the chick's vaccination response at placement"],
+      correct:1, fb:"Correto. Navel score avalia a cicatrização do umbigo — um dos 5 parâmetros do Pasgar (junto com plumagem, pernas, olhos e vitalidade). Umbigo mal cicatrizado indica problema na nacedoura: temperatura alta demais ou ventilação insuficiente." },
+    { ctx:"Você está descrevendo o processamento dos pintinhos para um cliente exportador.",
+      q:"O que chick processing inclui antes da entrega na granja?",
+      opts:["Chick processing only includes counting and boxing the chicks for transport","Chick processing includes sexing, vaccination, counting and boxing before delivery to the farm","Chick processing refers only to the vaccination protocol applied at hatch","Chick processing is performed at the farm, not at the hatchery"],
+      correct:1, fb:"Correto. Chick processing inclui sexing (sexagem), vaccination (vacinação), counting (contagem) e boxing (embalagem) antes da entrega. Cada etapa tem vocabulário específico — reportar essas operações em inglês é essencial para clientes internacionais." },
+    { ctx:"A temperatura do chick transport estava incorreta durante a entrega de hoje.",
+      q:"Qual é a faixa de temperatura correta para o chick transport?",
+      opts:["Between 15 and 18°C to prevent overheating during transport","Between 22 and 26°C to prevent chick stress during delivery","Between 30 and 33°C to maintain the same temperature as the holding room","Between 10 and 15°C for long-distance transport over 3 hours"],
+      correct:1, fb:"Correto. Chick transport deve ser mantido entre 22 e 26°C. Temperatura fora desse range — seja fria demais ou quente demais — causa estresse nos pintinhos e compromete o desempenho do lote. Temperatura errada no transporte anula o trabalho de toda a operação de incubatório." }
+  ],
+  breeder: [
+    { ctx:"Você apresenta seu protocolo de alojamento para um técnico da Aviagen.",
+      q:"Por que gender separation é realizada desde o primeiro dia em matrizes de frango de corte?",
+      opts:["Gender separation is done to prevent disease transmission between male and female chicks","Gender separation from day one allows for precise feed management and body weight control since males and females have different growth curves","Gender separation is only required in cage systems, not in litter floor systems","Gender separation is performed at 3 weeks of age, not at placement"],
+      correct:1, fb:"Correto. Gender separation desde o dia 1 é obrigatória em matrizes porque galos e galinhas têm curvas de crescimento e exigências nutricionais completamente diferentes. Sem separação, é impossível controlar o body weight e a feed allocation de cada sexo." },
+    { ctx:"Seu relatório de uniformidade da semana 4 mostra 72% — abaixo da meta.",
+      q:"Qual é a meta de body weight uniformity ao final do brooding em matrizes?",
+      opts:["Above 60% uniformity is acceptable at the end of brooding","Above 80% uniformity at end of brooding is the target for well-managed breeder flocks","Body weight uniformity only matters from week 16 onwards","Uniformity above 90% is required — any lower indicates a management failure"],
+      correct:1, fb:"Correto. A meta é acima de 80% de uniformidade ao final do pinteiro em matrizes. Uniformidade baixa nessa fase compromete a produção de ovos férteis no pico — porque lotes não uniformes não atingem a maturidade sexual ao mesmo tempo." },
+    { ctx:"Você está explicando o sistema de alimentação para um auditor internacional.",
+      q:"O que são grille feeders e por que são usados em matrizes?",
+      opts:["Grille feeders are feeders with a grill pattern on the outside for aesthetic purposes","Grille feeders have a grid opening that allows hens to access feed while preventing roosters from eating from the same feeder","Grille feeders are used only during the brooding phase for small chicks","Grille feeders are automated feeding systems used in large breeder farms"],
+      correct:1, fb:"Correto. Grille feeders têm uma grade que permite às galinhas acessar a ração mas bloqueia os galos — que têm comedouros exclusivos suspensos mais alto. Esse sistema é específico de matrizes e não existe em broiler ou layer comercial." },
+    { ctx:"Você precisa descrever seu programa de vacinação no alojamento para um comprador de pintinhos.",
+      q:"Por que vaccination at placement é obrigatória para matrizes de frango de corte?",
+      opts:["Vaccination at placement is optional for broiler breeders — only required for layer breeders","Vaccination at placement for Marek's disease is mandatory for all broiler breeder flocks to protect the parent stock and their progeny","Vaccination at placement refers to the in-ovo vaccination performed before hatching","Vaccination at placement is only required when birds will be exported"],
+      correct:1, fb:"Correto. Vacinação no alojamento para doença de Marek é obrigatória em matrizes. Matrizes não vacinadas podem transmitir o vírus aos pintinhos comerciais — o impacto se propaga por toda a cadeia. Vocabulário completo de vacinação será coberto na Semana 2." },
+    { ctx:"Um técnico da Ross pergunta sobre sua estratégia de feed allocation no pinteiro.",
+      q:"Por que feed allocation é rigorosamente controlada em matrizes desde o pinteiro?",
+      opts:["Feed allocation is controlled to reduce feed costs during the low-value rearing phase","Feed allocation is strictly controlled to prevent overweight birds — overweight breeders have reduced fertility and egg production","Feed allocation in breeders is the same as in commercial broilers — ad libitum feeding","Feed allocation is only controlled from week 16 when birds approach sexual maturity"],
+      correct:1, fb:"Correto. Matrizes com sobrepeso têm fertilidade reduzida e problemas reprodutivos. Por isso a feed allocation começa a ser controlada desde o pinteiro — diferente de broilers comerciais que comem à vontade (ad libitum). Essa é uma das maiores diferenças de manejo entre as duas categorias." },
+    { ctx:"Você está reportando um problema de leg health no seu lote de matrizes.",
+      q:"Qual é a relação entre brooding conditions e leg health em matrizes?",
+      opts:["Leg health in breeders is determined entirely by genetics and is not affected by brooding conditions","Litter temperature and brooding conditions directly impact leg health and long-term locomotion in broiler breeders","Leg health problems in breeders only appear after 30 weeks of age and are unrelated to early brooding","Leg health is only a concern in male breeders, not in female breeders"],
+      correct:1, fb:"Correto. Temperatura da cama e condições do pinteiro impactam diretamente a saúde das pernas em matrizes. Galos com problemas locomotores têm acasalamento reduzido — o que compromete a taxa de fertilidade natural no pico de produção." }
+  ]
+};
+const quizState = {};
+['all','broiler','layer','hatchery','breeder'].forEach(t => {
+  quizState[t] = { idx:0, score:0, answered:false, done:false };
+});
+
+
+const fitbData = [
+  { before:"The chicks were", blank:"huddling", after:"under the brooder, which indicated the temperature was too low.", hint:"amontoamento", fb:"'Huddling' indica que os pintinhos estão com frio ou há corrente de ar. É o sinal de alerta mais comum no pinteiro." },
+  { before:"Ammonia levels must stay below 10 ppm during", blank:"brooding", after:"to protect chick respiratory health.", hint:"fase de aquecimento", fb:"'Brooding' é a fase de aquecimento — não confunda com 'brooder', que é o equipamento." },
+  { before:"Birds were", blank:"panting", after:"and moving away from the heat source, so we reduced the temperature.", hint:"ofegação", fb:"'Panting' indica calor excessivo. É o oposto de huddling — e os dois juntos cobrem os dois erros mais comuns de temperatura no pinteiro." },
+  { before:"We set up temperature", blank:"zones", after:"to allow chicks to self-regulate their comfort level.", hint:"zonas", fb:"'Temperature zones' é o gradiente de temperatura no galpão — permite que os pintinhos escolham a área de maior conforto." },
+  { before:"Minimum", blank:"ventilation", after:"during brooding is critical to remove moisture and ammonia without chilling the chicks.", hint:"ventilação", fb:"'Minimum ventilation' é o ponto de equilíbrio entre qualidade do ar e temperatura — um dos parâmetros mais cobrados em auditorias BRC." },
+  { before:"The", blank:"heat source", after:"in our brooder house is a radiant gas brooder set to 34°C.", hint:"fonte de aquecimento", fb:"'Heat source' é o termo genérico para a fonte de aquecimento — pode ser campânula a gás, infravermelho ou aquecimento por piso." }
+];
+
+const matchData = [
+  { term:"Huddling", def:"Amontoamento — indica frio ou corrente de ar" },
+  { term:"Panting", def:"Ofegação — indica calor excessivo" },
+  { term:"Brooder", def:"Equipamento de aquecimento do pinteiro" },
+  { term:"Spreading evenly", def:"Distribuição uniforme — temperatura ideal" },
+  { term:"Ammonia level", def:"Concentração de amônia no ar, medida em ppm" },
+  { term:"Minimum ventilation", def:"Renovação mínima de ar sem criar corrente de frio" }
+];
+
+// ─── ESTADO ──────────────────────────────────────────────────────
+const fcState = {};
+['all','broiler','layer','hatchery','breeder'].forEach(t => {
+  fcState[t] = { idx:0, flipped:false, spd:1, exSpd:1 };
+});
+
+let qIdx=0, score=0, qAnswered=false;
+let doneFC=false, doneQuiz=false, doneFitb=false, doneMatch=false;
+let fitbCorrect=0, matchSelected=null, matchedCount=0, shuffledDefs=[];
+const STORAGE_KEY = 'poultry-english:s1-aula02';
+
+// ─── VOZES ───────────────────────────────────────────────────────
+let voices=[], selVoice=null;
+function loadVoices(){
+  const all=window.speechSynthesis.getVoices();
+  voices=all.filter(v=>v.lang.startsWith('en'));
+  if(!voices.length){setTimeout(loadVoices,300);return;}
+  const pref=['Google US English','Samantha','Karen','Google UK English Female','Microsoft Aria'];
+  const sorted=[...voices].sort((a,b)=>{
+    const ai=pref.findIndex(p=>a.name.includes(p.split(' ')[0])&&a.name.includes(p.split(' ').pop()));
+    const bi=pref.findIndex(p=>b.name.includes(p.split(' ')[0])&&b.name.includes(p.split(' ').pop()));
+    return(ai<0?99:ai)-(bi<0?99:bi);
+  });
+  const top=sorted.slice(0,4); selVoice=top[0]||null;
+  document.getElementById('v-loading').style.display='none';
+  const c=document.getElementById('v-btns'); c.innerHTML='';
+  top.forEach((v,i)=>{
+    const b=document.createElement('button');
+    b.className='vbtn'+(i===0?' active':'');
+    b.textContent=v.name.replace('Google ','').replace('Microsoft ','').replace(' Online','');
+    b.onclick=()=>{selVoice=v;stopAll();document.querySelectorAll('.vbtn').forEach(x=>x.classList.remove('active'));b.classList.add('active');};
+    c.appendChild(b);
+  });
+}
+function stopAll(){window.speechSynthesis&&window.speechSynthesis.cancel();document.querySelectorAll('.abtn').forEach(b=>b.classList.remove('playing'));}
+function sayText(text,rate,btnId){
+  stopAll();if(!window.speechSynthesis)return;
+  const u=new SpeechSynthesisUtterance(text);
+  if(selVoice)u.voice=selVoice;u.lang='en-US';u.rate=rate;
+  const btn=document.getElementById(btnId);
+  if(btn)btn.classList.add('playing');
+  u.onend=u.onerror=()=>{if(btn)btn.classList.remove('playing');};
+  window.speechSynthesis.speak(u);
+}
+function sayWord(t){const s=fcState[t];const c=allCards[t][s.idx];sayText(c.word,s.spd,'abtn-word-'+t);}
+function sayEx(t){const s=fcState[t];const c=allCards[t][s.idx];sayText(c.ex,s.exSpd,'abtn-ex-'+t);}
+function setSpd(t,spd,e){e.stopPropagation();fcState[t].spd=spd;document.getElementById('spd1-'+t).classList.toggle('active',spd===1);document.getElementById('spd07-'+t).classList.toggle('active',spd===0.7);sayWord(t);}
+function setExSpd(t,spd,e){e.stopPropagation();fcState[t].exSpd=spd;document.getElementById('exspd1-'+t).classList.toggle('active',spd===1);document.getElementById('exspd07-'+t).classList.toggle('active',spd===0.7);sayEx(t);}
+
+// ─── FLASHCARDS ──────────────────────────────────────────────────
+function buildDots(t){
+  const c=document.getElementById('fc-dots-'+t);if(!c)return;c.innerHTML='';
+  allCards[t].forEach((_,i)=>{
+    const d=document.createElement('div');d.className='fc-dot'+(i===0?' active':'');d.id='dot-'+t+'-'+i;
+    d.onclick=()=>{fcState[t].idx=i;renderFC(t);updateDots(t);};c.appendChild(d);
+  });
+}
+function updateDots(t){
+  allCards[t].forEach((_,i)=>{
+    const d=document.getElementById('dot-'+t+'-'+i);if(!d)return;
+    const idx=fcState[t].idx;d.className='fc-dot'+(i===idx?' active':i<idx?' done':'');
+  });
+}
+function renderFC(t){
+  const s=fcState[t];const c=allCards[t][s.idx];
+  document.getElementById('fc-step-'+t).textContent=c.step;
+  document.getElementById('fc-word-'+t).textContent=c.word;
+  document.getElementById('fc-ipa-'+t).textContent=c.ipa;
+  document.getElementById('fc-trans-'+t).textContent=c.trans;
+  document.getElementById('fc-ex-'+t).textContent=c.ex;
+  document.getElementById('fc-ex-pt-'+t).textContent=c.pt;
+  document.getElementById('fc-why-'+t).textContent='Por que importa: '+c.why;
+  document.getElementById('fc-counter-'+t).textContent=(s.idx+1)+' de '+allCards[t].length;
+  s.flipped=false;stopAll();
+  document.getElementById('fc-front-'+t).classList.remove('hidden');
+  document.getElementById('fc-back-'+t).classList.remove('visible');
+}
+function handleCardClick(e,t){
+  if(e.target.closest('.audio-btns')||e.target.closest('.abtn')||e.target.closest('.spd-btn'))return;
+  const s=fcState[t];s.flipped=!s.flipped;
+  document.getElementById('fc-front-'+t).classList.toggle('hidden',s.flipped);
+  document.getElementById('fc-back-'+t).classList.toggle('visible',s.flipped);
+  if(s.idx===allCards[t].length-1&&s.flipped){doneFC=true;updateProg();}
+}
+function fcNav(t,d){
+  const s=fcState[t];s.idx=(s.idx+d+allCards[t].length)%allCards[t].length;
+  renderFC(t);updateDots(t);
+}
+
+// ─── PROGRESSO ───────────────────────────────────────────────────
+function updateProg(){
+  let p=0;if(doneFC)p+=25;if(doneQuiz)p+=25;if(doneFitb)p+=25;if(doneMatch)p+=25;
+  document.getElementById('prog-fill').style.width=p+'%';
+}
+
+// ─── QUIZ ────────────────────────────────────────────────────────
+
+function renderQ(t) {
+  const q = quizData[t][quizState[t].idx];
+  document.getElementById('q-ctx-'+t).textContent = q.ctx;
+  document.getElementById('q-text-'+t).textContent = q.q;
+  document.getElementById('q-prog-'+t).textContent = 'Questão '+(quizState[t].idx+1)+' de '+quizData[t].length;
+  document.getElementById('q-fb-'+t).className = 'quiz-feedback';
+  document.getElementById('q-fb-'+t).textContent = '';
+  document.getElementById('btn-next-'+t).style.display = 'none';
+  quizState[t].answered = false;
+  const opts = document.getElementById('q-opts-'+t);
+  opts.innerHTML = '';
+  q.opts.forEach((o,i) => {
+    const b = document.createElement('button');
+    b.className = 'quiz-opt'; b.textContent = o;
+    b.onclick = () => selectQ(t, i);
+    opts.appendChild(b);
+  });
+}
+function selectQ(t, i) {
+  if (quizState[t].answered) return;
+  quizState[t].answered = true;
+  const q = quizData[t][quizState[t].idx];
+  document.querySelectorAll('#q-opts-'+t+' .quiz-opt').forEach((b,idx) => {
+    b.disabled = true;
+    if (idx === q.correct) b.classList.add('correct');
+    else if (idx === i && i !== q.correct) b.classList.add('wrong');
+  });
+  const fb = document.getElementById('q-fb-'+t);
+  if (i === q.correct) { quizState[t].score++; fb.className = 'quiz-feedback ok'; }
+  else { fb.className = 'quiz-feedback no'; }
+  fb.textContent = (i === q.correct ? '✓ ' : '✗ ') + q.fb;
+  document.getElementById('btn-next-'+t).style.display = 'inline-block';
+  saveProgress();
+}
+function nextQ(t) {
+  quizState[t].idx++;
+  if (quizState[t].idx >= quizData[t].length) {
+    document.getElementById('quiz-block-'+t).style.display = 'none';
+    const sb = document.getElementById('score-block-'+t);
+    sb.classList.add('show');
+    document.getElementById('score-num-'+t).textContent = quizState[t].score+'/'+quizData[t].length;
+    const pct = Math.round(quizState[t].score/quizData[t].length*100);
+    document.getElementById('score-msg-'+t).textContent = pct>=75 ? 'Excelente. Avance para o próximo exercício.' : 'Revise os flashcards e tente novamente.';
+    quizState[t].done = true;
+    if (!doneQuiz) { doneQuiz = true; updateProg(); }
+    saveProgress();
+  } else {
+    renderQ(t);
+  }
+}
+function restartQuiz(t) {
+  quizState[t] = { idx:0, score:0, answered:false, done:false };
+  document.getElementById('quiz-block-'+t).style.display = 'block';
+  document.getElementById('score-block-'+t).classList.remove('show');
+  renderQ(t);
+}
+
+
+// ─── FILL IN THE BLANK ───────────────────────────────────────────
+function buildFitb(){
+  const block=document.getElementById('fitb-block');
+  fitbData.forEach((item,i)=>{
+    const div=document.createElement('div');div.className='fitb-item';
+    div.innerHTML=`<div class="fitb-sentence">${item.before} <strong>[___]</strong> ${item.after}</div><div class="fitb-input-row"><input class="fitb-input" id="fitb-inp-${i}" type="text" placeholder="Digite em inglês..." autocomplete="off" autocorrect="off" spellcheck="false"><button class="fitb-btn" onclick="checkFitb(${i})">Verificar</button></div><div class="fitb-feedback" id="fitb-fb-${i}"></div>`;
+    block.appendChild(div);
+    div.querySelector('input').addEventListener('keydown',e=>{if(e.key==='Enter')checkFitb(i);});
+  });
+}
+function checkFitb(i){
+  const inp=document.getElementById('fitb-inp-'+i);const fb=document.getElementById('fitb-fb-'+i);
+  if(inp.disabled)return;
+  const val=inp.value.trim().toLowerCase();const correct=fitbData[i].blank.toLowerCase();
+  inp.disabled=true;
+  if(val===correct||(correct.includes(val)&&val.length>3)){inp.classList.add('correct');fb.className='fitb-feedback ok';fb.textContent='✓ Correto! '+fitbData[i].fb;fitbCorrect++;}
+  else{inp.classList.add('wrong');fb.className='fitb-feedback no';fb.textContent='✗ A resposta correta é "'+fitbData[i].blank+'". '+fitbData[i].fb;}
+  const done=document.querySelectorAll('.fitb-input:disabled').length;
+  if(done===fitbData.length){document.getElementById('fitb-score').textContent=fitbCorrect+'/'+fitbData.length+' corretas';doneFitb=true;updateProg();}
+}
+
+// ─── MATCH THE TERM ──────────────────────────────────────────────
+function buildMatch(){
+  shuffledDefs=[...matchData].sort(()=>Math.random()-0.5);
+  const termsEl=document.getElementById('match-terms');const defsEl=document.getElementById('match-defs');
+  termsEl.innerHTML='';defsEl.innerHTML='';
+  matchData.forEach((item,i)=>{const t=document.createElement('div');t.className='match-item';t.textContent=item.term;t.dataset.idx=i;t.onclick=()=>handleMatch(t,'term',i);termsEl.appendChild(t);});
+  shuffledDefs.forEach((item,i)=>{const d=document.createElement('div');d.className='match-item';d.textContent=item.def;d.dataset.idx=i;d.onclick=()=>handleMatch(d,'def',i);defsEl.appendChild(d);});
+}
+function handleMatch(el,type,idx){
+  if(el.classList.contains('matched'))return;
+  if(!matchSelected&&type==='def')return;
+  if(!matchSelected){document.querySelectorAll('#match-terms .match-item').forEach(x=>x.classList.remove('selected'));el.classList.add('selected');matchSelected={el,idx};return;}
+  if(type==='term'){document.querySelectorAll('#match-terms .match-item').forEach(x=>x.classList.remove('selected'));el.classList.add('selected');matchSelected={el,idx};return;}
+  const termTerm=matchData[matchSelected.idx].term;const defTerm=shuffledDefs[idx].term;
+  const prevEl=matchSelected.el;matchSelected=null;
+  if(termTerm===defTerm){
+    prevEl.classList.remove('selected');prevEl.classList.add('matched');el.classList.add('matched');matchedCount++;
+    if(matchedCount===matchData.length){const r=document.getElementById('match-result');r.textContent='Perfeito! Todos os pares conectados corretamente.';r.classList.add('show');doneMatch=true;updateProg();}
+  }else{
+    prevEl.classList.remove('selected');prevEl.classList.add('wrong-match');el.classList.add('wrong-match');
+    setTimeout(()=>{prevEl.classList.remove('wrong-match');el.classList.remove('wrong-match');},800);
+  }
+}
+function resetMatch(){matchSelected=null;matchedCount=0;buildMatch();document.getElementById('match-result').classList.remove('show');}
+
+// ─── STORAGE ─────────────────────────────────────────────────────
+async function saveProgress(){
+  try{
+    const fcTabState={};
+    ['all','broiler','layer','hatchery','breeder'].forEach(t=>{fcTabState['fc_'+t]=fcState[t].idx;});
+    const fields={
+      broiler:['br2-heatsrc','br2-temp','br2-wk1temp','br2-decrease','br2-behavior','br2-vent','br2-extra'],
+      layer:['ly2-heatsrc','ly2-temp','ly2-decrease','ly2-behavior','ly2-vent'],
+      hatchery:['ht2-temp','ht2-humid','ht2-holdtemp','ht2-signs','ht2-air'],
+      breeder:['bd2-age','bd2-heatsrc','bd2-temp','bd2-behavior','bd2-uniform','bd2-vent']
+    };
+    const desafioVals={};
+    Object.entries(fields).forEach(([p,ids])=>{desafioVals[p]={};ids.forEach(id=>{const el=document.getElementById(id);if(el)desafioVals[p][id]=el.value;});});
+    const state={...fcTabState,doneFC,quizState:JSON.stringify(quizState),doneQuiz,
+      fitbAnswers:fitbData.map((_,i)=>{const inp=document.getElementById('fitb-inp-'+i);return inp?{value:inp.value,disabled:inp.disabled,correct:inp.classList.contains('correct')}:null;}),
+      fitbCorrect,doneFitb,doneMatch,matchedCount,desafioVals,savedAt:Date.now()};
+    await window.storage.set(STORAGE_KEY,JSON.stringify(state));
+  }catch(e){}
+}
+async function loadProgress(){
+  try{const r=await window.storage.get(STORAGE_KEY);if(!r)return null;return JSON.parse(r.value);}catch(e){return null;}
+}
+async function restoreProgress(state){
+  if(!state)return;
+  ['all','broiler','layer','hatchery','breeder'].forEach(t=>{
+    if(state['fc_'+t]!==undefined)fcState[t].idx=state['fc_'+t];
+    renderFC(t);updateDots(t);
+  });
+  if(state.doneFC)doneFC=true;
+  if(state.quizState){
+    try{
+      const qs=JSON.parse(state.quizState);
+      ['all','broiler','layer','hatchery','breeder'].forEach(t=>{
+        if(qs[t]){
+          quizState[t]=qs[t];
+          if(qs[t].done){
+            document.getElementById('quiz-block-'+t).style.display='none';
+            const sb=document.getElementById('score-block-'+t);sb.classList.add('show');
+            document.getElementById('score-num-'+t).textContent=qs[t].score+'/'+quizData[t].length;
+            const pct=Math.round(qs[t].score/quizData[t].length*100);
+            document.getElementById('score-msg-'+t).textContent=pct>=75?'Excelente. Avance para o próximo exercício.':'Revise os flashcards e tente novamente.';
+            if(!doneQuiz){doneQuiz=true;}
+          }else if(qs[t].idx>0){renderQ(t);}
+        }
+      });
+    }catch(e){}
+  }
+  if(state.fitbAnswers){
+    state.fitbAnswers.forEach((ans,i)=>{
+      if(!ans||!ans.disabled)return;
+      const inp=document.getElementById('fitb-inp-'+i);const fb=document.getElementById('fitb-fb-'+i);
+      if(!inp||!fb)return;
+      inp.value=ans.value;inp.disabled=true;
+      if(ans.correct){inp.classList.add('correct');fb.className='fitb-feedback ok';fb.textContent='✓ Correto! '+fitbData[i].fb;}
+      else{inp.classList.add('wrong');fb.className='fitb-feedback no';fb.textContent='✗ A resposta correta é "'+fitbData[i].blank+'". '+fitbData[i].fb;}
+    });
+    fitbCorrect=state.fitbCorrect||0;
+    if(state.doneFitb){doneFitb=true;document.getElementById('fitb-score').textContent=fitbCorrect+'/'+fitbData.length+' corretas';}
+  }
+  if(state.doneMatch){
+    doneMatch=true;matchedCount=matchData.length;
+    document.querySelectorAll('#match-terms .match-item,#match-defs .match-item').forEach(el=>el.classList.add('matched'));
+    const r=document.getElementById('match-result');r.textContent='Perfeito! Todos os pares conectados corretamente.';r.classList.add('show');
+  }
+  if(state.desafioVals){
+    Object.entries(state.desafioVals).forEach(([p,flds])=>{
+      Object.entries(flds).forEach(([id,val])=>{const el=document.getElementById(id);if(el&&val)el.value=val;});
+    });
+  }
+  updateProg();
+  if(state.savedAt){
+    const mins=Math.round((Date.now()-state.savedAt)/60000);
+    const label=mins<60?mins+'min atrás':Math.round(mins/60)+'h atrás';
+    showToast('Progresso restaurado — salvo '+label);
+  }
+}
+function patchSave(){
+  const save=()=>setTimeout(saveProgress,400);
+  // selectQ e nextQ já chamam saveProgress diretamente
+  const _cF=checkFitb;window.checkFitb=function(i){_cF(i);save();};
+  const _hM=handleMatch;window.handleMatch=function(el,type,idx){_hM(el,type,idx);save();};
+  const _hC=handleCardClick;window.handleCardClick=function(e,t){_hC(e,t);if(doneFC)save();};
+  document.querySelectorAll('.script-field').forEach(inp=>{inp.addEventListener('input',()=>save());});
+}
+
+// ─── DESAFIO ─────────────────────────────────────────────────────
+function copyDesafio2(profile){
+  const v=(id)=>{const el=document.getElementById(id);return el&&el.value.trim()?el.value.trim():'['+id+']';};
+  const t={
+    broiler:`"We use ${v('br2-heatsrc')} as our heat source. The brooder is set to ${v('br2-temp')} at chick level.\n\nThe brooding temperature in week one is ${v('br2-wk1temp')}, decreasing by ${v('br2-decrease')} per week. The chicks are ${v('br2-behavior')}, which indicates the temperature is correct.\n\nMinimum ventilation is set to ${v('br2-vent')} to keep ammonia below 10 ppm. ${v('br2-extra')}"`,
+    layer:`"We use ${v('ly2-heatsrc')} in the rearing house. Brooding temperature starts at ${v('ly2-temp')} and decreases by ${v('ly2-decrease')} per week.\n\nThe pullets are ${v('ly2-behavior')}, indicating temperature is correct.\n\nMinimum ventilation is maintained to keep ammonia below 10 ppm. ${v('ly2-vent')}"`,
+    hatchery:`"In our hatcher, temperature is ${v('ht2-temp')} and humidity is ${v('ht2-humid')} during the hatching window.\n\nChicks are held at ${v('ht2-holdtemp')} in the chick holding room. We monitor for ${v('ht2-signs')} to ensure chick comfort.\n\n${v('ht2-air')}"`,
+    breeder:`"Broiler breeder chicks received at ${v('bd2-age')}. We use ${v('bd2-heatsrc')} at ${v('bd2-temp')} at chick level.\n\nChicks are currently ${v('bd2-behavior')}. ${v('bd2-uniform')}\n\nMinimum ventilation maintained to keep ammonia below 10 ppm. ${v('bd2-vent')}"`
+  };
+  navigator.clipboard.writeText(t[profile])
+    .then(()=>showToast('Script copiado — grave em voz alta!'))
+    .catch(()=>showToast('Selecione o texto para copiar manualmente'));
+}
+
+// ─── UTILS ───────────────────────────────────────────────────────
+function showToast(msg){
+  const t=document.createElement('div');
+  Object.assign(t.style,{position:'fixed',bottom:'24px',left:'50%',transform:'translateX(-50%)',background:'#0d2b1f',color:'#E1F5EE',fontSize:'13px',padding:'10px 20px',borderRadius:'99px',border:'1px solid #1D9E75',zIndex:'999',fontFamily:'DM Sans,sans-serif',boxShadow:'0 4px 20px rgba(0,0,0,0.3)',opacity:'0',transition:'opacity 0.3s'});
+  t.textContent=msg;document.body.appendChild(t);
+  requestAnimationFrame(()=>{t.style.opacity='1';});
+  setTimeout(()=>{t.style.opacity='0';setTimeout(()=>t.remove(),300);},3000);
+}
+
+// ─── INIT ────────────────────────────────────────────────────────
+if(window.speechSynthesis){
+  if(window.speechSynthesis.onvoiceschanged!==undefined)window.speechSynthesis.onvoiceschanged=loadVoices;
+  loadVoices();
+}
+['all','broiler','layer','hatchery','breeder'].forEach(t=>{buildDots(t);renderFC(t);});
+['all','broiler','layer','hatchery','breeder'].forEach(t=>renderQ(t));
+buildFitb();buildMatch();patchSave();
+(async()=>{const s=await loadProgress();if(s)await restoreProgress(s);})();
+</script>
+</body>
+</html>
